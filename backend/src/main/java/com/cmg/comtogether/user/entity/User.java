@@ -30,11 +30,14 @@ public class User {
     @Column(nullable = false)
     private SocialType socialType;
 
-    @Column(nullable = false)
-    private Long socialId;
+    @Column(nullable = false, unique = true)
+    private String socialId;
 
     @Column
     private Integer point;
+
+    @Column
+    private String profileImageUrl;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<UserInterest> interests = new HashSet<>();
