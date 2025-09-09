@@ -1,5 +1,6 @@
 package com.cmg.comtogether.user.controller;
 
+import com.cmg.comtogether.common.response.ApiResponse;
 import com.cmg.comtogether.common.security.CustomUserDetails;
 import com.cmg.comtogether.user.dto.UserResponseDto;
 import com.cmg.comtogether.user.entity.User;
@@ -22,9 +23,9 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/me")
-    public ResponseEntity<UserResponseDto> getCurrentUser(@AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<ApiResponse<UserResponseDto>> getUserInfo(@AuthenticationPrincipal CustomUserDetails userDetails) {
         User user = userDetails.getUser();
         log.info("Response: {}", user.getUserId());
-        return ResponseEntity.ok(userService.getUserInfo(user));
+        return ResponseEntity.ok(ApiResponse.success(userService.getUserInfo(user)));
     }
 }
