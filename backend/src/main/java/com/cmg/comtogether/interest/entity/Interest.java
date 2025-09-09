@@ -1,4 +1,4 @@
-package com.cmg.comtogether.user.entity;
+package com.cmg.comtogether.interest.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
