@@ -33,12 +33,11 @@ public class User {
     @Column(nullable = false, unique = true)
     private String socialId;
 
-    @Column
     private Integer point;
 
-    @Column
     private String profileImageUrl;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default
     private Set<UserInterest> interests = new HashSet<>();
 }
