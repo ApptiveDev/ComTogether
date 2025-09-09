@@ -5,22 +5,23 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
+import org.springdoc.core.customizers.OpenApiCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.Collections;
 
 @Configuration
 public class SwaggerConfig {
 
     @Bean
     public OpenAPI openAPI() {
-        // SecurityScheme 등록
         SecurityScheme securityScheme = new SecurityScheme()
                 .type(SecurityScheme.Type.HTTP)
                 .scheme("bearer")
                 .bearerFormat("JWT")
                 .name("Authorization");
 
-        // 모든 API에 Security 적용
         SecurityRequirement securityRequirement = new SecurityRequirement().addList("BearerAuth");
 
         return new OpenAPI()
@@ -30,5 +31,14 @@ public class SwaggerConfig {
                         .version("v1.0"))
                 .components(new Components().addSecuritySchemes("BearerAuth", securityScheme))
                 .addSecurityItem(securityRequirement);
+    }
+
+    @Bean
+    public OpenApiCustomizer oauthSecurityIgnoreCustomizer() {
+        return openApi -> openApi.getPaths().forEach((path, pathItem) -> {
+            if (path.startsWith("/oauth")) {
+                pathItem.readOperations().forEach(operation -> operation.setSecurity(Collections.emptyList()));
+            }
+        });
     }
 }
