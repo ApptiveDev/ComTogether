@@ -1,0 +1,24 @@
+.moreBtn {
+    width: 428px;
+    height: 40px;
+    margin: 0 auto;
+    background: #ea5a2a;
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 16px 0;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 24px;
+    box-shadow: 0 4px 16px rgba(234, 90, 42, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.2s;
+}
+
+.moreBtn:hover {
+    background: #ff5a1f;
+}
