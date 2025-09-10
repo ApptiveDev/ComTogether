@@ -35,7 +35,8 @@ public class User {
     @Column(nullable = false, unique = true)
     private String socialId;
 
-    private Integer point;
+    @Builder.Default
+    private Integer point = 0;
 
     private String profileImageUrl;
 
