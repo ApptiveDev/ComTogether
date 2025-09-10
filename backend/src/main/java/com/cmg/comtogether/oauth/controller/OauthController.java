@@ -1,8 +1,8 @@
 package com.cmg.comtogether.oauth.controller;
 
 import com.cmg.comtogether.common.response.ApiResponse;
+import com.cmg.comtogether.common.security.jwt.dto.TokenDto;
 import com.cmg.comtogether.oauth.dto.OauthLoginRequestDto;
-import com.cmg.comtogether.oauth.dto.OauthLoginResponseDto;
 import com.cmg.comtogether.oauth.service.OauthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +22,9 @@ public class OauthController {
     private final OauthService oauthService;
 
     @PostMapping("/kakao")
-    public ResponseEntity<ApiResponse<OauthLoginResponseDto>> kakaoLogin(@Valid @RequestBody OauthLoginRequestDto requestDto) {
+    public ResponseEntity<ApiResponse<TokenDto>> kakaoLogin(@Valid @RequestBody OauthLoginRequestDto requestDto) {
         String code = requestDto.getCode();
-        OauthLoginResponseDto oauthLoginResponseDto = oauthService.kakaoLogin(code);
-        return ResponseEntity.ok(ApiResponse.success(oauthLoginResponseDto));
+        TokenDto tokenDto = oauthService.kakaoLogin(code);
+        return ResponseEntity.ok(ApiResponse.success(tokenDto));
     }
 }
