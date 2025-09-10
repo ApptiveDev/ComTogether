@@ -24,6 +24,7 @@ public class UserMapper {
                 .role(user.getRole())
                 .point(user.getPoint())
                 .profileImageUrl(user.getProfileImageUrl())
+                .initialized(user.isInitialized())
                 .interests(interests)
                 .build();
     }

@@ -40,12 +40,19 @@ public class User {
 
     private String profileImageUrl;
 
+    @Builder.Default
+    private boolean initialized = false;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private Set<UserInterest> interests = new HashSet<>();;
 
     public void updateRole(Role role) {
         this.role = role;
+    }
+
+    public void completeInitialization() {
+        this.initialized = true;
     }
 
     public void updateInterests(List<Interest> newInterests) {

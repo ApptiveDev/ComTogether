@@ -46,6 +46,8 @@ public class UserService {
             user.updateInterests(interests);
         }
 
+        user.completeInitialization();
+
         return userMapper.toResponse(user);
     }
 }

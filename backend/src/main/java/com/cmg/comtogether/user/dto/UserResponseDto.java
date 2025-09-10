@@ -18,6 +18,7 @@ public class UserResponseDto {
     private Role role;
     private Integer point;
     private String profileImageUrl;
+    private boolean initialized;
     private List<InterestDto> interests;
 }
 
