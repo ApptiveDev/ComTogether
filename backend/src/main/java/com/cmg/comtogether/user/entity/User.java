@@ -1,10 +1,11 @@
 package com.cmg.comtogether.user.entity;
 
-import com.cmg.comtogether.userinterest.entity.UserInterest;
+import com.cmg.comtogether.interest.entity.Interest;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -40,5 +41,16 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
-    private Set<UserInterest> interests = new HashSet<>();
+    private Set<UserInterest> interests = new HashSet<>();;
+
+    public void updateRole(Role role) {
+        this.role = role;
+    }
+
+    public void updateInterests(List<Interest> newInterests) {
+        this.interests.clear();
+        for (Interest interest : newInterests) {
+            this.interests.add(new UserInterest(this, interest));
+        }
+    }
 }

@@ -1,9 +1,10 @@
-package com.cmg.comtogether.userinterest.entity;
+package com.cmg.comtogether.user.entity;
 
 import com.cmg.comtogether.interest.entity.Interest;
-import com.cmg.comtogether.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -23,4 +24,9 @@ public class UserInterest {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "interest_id", nullable = false)
     private Interest interest;
+
+    public UserInterest(User user, Interest interest) {
+        this.user = user;
+        this.interest = interest;
+    }
 }
