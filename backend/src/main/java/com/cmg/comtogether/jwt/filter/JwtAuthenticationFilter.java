@@ -1,6 +1,7 @@
-package com.cmg.comtogether.common.security.jwt;
+package com.cmg.comtogether.common.security.jwt.filter;
 
 import com.cmg.comtogether.common.security.CustomUserDetailsService;
+import com.cmg.comtogether.common.security.jwt.util.JwtTokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,7 +12,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -41,7 +41,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (token != null && jwtTokenProvider.validateToken(token)) {
             Long userId = jwtTokenProvider.getUserId(token);
-            String role = "ROLE_USER"; // jwtTokenProvider.getRole(token) 으로 꺼내도 됨
+            String role = "ROLE_USER";
 
             UserDetails userDetails = customUserDetailsService.loadUserByUsername(String.valueOf(userId));
 
