@@ -1,5 +1,6 @@
 package com.cmg.comtogether.user.dto;
 
+import com.cmg.comtogether.interest.dto.InterestDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,6 +17,6 @@ public class UserResponseDto {
     private String role;
     private Integer point;
     private String profileImageUrl;
-    private List<String> interests;
+    private List<InterestDto> interests;
 }
 

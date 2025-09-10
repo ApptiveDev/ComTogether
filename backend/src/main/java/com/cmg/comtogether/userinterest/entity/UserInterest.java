@@ -1,4 +1,4 @@
-package com.cmg.comtogether.userinterest;
+package com.cmg.comtogether.userinterest.entity;
 
 import com.cmg.comtogether.interest.entity.Interest;
 import com.cmg.comtogether.user.entity.User;

@@ -16,8 +16,8 @@ public class UserService {
     private final UserMapper userMapper;
     private final UserRepository userRepository;
 
-    public UserResponseDto getUserInfo(User loginUser) {
-        User user = userRepository.findById(loginUser.getUserId())
+    public UserResponseDto getUserInfo(Long userId) {
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
         return userMapper.toResponse(user);
     }

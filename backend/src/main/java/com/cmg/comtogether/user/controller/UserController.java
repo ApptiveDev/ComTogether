@@ -26,6 +26,7 @@ public class UserController {
     public ResponseEntity<ApiResponse<UserResponseDto>> getUserInfo(@AuthenticationPrincipal CustomUserDetails userDetails) {
         User user = userDetails.getUser();
         log.info("Response: {}", user.getUserId());
-        return ResponseEntity.ok(ApiResponse.success(userService.getUserInfo(user)));
+        return ResponseEntity.ok(ApiResponse.success(userService.getUserInfo(user.getUserId())));
+    }
     }
 }
