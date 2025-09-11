@@ -1,8 +1,8 @@
-package com.cmg.comtogether.common.security.jwt.controller;
+package com.cmg.comtogether.jwt.controller;
 
 import com.cmg.comtogether.common.response.ApiResponse;
-import com.cmg.comtogether.common.security.jwt.dto.TokenDto;
-import com.cmg.comtogether.common.security.jwt.service.JwtService;
+import com.cmg.comtogether.jwt.dto.TokenDto;
+import com.cmg.comtogether.jwt.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -1,7 +1,7 @@
 package com.cmg.comtogether.oauth.controller;
 
 import com.cmg.comtogether.common.response.ApiResponse;
-import com.cmg.comtogether.common.security.jwt.dto.TokenDto;
+import com.cmg.comtogether.jwt.dto.TokenDto;
 import com.cmg.comtogether.oauth.dto.OauthLoginRequestDto;
 import com.cmg.comtogether.oauth.service.OauthService;
 import jakarta.validation.Valid;

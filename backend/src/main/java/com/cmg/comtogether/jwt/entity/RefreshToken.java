@@ -1,4 +1,4 @@
-package com.cmg.comtogether.common.security.jwt.entity;
+package com.cmg.comtogether.jwt.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

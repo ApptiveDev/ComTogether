@@ -1,4 +1,4 @@
-package com.cmg.comtogether.common.security.jwt.util;
+package com.cmg.comtogether.jwt.util;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

@@ -1,4 +1,4 @@
-package com.cmg.comtogether.common.security.jwt.dto;
+package com.cmg.comtogether.jwt.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;

@@ -1,6 +1,6 @@
-package com.cmg.comtogether.common.security;
+package com.cmg.comtogether.common.security.config;
 
-import com.cmg.comtogether.common.security.jwt.filter.JwtAuthenticationFilter;
+import com.cmg.comtogether.jwt.filter.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

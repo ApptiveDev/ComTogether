@@ -1,7 +1,7 @@
-package com.cmg.comtogether.common.security.jwt.filter;
+package com.cmg.comtogether.jwt.filter;
 
 import com.cmg.comtogether.common.security.CustomUserDetailsService;
-import com.cmg.comtogether.common.security.jwt.util.JwtTokenProvider;
+import com.cmg.comtogether.jwt.util.JwtTokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

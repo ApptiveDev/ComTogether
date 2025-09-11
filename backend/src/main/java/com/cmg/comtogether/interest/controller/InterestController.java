@@ -2,7 +2,6 @@ package com.cmg.comtogether.interest.controller;
 
 import com.cmg.comtogether.common.response.ApiResponse;
 import com.cmg.comtogether.interest.dto.InterestDto;
-import com.cmg.comtogether.interest.entity.Interest;
 import com.cmg.comtogether.interest.service.InterestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

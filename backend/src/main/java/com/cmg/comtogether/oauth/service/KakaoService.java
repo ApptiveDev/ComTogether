@@ -2,7 +2,7 @@ package com.cmg.comtogether.oauth.service;
 
 import com.cmg.comtogether.common.exception.BusinessException;
 import com.cmg.comtogether.common.exception.ErrorCode;
-import com.cmg.comtogether.common.security.jwt.dto.TokenDto;
+import com.cmg.comtogether.jwt.dto.TokenDto;
 import com.cmg.comtogether.oauth.dto.KakaoProfileDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

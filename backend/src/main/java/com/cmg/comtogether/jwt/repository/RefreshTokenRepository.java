@@ -1,6 +1,6 @@
-package com.cmg.comtogether.common.security.jwt.repository;
+package com.cmg.comtogether.jwt.repository;
 
-import com.cmg.comtogether.common.security.jwt.entity.RefreshToken;
+import com.cmg.comtogether.jwt.entity.RefreshToken;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
