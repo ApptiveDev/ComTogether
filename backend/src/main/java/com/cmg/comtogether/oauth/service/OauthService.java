@@ -1,19 +1,15 @@
 package com.cmg.comtogether.oauth.service;
 
-import com.cmg.comtogether.common.security.jwt.entity.RefreshToken;
-import com.cmg.comtogether.common.security.jwt.repository.RefreshTokenRepository;
-import com.cmg.comtogether.common.security.jwt.service.JwtService;
-import com.cmg.comtogether.common.security.jwt.dto.TokenDto;
+import com.cmg.comtogether.jwt.repository.RefreshTokenRepository;
+import com.cmg.comtogether.jwt.service.JwtService;
+import com.cmg.comtogether.jwt.dto.TokenDto;
 import com.cmg.comtogether.oauth.dto.KakaoProfileDto;
 import com.cmg.comtogether.user.entity.Role;
 import com.cmg.comtogether.user.entity.SocialType;
 import com.cmg.comtogether.user.entity.User;
-import com.cmg.comtogether.user.mapper.UserMapper;
 import com.cmg.comtogether.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -39,11 +35,6 @@ public class OauthService {
                         .build()));
 
         TokenDto token = jwtService.generateToken(user);
-        refreshTokenRepository.findByUserId(user.getUserId())
-                .ifPresentOrElse(
-                        rt -> rt.updateToken(token.getRefreshToken()),
-                        () -> refreshTokenRepository.save(new RefreshToken(token.getRefreshToken(), user.getUserId()))
-                );
 
         return TokenDto.builder()
                 .accessToken(token.getAccessToken())

@@ -1,11 +1,11 @@
-package com.cmg.comtogether.common.security.jwt.service;
+package com.cmg.comtogether.jwt.service;
 
 import com.cmg.comtogether.common.exception.BusinessException;
 import com.cmg.comtogether.common.exception.ErrorCode;
-import com.cmg.comtogether.common.security.jwt.entity.RefreshToken;
-import com.cmg.comtogether.common.security.jwt.repository.RefreshTokenRepository;
-import com.cmg.comtogether.common.security.jwt.util.JwtTokenProvider;
-import com.cmg.comtogether.common.security.jwt.dto.TokenDto;
+import com.cmg.comtogether.jwt.entity.RefreshToken;
+import com.cmg.comtogether.jwt.repository.RefreshTokenRepository;
+import com.cmg.comtogether.jwt.util.JwtTokenProvider;
+import com.cmg.comtogether.jwt.dto.TokenDto;
 import com.cmg.comtogether.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +20,12 @@ public class JwtService {
     public TokenDto generateToken(User user) {
         String accessToken = jwtTokenProvider.createAccessToken(user.getUserId());
         String refreshToken = jwtTokenProvider.createRefreshToken(user.getUserId());
+
+        refreshTokenRepository.findByUserId(user.getUserId())
+                .ifPresentOrElse(
+                        rt -> rt.updateToken(refreshToken),
+                        () -> refreshTokenRepository.save(new RefreshToken(refreshToken, user.getUserId()))
+                );
 
         return TokenDto.builder()
                 .accessToken(accessToken)
