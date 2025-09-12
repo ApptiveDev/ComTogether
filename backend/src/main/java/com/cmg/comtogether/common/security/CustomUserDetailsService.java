@@ -1,5 +1,6 @@
 package com.cmg.comtogether.common.security;
 
+import com.cmg.comtogether.common.exception.ErrorCode;
 import com.cmg.comtogether.user.entity.User;
 import com.cmg.comtogether.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
         User user = userRepository.findById(Long.valueOf(userId))
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                .orElseThrow(() -> new UsernameNotFoundException(ErrorCode.USER_NOT_FOUND.getMessage()));
         return new CustomUserDetails(user);
     }
 }

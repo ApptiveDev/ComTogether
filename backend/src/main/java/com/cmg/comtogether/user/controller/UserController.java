@@ -6,6 +6,7 @@ import com.cmg.comtogether.user.dto.UserInitializeRequestDto;
 import com.cmg.comtogether.user.dto.UserResponseDto;
 import com.cmg.comtogether.user.entity.User;
 import com.cmg.comtogether.user.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ public class UserController {
     @PutMapping("/initialize")
     public ResponseEntity<ApiResponse<UserResponseDto>> initializeUser(
             @AuthenticationPrincipal CustomUserDetails userDetails,
-            @RequestBody UserInitializeRequestDto request
+            @Valid @RequestBody UserInitializeRequestDto request
     ) {
         UserResponseDto userResponseDto = userService.initializeUser(userDetails.getUser().getUserId(), request);
         return ResponseEntity.ok(ApiResponse.success(userResponseDto));

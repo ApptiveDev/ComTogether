@@ -13,6 +13,8 @@ spring:
         format_sql: true
     defer-datasource-initialization: true
   jackson:
+    deserialization:
+      fail-on-unknown-properties: true
     property-naming-strategy: SNAKE_CASE
   sql:
     init:

@@ -1,5 +1,6 @@
 package com.cmg.comtogether.jwt.filter;
 
+import com.cmg.comtogether.common.exception.BusinessException;
 import com.cmg.comtogether.common.security.CustomUserDetailsService;
 import com.cmg.comtogether.jwt.util.JwtTokenProvider;
 import jakarta.servlet.FilterChain;
@@ -39,26 +40,32 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             token = authHeader.substring(7);
         }
 
-        if (token != null && jwtTokenProvider.validateToken(token)) {
-            Long userId = jwtTokenProvider.getUserId(token);
-            String role = "ROLE_USER";
+        try {
+            if (token != null) {
+                jwtTokenProvider.validateToken(token);
 
-            UserDetails userDetails = customUserDetailsService.loadUserByUsername(String.valueOf(userId));
+                Long userId = jwtTokenProvider.getUserId(token);
+                String role = "ROLE_USER";
 
-            UsernamePasswordAuthenticationToken authentication =
-                    new UsernamePasswordAuthenticationToken(
-                            userDetails,
-                            null,
-                            List.of(new SimpleGrantedAuthority(role))
-                    );
+                UserDetails userDetails =
+                        customUserDetailsService.loadUserByUsername(String.valueOf(userId));
 
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+                UsernamePasswordAuthenticationToken authentication =
+                        new UsernamePasswordAuthenticationToken(
+                                userDetails,
+                                null,
+                                List.of(new SimpleGrantedAuthority(role))
+                        );
 
-            log.info(">>> Auth set: principal={}, authorities={}",
-                    authentication.getPrincipal(), authentication.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
+
+            filterChain.doFilter(request, response);
+
+        } catch (BusinessException e) {
+            request.setAttribute("exception", e.getErrorCode());
+            throw e;
         }
-
-        filterChain.doFilter(request, response);
     }
 }
 

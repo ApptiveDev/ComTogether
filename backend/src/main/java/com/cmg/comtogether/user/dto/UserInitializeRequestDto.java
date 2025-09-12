@@ -2,7 +2,7 @@ package com.cmg.comtogether.user.dto;
 
 import com.cmg.comtogether.user.entity.Role;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 public class UserInitializeRequestDto {
 
-    @NotBlank
+    @NotNull(message = "역할(role)은 필수 값입니다.")
     private Role role;
 
     @JsonProperty("interest_ids")

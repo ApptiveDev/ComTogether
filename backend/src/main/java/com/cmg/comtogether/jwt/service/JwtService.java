@@ -34,9 +34,7 @@ public class JwtService {
     }
 
     public TokenDto refreshAccessToken(String refreshToken) {
-        if (!jwtTokenProvider.validateToken(refreshToken)) {
-            throw new BusinessException(ErrorCode.UNAUTHORIZED);
-        }
+        jwtTokenProvider.validateToken(refreshToken);
         RefreshToken stored = refreshTokenRepository.findByRefreshToken(refreshToken)
                 .orElseThrow(() -> new BusinessException(ErrorCode.UNAUTHORIZED));
 

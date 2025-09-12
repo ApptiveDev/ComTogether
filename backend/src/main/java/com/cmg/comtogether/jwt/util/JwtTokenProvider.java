@@ -1,7 +1,12 @@
 package com.cmg.comtogether.jwt.util;
 
+import com.cmg.comtogether.common.exception.BusinessException;
+import com.cmg.comtogether.common.exception.ErrorCode;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.SignatureException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -50,16 +55,16 @@ public class JwtTokenProvider {
         );
     }
 
-    public boolean validateToken(String token) {
+    public void validateToken(String token) {
         try {
-            Date expiration = Jwts.parser()
-                    .setSigningKey(secretKey)
-                    .parseClaimsJws(token)
-                    .getBody()
-                    .getExpiration();
-            return !expiration.before(new Date());
+            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+        } catch (ExpiredJwtException e) {
+            throw new BusinessException(ErrorCode.TOKEN_EXPIRED);
+        } catch (MalformedJwtException | SignatureException e) {
+            throw new BusinessException(ErrorCode.INVALID_TOKEN);
         } catch (Exception e) {
-            return false;
+            throw new BusinessException(ErrorCode.UNAUTHORIZED);
         }
     }
+
 }

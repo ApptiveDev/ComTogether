@@ -1,5 +1,7 @@
 package com.cmg.comtogether.common.security.config;
 
+import com.cmg.comtogether.common.security.CustomAccessDeniedHandler;
+import com.cmg.comtogether.common.security.CustomAuthenticationEntryPoint;
 import com.cmg.comtogether.jwt.filter.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

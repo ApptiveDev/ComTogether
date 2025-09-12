@@ -15,15 +15,21 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
     public void commence(HttpServletRequest request,
                          HttpServletResponse response,
                          AuthenticationException authException) throws IOException {
+
+        ErrorCode errorCode = (ErrorCode) request.getAttribute("exception");
+        if (errorCode == null) {
+            errorCode = ErrorCode.UNAUTHORIZED; // 토큰 없음
+        }
+
         response.setContentType("application/json;charset=UTF-8");
-        response.setStatus(ErrorCode.UNAUTHORIZED.getStatus());
+        response.setStatus(errorCode.getStatus());
 
         String body = """
         {
           "code": "%s",
           "message": "%s"
         }
-        """.formatted(ErrorCode.UNAUTHORIZED.getCode(), ErrorCode.UNAUTHORIZED.getMessage());
+        """.formatted(errorCode.getCode(), errorCode.getMessage());
 
         response.getWriter().write(body);
     }
