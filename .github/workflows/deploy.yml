@@ -1,0 +1,36 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches: [ "main" ]  # main 브랜치 푸시 시 실행
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
+
+      - name: Deploy to EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no -tt ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
+            set -e  # 에러 발생 시 즉시 종료
+            cd ~/ComTogether/backend
+
+            echo "🔄 최신 코드 가져오는 중..."
+            git pull
+
+            echo "🛑 기존 컨테이너 종료..."
+            docker-compose down || true
+
+            echo "🚀 새 컨테이너 빌드 및 실행..."
+            docker-compose up --build -d
+
+            exit
+          EOF
