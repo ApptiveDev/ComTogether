@@ -1,0 +1,77 @@
+.container{
+    height: 850px;
+    display: flex;
+    flex-direction: column;
+}
+.footer{
+    background-color: #2d2d2d;
+    height: 600px;
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+    padding-left: 90px;
+}
+
+.footerTop{
+    display: flex;
+    justify-content: space-between;
+    height: 300px;
+}
+
+.logo{
+    color: #cfcfcf;
+    margin-top: 60px;
+    font-size: 25px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.footerMenu{
+    display: flex;
+    gap: 140px;
+    margin-top: 80px;
+    margin-right: 150px;
+}
+
+.footerBottom{
+    height: 300px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 60px;
+}
+
+.info{
+    color: #888888;
+    display: flex;
+    flex-direction: column;
+    gap: 35px;
+}
+
+.company{
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.companyInfo{
+    display: flex;
+    gap: 13px;
+}
+
+.policy{
+    display: flex;
+    gap: 30px;
+}
+
+.socialLink{
+    display: flex;
+    gap: 10px;
+    margin-right: 120px;
+}
+
+.socialLink img{
+    width: 30px;
+    height: 30px;
+}

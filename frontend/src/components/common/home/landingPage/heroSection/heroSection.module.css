@@ -1,0 +1,105 @@
+.container{
+    width: 100%;
+    background-color: #ff5525;
+    height: calc(100vh - 75px);
+    position: relative;
+}
+
+.logo{
+    position: absolute;
+    bottom: 0;
+    left: 160px;
+    width: 480px;
+    height: 480px;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.logo.show{
+    opacity: 1;
+    transform: scale(1);
+}
+
+.scrollIcon{
+    position: absolute;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0; 
+    animation: bounceFade 1.5s infinite ease-in-out;
+    animation-delay: 2.5s; 
+    animation-fill-mode: forwards; 
+}
+
+@keyframes bounceFade {
+  0% {
+    transform: translateY(0);
+    opacity: 0.7;
+  }
+  30% {
+    opacity: 1; 
+  }
+  50% {
+    transform: translateY(15px);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.content{
+    position: absolute;
+    left: 860px;
+    top: 160px;
+    color: white;
+    min-width: 450px;
+    display: flex;
+    flex-direction: column;
+}
+
+.slogan{
+    font-size: 32px;
+    font-weight: 500;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.slogan.show{
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.brand{
+    margin-top: 8px;
+    font-size: 60px;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.brand.show{
+    opacity: 1;
+}
+
+.dots{
+    display: flex;
+    color: white;
+    font-size: 32px;
+    margin-left: 115px;
+    gap: 20px;
+}
+
+.dot{
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.dot.show{
+    opacity: 1;
+    transform: translateY(0);
+}

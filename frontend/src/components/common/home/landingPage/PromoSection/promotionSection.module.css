@@ -1,0 +1,18 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    height: 3780px;
+}
+.mainHeadline{
+    font-size: 35px;
+    font-weight: 500;
+    margin-top: 170px;
+    margin-bottom: 150px;
+    margin-left: 280px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.mainHeadline.show{
+    opacity: 1;
+}

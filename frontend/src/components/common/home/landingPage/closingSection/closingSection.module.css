@@ -1,0 +1,44 @@
+.container{
+    background-color: #ff5525;
+    height: 900px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.textContent{
+    color: white;
+    font-weight: bold;
+    font-size: 38px;
+    margin-top: 200px;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.textContent.show{
+    opacity: 1;
+}
+
+.logo{
+    width: 480px;
+    height: 480px;
+    position: absolute;
+    bottom: 0;
+}
+
+.buttons{
+    position: absolute;
+    bottom: 405px;
+    display: flex;
+    gap: 20px;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.buttons.show{
+    opacity: 1;
+    transform: scale(1);
+}
