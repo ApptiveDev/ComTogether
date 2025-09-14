@@ -1,0 +1,33 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/comtogether?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:password}
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+    defer-datasource-initialization: true
+  jackson:
+    deserialization:
+      fail-on-unknown-properties: true
+    property-naming-strategy: SNAKE_CASE
+  sql:
+    init:
+      mode: always
+
+oauth:
+  kakao:
+    client-id: ${KAKAO_CLIENT_ID}
+    redirect-uri: ${KAKAO_REDIRECT_URI}
+    token-uri: https://kauth.kakao.com/oauth/token
+    user-info-uri: https://kapi.kakao.com/v2/user/me
+
+jwt:
+  secret: ${JWT_SECRET}
+  access-token-expire-time: ${JWT_ACCESS_EXPIRE:3600000}     # 1시간
+  refresh-token-expire-time: ${JWT_REFRESH_EXPIRE:1209600000} # 2주

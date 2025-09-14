@@ -191,4 +191,7 @@ bin/
 /nbdist/
 /.nb-gradle/
 
+.env
+src/test/resources/application.yaml
+
 # End of https://www.toptal.com/developers/gitignore/api/intellij,visualstudiocode,gradle,java
