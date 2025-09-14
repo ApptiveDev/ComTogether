@@ -3,19 +3,22 @@ package com.cmg.comtogether.oauth.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
-@Getter @Setter
+@Getter
+@Builder
 public class KakaoProfileDto {
     private Long id;
 
     @JsonProperty("kakao_account")
     private KakaoAccount kakaoAccount;
 
-    @Getter @Setter
+    @Builder
+    @Getter
     public static class KakaoAccount {
         private String email;
         private Profile profile;
 
-        @Getter @Setter
+        @Builder
+        @Getter
         public static class Profile {
             private String nickname;
 

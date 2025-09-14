@@ -18,7 +18,6 @@ public class OauthService {
     private final KakaoService kakaoService;
     private final JwtService jwtService;
     private final UserRepository userRepository;
-    private final RefreshTokenRepository refreshTokenRepository;
 
     public TokenDto kakaoLogin(String code) {
         TokenDto kakaoToken = kakaoService.getToken(code);
