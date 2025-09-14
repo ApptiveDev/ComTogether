@@ -1,0 +1,21 @@
+.container{
+    height: 380px;
+    width: 100%;
+    background-color: #f2f2f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.content{
+    font-size: 25px;
+    font-weight: 500;
+    min-width: 300px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.content.show{
+    opacity: 1;
+}
