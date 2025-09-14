@@ -1,0 +1,8 @@
+services:
+  backend:
+    image: comtogether
+    build: .
+    container_name: backend
+    ports:
+      - "8080:8080"
+    env_file: ".env" #EC2에 올려둔 .env 사용
