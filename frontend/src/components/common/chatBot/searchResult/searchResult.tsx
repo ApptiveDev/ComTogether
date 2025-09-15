@@ -16,7 +16,6 @@ export default function SearchResult() {
       <div className={style.searchResultBox}>
         <div className={style.searchResultTitle}>
           <span dangerouslySetInnerHTML={{ __html: title }} />
-          <span className={style.searchResultTitleDesc}>에 대한 검색 결과</span>
         </div>
         <hr className={style.searchResultHr} />
         <div className={style.searchResultContentWrap}>

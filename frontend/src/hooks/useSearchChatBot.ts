@@ -10,7 +10,7 @@ export type DummyChatBotItem = {
   details: { title: string; desc: string }[];
 };
 
-export function useSearchDummyChatBot() {
+export function useSearchChatBot() {
   const [search, setSearch] = useState("");
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const [result, setResult] = useState<DummyChatBotItem | null>(null);

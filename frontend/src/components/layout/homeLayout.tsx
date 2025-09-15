@@ -1,4 +1,4 @@
-import Header from "../common/home/header/header";
+import Header from "../common/header/header";
 import HeroSection from "../common/home/landingPage/heroSection/heroSection";
 import IntroSection from "../common/home/landingPage/introSection/introSection";
 import GuideSection from "../common/home/landingPage/section/guideSection";
@@ -8,21 +8,21 @@ import BannerSection from "../common/home/landingPage/bannerSection/bannerSectio
 import PromoSection from "../common/home/landingPage/PromoSection/promotionSection";
 import ClosingSection from "../common/home/landingPage/closingSection/closingSection";
 import Footer from "../common/home/footer/footer";
-import style from './homeLayout.module.css'
+import style from "./homeLayout.module.css";
 
-export default function HomeLayout(){
-    return(
-        <div className={style.container}>
-            <Header/>
-            <HeroSection/>
-            <IntroSection/>
-            <GuideSection/>
-            <ConsultingSection/>
-            <CommunitySection/>
-            <BannerSection/>
-            <PromoSection/>
-            <ClosingSection/>
-            <Footer/>
-        </div>
-    )
+export default function HomeLayout() {
+  return (
+    <div className={style.container}>
+      <Header />
+      <HeroSection />
+      <IntroSection />
+      <GuideSection />
+      <ConsultingSection />
+      <CommunitySection />
+      <BannerSection />
+      <PromoSection />
+      <ClosingSection />
+      <Footer />
+    </div>
+  );
 }
