@@ -1,4 +1,4 @@
-.header{
+.header {
     display: flex;
     justify-content: space-between;
     gap: 180px;
@@ -15,19 +15,22 @@
     transition: opacity 0.5s ease;
 }
 
-.header.show{
+.header.show {
     opacity: 1;
 }
 
-.logo{
+.logo {
     font-size: 20px;
     font-weight: bold;
     color: #ff5525;
     text-align: center;
     margin-bottom: 10px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
 }
 
-.btnContainer{
+.btnContainer {
     display: flex;
     justify-content: space-between;
     gap: 100px;

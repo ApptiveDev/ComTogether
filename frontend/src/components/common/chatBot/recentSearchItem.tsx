@@ -1,5 +1,5 @@
 import { useSearchChatBotStore } from "../../../stores/useSearchChatBotStore";
-import delete_recent_search from "../../../assets/image/delete_recent_search.svg";
+import delete_recent_search from "@/assets/image/icon/delete_recent_search.svg";
 
 interface RecentSearchItemProps {
   keyword: string;

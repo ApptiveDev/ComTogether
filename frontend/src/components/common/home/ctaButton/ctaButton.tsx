@@ -1,12 +1,24 @@
-import style from './ctaButton.module.css'
+import style from "./ctaButton.module.css";
 
-interface CtaButtonProp{
-    text:string;
-    color:string;
-    backgroundColor:string;
+interface CtaButtonProp {
+  text: string;
+  color: string;
+  backgroundColor: string;
+  onClick?: () => void;
 }
-export default function CtaButton({text, color, backgroundColor}:CtaButtonProp){
-    return(
-        <button className={style.button} style={{color:`${color}`, backgroundColor:`${backgroundColor}`}}>{text}</button>
-    )
+export default function CtaButton({
+  text,
+  color,
+  backgroundColor,
+  onClick,
+}: CtaButtonProp) {
+  return (
+    <button
+      className={style.button}
+      style={{ color: `${color}`, backgroundColor: `${backgroundColor}` }}
+      onClick={onClick}
+    >
+      {text}
+    </button>
+  );
 }

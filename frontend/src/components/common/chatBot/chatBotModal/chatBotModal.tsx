@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import styles from "./chatBotModal.module.css";
-import close_icon from "@/assets/image/close_icon.svg";
+import close_icon from "@/assets/image/icon/close_icon.svg";
 
 import SearchBar from "@/components/common/searchBar/searchBar";
 import SearchResult from "@/components/common/chatBot/searchResult/searchResult";

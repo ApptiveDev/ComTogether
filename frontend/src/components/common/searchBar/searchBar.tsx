@@ -2,7 +2,7 @@ import React from "react";
 import RecentSearchItem from "../chatBot/recentSearchItem";
 import { useSearchChatBotStore } from "../../../stores/useSearchChatBotStore";
 import style from "./SearchBar.module.css";
-import clock_icon from "../../../assets/image/clock.svg";
+import clock_icon from "@/assets/image/icon/clock_icon.svg";
 
 export default function SearchBar() {
   const {

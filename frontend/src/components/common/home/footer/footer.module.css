@@ -1,9 +1,10 @@
-.container{
+.container {
     height: 850px;
     display: flex;
     flex-direction: column;
 }
-.footer{
+
+.footer {
     background-color: #2d2d2d;
     height: 600px;
     margin-top: auto;
@@ -13,13 +14,13 @@
     padding-left: 90px;
 }
 
-.footerTop{
+.footerTop {
     display: flex;
     justify-content: space-between;
     height: 300px;
 }
 
-.logo{
+.logo {
     color: #cfcfcf;
     margin-top: 60px;
     font-size: 25px;
@@ -27,14 +28,14 @@
     text-align: center;
 }
 
-.footerMenu{
+.footerMenu {
     display: flex;
     gap: 140px;
     margin-top: 80px;
     margin-right: 150px;
 }
 
-.footerBottom{
+.footerBottom {
     height: 300px;
     display: flex;
     justify-content: space-between;
@@ -42,36 +43,36 @@
     padding-bottom: 60px;
 }
 
-.info{
+.info {
     color: #888888;
     display: flex;
     flex-direction: column;
     gap: 35px;
 }
 
-.company{
+.company {
     display: flex;
     flex-direction: column;
     gap: 4px;
 }
 
-.companyInfo{
+.companyInfo {
     display: flex;
     gap: 13px;
 }
 
-.policy{
+.policy {
     display: flex;
     gap: 30px;
 }
 
-.socialLink{
+.socialLink {
     display: flex;
     gap: 10px;
     margin-right: 120px;
 }
 
-.socialLink img{
-    width: 30px;
-    height: 30px;
+.socialLink img {
+    width: 106px;
+    height: 40px;
 }
