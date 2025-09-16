@@ -21,6 +21,12 @@ public class UserController {
 
     private final UserService userService;
 
+    @PostMapping("/logout")
+    public ResponseEntity<ApiResponse<Void>> logout(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        userService.logout(userDetails.getUser().getUserId());
+        return ResponseEntity.ok(ApiResponse.success(null));
+    }
+
     @GetMapping("/me")
     public ResponseEntity<ApiResponse<UserResponseDto>> getUserInfo(@AuthenticationPrincipal CustomUserDetails userDetails) {
         User user = userDetails.getUser();
