@@ -4,6 +4,7 @@ import com.cmg.comtogether.common.exception.BusinessException;
 import com.cmg.comtogether.common.exception.ErrorCode;
 import com.cmg.comtogether.interest.entity.Interest;
 import com.cmg.comtogether.interest.repository.InterestRepository;
+import com.cmg.comtogether.jwt.service.JwtService;
 import com.cmg.comtogether.user.dto.UserInitializeRequestDto;
 import com.cmg.comtogether.user.dto.UserResponseDto;
 import com.cmg.comtogether.user.entity.Role;
@@ -26,6 +27,14 @@ public class UserService {
     private final UserMapper userMapper;
     private final UserRepository userRepository;
     private final InterestRepository interestRepository;
+    private final JwtService jwtService;
+
+    public void logout(Long userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new BusinessException(ErrorCode.USER_NOT_FOUND);
+        }
+        jwtService.deleteRefreshToken(userId);
+    }
 
     public UserResponseDto getUserInfo(Long userId) {
         User user = userRepository.findById(userId)
