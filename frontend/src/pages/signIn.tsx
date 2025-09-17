@@ -1,3 +1,9 @@
+import SignInLayout from "../components/layout/signInLayout";
+
 export default function SignIn() {
-  return <div>로그인</div>;
+  return(
+    <>
+    <SignInLayout/>
+    </>
+  )
 }
