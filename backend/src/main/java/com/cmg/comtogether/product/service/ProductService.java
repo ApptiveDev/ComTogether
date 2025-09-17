@@ -1,8 +1,11 @@
 package com.cmg.comtogether.product.service;
 
+import com.cmg.comtogether.common.exception.BusinessException;
+import com.cmg.comtogether.common.exception.ErrorCode;
 import com.cmg.comtogether.product.dto.NaverProductResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -38,6 +41,12 @@ public class ProductService {
                 .header("X-Naver-Client-Id", clientId)
                 .header("X-Naver-Client-Secret", clientSecret)
                 .retrieve()
+                .onStatus(HttpStatusCode::is4xxClientError, (req, res) -> {
+                    throw new BusinessException(ErrorCode.INTERNAL_SERVER_ERROR);
+                })
+                .onStatus(HttpStatusCode::is5xxServerError, (req, res) -> {
+                    throw new BusinessException(ErrorCode.NAVER_API_ERROR);
+                })
                 .body(NaverProductResponseDto.class);
     }
 }

@@ -23,7 +23,10 @@ public enum ErrorCode {
 
     // 카카오 API
     OAUTH_INVALID_CODE(400, "OAUTH-000", "유효하지 않은 인가 코드입니다."),
-    OAUTH_PROVIDER_ERROR(502, "OAUTH-999", "카카오 서버와 통신 중 오류가 발생했습니다.");
+    OAUTH_PROVIDER_ERROR(502, "OAUTH-999", "카카오 서버와 통신 중 오류가 발생했습니다."),
+
+    // 네이버 상품 API
+    NAVER_API_ERROR(502, "NAVER-999", "네이버 서버와 통신 중 오류가 발생했습니다.");
 
     private final int status;
     private final String code;
