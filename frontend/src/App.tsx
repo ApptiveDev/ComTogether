@@ -6,6 +6,7 @@ import ExpertConsultation from "./pages/expertConsultation";
 import Guide from "./pages/guide";
 import Community from "./pages/community";
 import MyPage from "./pages/myPage";
+import SignIn from "./pages/signIn";
 
 const Router = () => {
   return (
@@ -17,6 +18,7 @@ const Router = () => {
         <Route path={"/guide"} element={<Guide />} />
         <Route path={"/community"} element={<Community />} />
         <Route path={"/mypage"} element={<MyPage />} />
+        <Route path={"/sign-up"} element={<SignIn />} />
       </Routes>
     </BrowserRouter>
   );

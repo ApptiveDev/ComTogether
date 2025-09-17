@@ -1,0 +1,13 @@
+.container{
+    width: 50%;
+    height: 100vh;
+    background-image: url('@/assets/image/signIn_background.png');
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.container img{
+    width: 630px;
+    height: 630px;
+}
