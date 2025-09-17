@@ -27,6 +27,12 @@ oauth:
     token-uri: https://kauth.kakao.com/oauth/token
     user-info-uri: https://kapi.kakao.com/v2/user/me
 
+naver:
+  shopping:
+    client-id: ${NAVER_CLIENT_ID}
+    client-secret: ${NAVER_CLIENT_SECRET}
+    base-url: https://openapi.naver.com/v1/search/shop.json
+
 jwt:
   secret: ${JWT_SECRET}
   access-token-expire-time: ${JWT_ACCESS_EXPIRE:3600000}     # 1시간
