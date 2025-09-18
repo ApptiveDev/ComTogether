@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class Product {
 
     @Id
-    private String productId;
+    private Long productId;
 
     @Column(nullable = false)
     private String title;

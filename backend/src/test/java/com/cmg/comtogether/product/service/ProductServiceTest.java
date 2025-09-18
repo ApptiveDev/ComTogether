@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.json.AutoConfigureJson;
 import org.springframework.boot.test.autoconfigure.web.client.RestClientTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
@@ -57,9 +58,9 @@ class ProductServiceTest {
                             "image": "https://shopping-phinf.pstatic.net/main_1288794/12887948127.10.jpg",
                             "lprice": "299000",
                             "hprice": "",
-                            "mallName": "리뉴올PC PC노리",
-                            "productId": "12887948127",
-                            "productType": "5",
+                            "mall_name": "리뉴올PC PC노리",
+                            "product_id": "12887948127",
+                            "product_type": "5",
                             "brand": "인텔",
                             "maker": "인텔",
                             "category1": "디지털/가전",
@@ -73,9 +74,9 @@ class ProductServiceTest {
                             "image": "https://shopping-phinf.pstatic.net/main_1063091/10630916988.16.jpg",
                             "lprice": "3419000",
                             "hprice": "",
-                            "mallName": "엘리트피씨",
-                            "productId": "10630916988",
-                            "productType": "2",
+                            "mall_name": "엘리트피씨",
+                            "product_id": "10630916988",
+                            "product_type": "2",
                             "brand": "",
                             "maker": "",
                             "category1": "디지털/가전",

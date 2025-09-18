@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 public class NaverProductDto {
     private Long productId;
     private String title;
-    private String lprice;
-    private String hprice;
+    private Integer lprice;
+    private Integer hprice;
     private String image;
     private String link;
     private String mallName;
