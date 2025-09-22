@@ -9,4 +9,4 @@ export default function NavButton({text, onClick}: NavButtonProps){
     return(
         <button className={style.navBtn} onClick={onClick}>{text}</button>
     )
-}
+}   

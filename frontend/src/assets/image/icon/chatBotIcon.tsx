@@ -16,7 +16,7 @@ export default function ChatBotIcon({ text }: { text: string }) {
           dominantBaseline="middle"
           fontSize="23.657px"
           fontWeight="700"
-          lineHeight="150%"
+          lineheight="150%"
           fill="#fff"
         >
           {text}
@@ -30,9 +30,9 @@ export default function ChatBotIcon({ text }: { text: string }) {
           width="84.4844"
           height="84.4844"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
