@@ -1,23 +1,64 @@
+# .github/workflows/deploy.yml
 name: Deploy to EC2
 
 on:
   push:
-    branches: [ "main" ]  # main 브랜치 푸시 시 실행
+    branches: [ "develop" ]          # develop에 머지되면 스테이징 배포
+    tags:
+      - "v*"                         # v1.2.3 같은 태그 푸시 시 운영 배포
+    paths:
+      - "backend/**"                 # 프론트 변경만으로는 실행 안 됨
+      - ".github/workflows/deploy.yml"
+  workflow_dispatch: {}               # 필요 시 수동 실행
 
 jobs:
-  deploy:
+  # ---------- STAGING (develop) ----------
+  deploy_staging:
+    name: Deploy to STAGING (develop)
     runs-on: ubuntu-latest
-
+    if: github.ref == 'refs/heads/develop'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup SSH
+      - name: Setup SSH (STG)
+        uses: webfactory/ssh-agent@v0.7.0
+        with:
+          ssh-private-key: ${{ secrets.EC2_STG_SSH_KEY }}
+
+      - name: Deploy to EC2 (STG)
+        run: |
+          ssh -o StrictHostKeyChecking=no -tt ec2-user@${{ secrets.EC2_STG_HOST }} << 'EOF'
+            set -e  # 에러 발생 시 즉시 종료
+            cd ~/ComTogether/backend
+
+            echo "🔄 최신 코드 가져오는 중..."
+            git pull
+
+            echo "🛑 기존 컨테이너 종료..."
+            docker-compose down || true
+
+            echo "🚀 새 컨테이너 빌드 및 실행..."
+            docker-compose up --build -d
+
+            exit
+          EOF
+
+  # ---------- PROD (tags v*) ----------
+  deploy_prod:
+    name: Deploy to PROD (tag v*)
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/v')
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup SSH (PROD)
         uses: webfactory/ssh-agent@v0.7.0
         with:
           ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
 
-      - name: Deploy to EC2
+      - name: Deploy to EC2 (PROD)
         run: |
           ssh -o StrictHostKeyChecking=no -tt ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
             set -e  # 에러 발생 시 즉시 종료
