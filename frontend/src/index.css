@@ -1,4 +1,13 @@
+@font-face {
+  font-family: "Pretendard";
+  src: url("@/assets/fonts/PretendardVariable.woff2");
+}
+
 html, body{
   width:100%;
   margin: 0;
+}
+
+body{
+  font-family: "Pretendard";
 }
