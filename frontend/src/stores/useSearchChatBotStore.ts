@@ -47,6 +47,10 @@ export const useSearchChatBotStore = create<SearchChatBotState>()(
         }));
       },
       setShowMore: (v) => set({ showMore: v }),
+      useClearRecentSearches: () => {
+        set({ recentSearches: [] });
+      },
+      
     }),
     {
       name: "search-chatbot-store",

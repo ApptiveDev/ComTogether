@@ -15,7 +15,11 @@ export default function CtaButton({
   return (
     <button
       className={style.button}
-      style={{ color: `${color}`, backgroundColor: `${backgroundColor}` }}
+      style={{
+        color: `${color}`,
+        backgroundColor: `${backgroundColor}`,
+        cursor: `pointer`,
+      }}
       onClick={onClick}
     >
       {text}

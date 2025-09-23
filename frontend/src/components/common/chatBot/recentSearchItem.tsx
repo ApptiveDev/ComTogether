@@ -24,11 +24,9 @@ const style = {
   cursor: "pointer",
 };
 
-export default function RecentSearchItem({
-  keyword,
-  onRemove,
-}: RecentSearchItemProps) {
-  const { setSearch, handleSearch } = useSearchChatBotStore();
+export default function RecentSearchItem({ keyword }: RecentSearchItemProps) {
+  const { setSearch, handleSearch, handleRemoveRecent } =
+    useSearchChatBotStore();
   const onClick = () => {
     setSearch(keyword);
     setTimeout(() => {
@@ -42,7 +40,7 @@ export default function RecentSearchItem({
         className="recent-search-remove"
         onClick={(e) => {
           e.stopPropagation();
-          onRemove(keyword);
+          handleRemoveRecent(keyword);
         }}
       >
         &nbsp;

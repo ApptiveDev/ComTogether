@@ -5,6 +5,7 @@ import close_icon from "@/assets/image/icon/close_icon.svg";
 import SearchBar from "@/components/common/searchBar/searchBar";
 import SearchResult from "@/components/common/chatBot/searchResult/searchResult";
 import { useSearchChatBotStore } from "@/stores/useSearchChatBotStore";
+import { useShallow } from "zustand/shallow";
 
 interface ChatBotModalProps {
   open: boolean;
@@ -13,7 +14,12 @@ interface ChatBotModalProps {
 
 export default function ChatBotModal({ open, onClose }: ChatBotModalProps) {
   const modalBackground = useRef<HTMLDivElement>(null);
-  const { result, setShowMore } = useSearchChatBotStore();
+  const { result, setShowMore } = useSearchChatBotStore(
+    useShallow((state) => ({
+      result: state.result,
+      setShowMore: state.setShowMore,
+    }))
+  );
 
   if (!open) return null;
 
