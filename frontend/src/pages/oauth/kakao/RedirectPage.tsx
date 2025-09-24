@@ -23,6 +23,9 @@ export default function KakaoRedirectPage() {
     if (isAuthenticated) {
       navigate("/home");
       return;
+    }else{
+      navigate("/setting");
+      return;
     }
 
     // 에러가 있는 경우 처리
