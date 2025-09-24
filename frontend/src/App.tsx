@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router";
 import "./App.css";
 import Home from "./pages/home";
 import CompatibilityCheck from "./pages/compatibilityCheck";
@@ -9,12 +9,14 @@ import MyPage from "./pages/myPage";
 import SignIn from "./pages/signIn";
 import Setting from "./pages/setting";
 import SecondSetting from "./pages/secondSetting";
+import RedirectPage from "./pages/oauth/kakao/RedirectPage";
 
 const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={"/"} element={<Home />} />
+        <Route path={"/"} element={<Navigate to="/sign-up" replace />} />
+        <Route path={"/home"} element={<Home />} />
         <Route path={"/compatibility-check"} element={<CompatibilityCheck />} />
         <Route path={"/expert-consultation"} element={<ExpertConsultation />} />
         <Route path={"/guide"} element={<Guide />} />
@@ -23,6 +25,7 @@ const Router = () => {
         <Route path={"/sign-up"} element={<SignIn />} />
         <Route path={"/setting"} element={<Setting />} />
         <Route path={"/second-setting"} element={<SecondSetting />} />
+        <Route path={"/oauth/kakao/redirect"} element={<RedirectPage />} />
       </Routes>
     </BrowserRouter>
   );
