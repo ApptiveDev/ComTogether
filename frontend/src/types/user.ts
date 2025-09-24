@@ -1,10 +1,20 @@
-export interface User {
-    id: string;
+export interface UserData {
+  userId: number;
+  name: string;
+  email: string;
+  role: keyof UserRole;
+  point: number;
+  profileImageUrl: string;
+  initialized: boolean;
+  interests: Array<{
+    interestId: number;
     name: string;
-    email: string;
-    role: 'BEGINNER' |  'EXPERT';
-    loginMethod: 'KAKAO';
-    socialId: string;
-    points: number;
-    initialized: boolean;
+  }>;
+}
+
+
+interface UserRole {
+  BEGINNER: string;
+  INTERMEDIATE: string;
+  ADVANCED: string;
 }
