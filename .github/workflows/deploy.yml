@@ -1,16 +1,30 @@
-name: Deploy to EC2
+name: Deploy Backend to EC2
 
 on:
   push:
-    branches: [ "main" ]  # main 브랜치 푸시 시 실행
+    branches: [main]   # main에 머지될 때만 배포 실행
+    paths:
+      - "backend/**"            # 프론트 변경은 무시
+      - ".github/workflows/deploy.yml"
+  workflow_dispatch: {}         # 수동 실행 가능
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.7.0
@@ -18,19 +32,25 @@ jobs:
           ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
 
       - name: Deploy to EC2
+        env:
+          EC2_HOST: ${{ secrets.EC2_HOST }}
+          EC2_USER: ${{ secrets.EC2_USER }}
         run: |
-          ssh -o StrictHostKeyChecking=no -tt ec2-user@${{ secrets.EC2_HOST }} << 'EOF'
-            set -e  # 에러 발생 시 즉시 종료
+          echo "Deploying to $EC2_USER@$EC2_HOST (branch: ${{ github.ref_name }})"
+
+          ssh -o StrictHostKeyChecking=no -tt "$EC2_USER"@"$EC2_HOST" << 'EOF'
+            set -e
             cd ~/ComTogether/backend
 
             echo "🔄 최신 코드 가져오는 중..."
-            git pull
+            git pull --ff-only
 
             echo "🛑 기존 컨테이너 종료..."
-            docker-compose down || true
+            docker compose down || docker-compose down || true
 
             echo "🚀 새 컨테이너 빌드 및 실행..."
-            docker-compose up --build -d
+            docker compose up --build -d || docker-compose up --build -d
 
+            echo "✅ 배포 완료"
             exit
           EOF
