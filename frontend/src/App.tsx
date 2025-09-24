@@ -7,6 +7,8 @@ import Guide from "./pages/guide";
 import Community from "./pages/community";
 import MyPage from "./pages/myPage";
 import SignIn from "./pages/signIn";
+import Setting from "./pages/setting";
+import SecondSetting from "./pages/secondSetting";
 
 const Router = () => {
   return (
@@ -19,6 +21,8 @@ const Router = () => {
         <Route path={"/community"} element={<Community />} />
         <Route path={"/mypage"} element={<MyPage />} />
         <Route path={"/sign-up"} element={<SignIn />} />
+        <Route path={"/setting"} element={<Setting />} />
+        <Route path={"/second-setting"} element={<SecondSetting />} />
       </Routes>
     </BrowserRouter>
   );
