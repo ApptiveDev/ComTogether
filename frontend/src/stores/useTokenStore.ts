@@ -13,10 +13,16 @@ export const useTokenStore = create<TokenState>()(
         (set) => ({
             accessToken: null,
             refreshToken: null,
-            setTokens: (accessToken, refreshToken) => 
-                set({ accessToken, refreshToken }),
-            clearTokens: () => 
-                set({ accessToken: null, refreshToken: null }),
+            setTokens: (accessToken, refreshToken) => {
+                console.log("🔑 토큰 저장:", { 
+                    accessToken: accessToken ? `${accessToken.substring(0, 20)}...` : null,
+                    refreshToken: refreshToken ? `${refreshToken.substring(0, 20)}...` : null
+                });
+                set({ accessToken, refreshToken });
+            },
+            clearTokens: () => {
+                set({ accessToken: null, refreshToken: null });
+            },
         }),
         {
             name: "token-store",

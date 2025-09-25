@@ -1,117 +1,66 @@
+// frontend/src/pages/oauth/kakao/RedirectPage.tsx
 import { useEffect, useRef } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import { useKakaoLogin } from "../../../api/useKakaoLogin";
 import { useAuthStore } from "../../../stores/useAuthStore";
+import { fetchUser } from "../../../api/userService";
 
 export default function KakaoRedirectPage() {
   const [searchParams] = useSearchParams();
-  const code = searchParams.get("code");
-  const error = searchParams.get("error");
-  const { mutation } = useKakaoLogin();
   const navigate = useNavigate();
-  const hasProcessed = useRef(false);
-  const { isLoading, isAuthenticated, authError, setLoading, setAuthError } =
-    useAuthStore();
+  const { mutation: loginMutation } = useKakaoLogin();
+  const { isAuthenticated, setUser, setAuthError } = useAuthStore();
 
+  // code 처리 로직이 중복 실행되지 않도록 ref 사용
+  const codeProcessed = useRef(false);
+  const code = searchParams.get("code");
+
+  // 1. URL의 code를 사용하여 로그인(토큰 발급) 요청
   useEffect(() => {
-    // 이미 처리했거나 로딩 중이면 중복 실행 방지
-    if (hasProcessed.current || isLoading) {
-      return;
+    if (code && !codeProcessed.current && !loginMutation.isPending) {
+      codeProcessed.current = true;
+      loginMutation.mutate(code);
     }
+  }, [code, loginMutation]);
 
-    // 이미 인증된 상태면 홈으로 리다이렉트
-    if (isAuthenticated) {
-      navigate("/home");
-      return;
-    }else{
-      navigate("/setting");
-      return;
+  // 2. 로그인이 성공하여 토큰이 저장되면(isAuthenticated=true), 사용자 정보(/users/me)를 요청
+  const {
+    data: user,
+    isSuccess: userFetchSuccess,
+    isError: userFetchError,
+  } = useQuery({
+    queryKey: ["userProfile"],
+    queryFn: fetchUser,
+    enabled: isAuthenticated && !useAuthStore.getState().user, // 인증되었고, 아직 유저 정보가 스토어에 없을 때만 실행
+    retry: false, // 실패 시 재시도 안함
+  });
+
+  // 3. 사용자 정보를 성공적으로 가져오면 상태를 저장하고 페이지 이동
+  useEffect(() => {
+    if (userFetchSuccess && user) {
+      setUser(user); // 사용자 정보를 Zustand 스토어에 저장
+      // 사용자의 초기 설정 완료 여부에 따라 페이지 이동
+      if (user.initialized) {
+        navigate("/home");
+      } else {
+        navigate("/setting");
+      }
     }
+  }, [userFetchSuccess, user, setUser, navigate]);
 
-    // 에러가 있는 경우 처리
-    if (error) {
-      console.error("카카오 인증 에러:", error);
-      setAuthError("로그인이 취소되었거나 오류가 발생했습니다.");
-      hasProcessed.current = true;
-      setTimeout(() => navigate("/sign-up"), 2000);
-      return;
+  // 4. 로그인 과정에서 에러 발생 시 처리
+  useEffect(() => {
+    if (loginMutation.isError || userFetchError) {
+      setAuthError("로그인에 실패했습니다. 다시 시도해주세요.");
+      setTimeout(() => navigate("/sign-up"), 3000); // 3초 후 로그인 페이지로
     }
+  }, [loginMutation.isError, userFetchError, setAuthError, navigate]);
 
-    // 코드가 있는 경우 로그인 처리
-    if (code) {
-      hasProcessed.current = true;
-      setLoading(true);
-      setAuthError(null);
-
-      mutation.mutate(code, {
-        onSuccess: (response) => {
-          const data = response.data.data || response.data;
-          const { user } = data;
-
-          if (user?.initialized) {
-            navigate("/");
-          } else {
-            navigate("/mypage");
-          }
-        },
-        onError: (error) => {
-          console.error("로그인 처리 실패:", error);
-          const errorMessage =
-            error.response?.data?.message ||
-            "로그인에 실패했습니다. 다시 시도해주세요.";
-          setAuthError(errorMessage);
-          // 3초 후 로그인 페이지로 리다이렉트
-          setTimeout(() => navigate("/sign-up"), 3000);
-        },
-      });
-    } else {
-      // 코드도 에러도 없는 경우
-      setAuthError("잘못된 접근입니다.");
-      hasProcessed.current = true;
-      setTimeout(() => navigate("/sign-up"), 2000);
-    }
-  }, [
-    code,
-    error,
-    mutation,
-    navigate,
-    isLoading,
-    isAuthenticated,
-    setLoading,
-    setAuthError,
-  ]);
-
-  // 에러 상태 표시
+  // 로딩 또는 에러 메시지 표시
+  const authError = useAuthStore((state) => state.authError);
   if (authError) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          height: "100vh",
-          gap: "20px",
-        }}
-      >
-        <div style={{ color: "red", fontSize: "18px" }}>{authError}</div>
-        <div style={{ color: "#666" }}>
-          잠시 후 로그인 페이지로 이동합니다...
-        </div>
-      </div>
-    );
+    return <div>{authError}</div>;
   }
-
-  return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-      }}
-    >
-      <div>로그인 처리 중...</div>
-    </div>
-  );
+  return <div>로그인 처리 중입니다...</div>;
 }
