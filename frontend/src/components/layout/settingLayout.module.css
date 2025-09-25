@@ -1,4 +1,4 @@
-.container{
+.container {
     display: flex;
     height: 100vh;
     flex-direction: column;
@@ -8,14 +8,30 @@
     justify-content: space-between;
 }
 
-.cards{
+.cards {
     display: flex;
     gap: 50px;
 }
 
-.btnContainer{
+.btnContainer {
     width: 1200px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
+}
+
+.loadingContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 18px;
+    color: #666;
+}
+
+.loadingIndicator {
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    margin-top: 10px;
 }
