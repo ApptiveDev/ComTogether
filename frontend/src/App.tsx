@@ -10,6 +10,7 @@ import SignIn from "./pages/signIn";
 import Setting from "./pages/setting";
 import SecondSetting from "./pages/secondSetting";
 import RedirectPage from "./pages/oauth/kakao/RedirectPage";
+import { ProtectedRoute } from "./components/common/ProtectedRoute";
 
 const Router = () => {
   return (
@@ -23,8 +24,22 @@ const Router = () => {
         <Route path={"/community"} element={<Community />} />
         <Route path={"/mypage"} element={<MyPage />} />
         <Route path={"/sign-up"} element={<SignIn />} />
-        <Route path={"/setting"} element={<Setting />} />
-        <Route path={"/second-setting"} element={<SecondSetting />} />
+        <Route
+          path="/setting"
+          element={
+            <ProtectedRoute>
+              <Setting />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/second-setting"
+          element={
+            <ProtectedRoute>
+              <SecondSetting />
+            </ProtectedRoute>
+          }
+        />
         <Route path={"/oauth/kakao/redirect"} element={<RedirectPage />} />
       </Routes>
     </BrowserRouter>

@@ -1,8 +1,8 @@
 [
   {
     "keyword": "CPU",
-    "title": "'CPU'에 대한 검색 결과",
-    "highlight": "'CPU'",
+    "title": "CPU 에 대한 검색 결과",
+    "highlight": "CPU",
     "description": "CPU는 중앙 처리 장치(Central Processing Unit)의 약자로, 컴퓨터의 두뇌 역할을 하는 핵심 부품입니다. CPU는 사용자의 지시를 해석하고, 소프트웨어 명령을 읽어 기계 내 다른 구성 요소를 제어하며, 데이터 연산과 논리 처리 등 다양한 작업을 수행합니다.",
     "detailsTitle": "CPU의 주요 기능 및 역할",
     "details": [
@@ -22,8 +22,8 @@
   },
   {
     "keyword": "GPU",
-    "title": "'GPU'에 대한 검색 결과",
-    "highlight": "'GPU'",
+    "title": "GPU 에 대한 검색 결과",
+    "highlight": "GPU",
     "description": "GPU는 그래픽 처리 장치(Graphics Processing Unit)로, 이미지 및 영상 처리에 특화된 컴퓨터 부품입니다.",
     "detailsTitle": "GPU의 주요 기능 및 역할",
     "details": [
@@ -43,8 +43,8 @@
   },
   {
     "keyword": "RAM",
-    "title": "'RAM'에 대한 검색 결과",
-    "highlight": "'RAM'",
+    "title": "RAM 에 대한 검색 결과",
+    "highlight": "RAM",
     "description": "RAM은 컴퓨터의 주기억장치로, 프로그램과 데이터가 일시적으로 저장되는 공간입니다.",
     "detailsTitle": "RAM의 주요 기능 및 역할",
     "details": [
@@ -64,8 +64,8 @@
   },
   {
     "keyword": "SSD",
-    "title": "'SSD'에 대한 검색 결과",
-    "highlight": "'SSD'",
+    "title": "SSD 에 대한 검색 결과",
+    "highlight": "SSD",
     "description": "SSD는 반도체를 이용해 데이터를 저장하는 저장장치로, 빠른 속도와 내구성이 특징입니다.",
     "detailsTitle": "SSD의 주요 기능 및 역할",
     "details": [
@@ -85,9 +85,9 @@
   },
   {
     "keyword": "메인보드",
-    "title": "'메인보드'에 대한 검색 결과",
-    "highlight": "'메인보드'",
-    "description": "메인보>는 컴퓨터의 모든 부품을 연결해주는 중심 회로판입니다.",
+    "title": "메인보드 에 대한 검색 결과",
+    "highlight": "메인보드",
+    "description": "메인보드는 컴퓨터의 모든 부품을 연결해주는 중심 회로판입니다.",
     "detailsTitle": "메인보드의 주요 기능 및 역할",
     "details": [
       {
@@ -106,9 +106,9 @@
   },
   {
     "keyword": "그래픽카드",
-    "title": "'그래픽카드'에 대한 검색 결과",
-    "highlight": "'그래픽카드'",
-    "description": "그래픽b>는 GPU가 탑재된 컴퓨터 부품으로, 영상 및 이미지 처리에 특화되어 있습니다.",
+    "title": "그래픽카드 에 대한 검색 결과",
+    "highlight": "그래픽카드",
+    "description": "그래픽카드는 GPU가 탑재된 컴퓨터 부품으로, 영상 및 이미지 처리에 특화되어 있습니다.",
     "detailsTitle": "그래픽카드의 주요 기능 및 역할",
     "details": [
       {
@@ -127,9 +127,9 @@
   },
   {
     "keyword": "쿨러",
-    "title": "'쿨러'에 대한 검색 결과",
-    "highlight": "'쿨러'",
-    "description": "쿨러< 컴퓨터 내부의 열을 식혀주는 장치입니다.",
+    "title": "쿨러에 대한 검색 결과",
+    "highlight": "쿨러",
+    "description": "쿨러는 컴퓨터 내부의 열을 식혀주는 장치입니다.",
     "detailsTitle": "쿨러의 주요 기능 및 역할",
     "details": [
       {
