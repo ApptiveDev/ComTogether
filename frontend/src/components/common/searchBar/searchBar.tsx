@@ -3,6 +3,7 @@ import RecentSearchItem from "../chatBot/recentSearchItem";
 import { useSearchChatBotStore } from "../../../stores/useSearchChatBotStore";
 import style from "./SearchBar.module.css";
 import clock_icon from "@/assets/image/icon/clock_icon.svg";
+import { useShallow } from "zustand/shallow";
 
 export default function SearchBar() {
   const {
@@ -11,7 +12,15 @@ export default function SearchBar() {
     recentSearches,
     handleSearch,
     handleRemoveRecent,
-  } = useSearchChatBotStore();
+  } = useSearchChatBotStore(
+    useShallow((state) => ({
+      search: state.search,
+      setSearch: state.setSearch,
+      recentSearches: state.recentSearches,
+      handleSearch: state.handleSearch,
+      handleRemoveRecent: state.handleRemoveRecent,
+    }))
+  );
 
   return (
     <div className={style.searchBar}>
