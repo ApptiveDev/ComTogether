@@ -19,8 +19,8 @@ public class InterestController {
     private final InterestService interestService;
 
     @GetMapping
-    private ResponseEntity<ApiResponse<List<InterestDto>>> getInterests() {
-        List<InterestDto> allInterest = interestService.getAllInterest();
+    private ResponseEntity<ApiResponse<List<InterestDto>>> getCommonInterests() {
+        List<InterestDto> allInterest = interestService.getCommonInterests();
         return ResponseEntity.ok(ApiResponse.success(allInterest));
     }
 }
