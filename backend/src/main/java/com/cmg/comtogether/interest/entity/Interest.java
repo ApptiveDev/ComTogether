@@ -14,6 +14,9 @@ public class Interest {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long interestId;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String name;
+
+    @Builder.Default
+    private Boolean isCustom = false;
 }

@@ -3,12 +3,15 @@ package com.cmg.comtogether.user.service;
 import com.cmg.comtogether.common.exception.BusinessException;
 import com.cmg.comtogether.common.exception.ErrorCode;
 import com.cmg.comtogether.interest.dto.InterestDto;
+import com.cmg.comtogether.jwt.entity.RefreshToken;
+import com.cmg.comtogether.jwt.repository.RefreshTokenRepository;
 import com.cmg.comtogether.user.dto.UserInitializeRequestDto;
 import com.cmg.comtogether.user.dto.UserResponseDto;
 import com.cmg.comtogether.user.entity.Role;
 import com.cmg.comtogether.user.entity.SocialType;
 import com.cmg.comtogether.user.entity.User;
 import com.cmg.comtogether.user.repository.UserRepository;
+import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -28,6 +32,10 @@ class UserServiceTest {
     private UserService userService;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private RefreshTokenRepository refreshTokenRepository;
+
+    private EntityManager entityManager;
 
     private User createUser() {
         User user = User.builder()
@@ -38,6 +46,25 @@ class UserServiceTest {
                 .role(Role.BEGINNER)
                 .build();
         return userRepository.save(user);
+    }
+
+    @Test
+    @DisplayName("성공 - 로그아웃")
+    void logout_success() {
+        // given
+        User user = createUser();
+        RefreshToken testRefresh = RefreshToken.builder()
+                .refreshToken("test-refresh-token")
+                .userId(user.getUserId())
+                .build();
+        refreshTokenRepository.save(testRefresh);
+
+        // when
+        userService.logout(user.getUserId());
+
+        // then
+        Optional<RefreshToken> result = refreshTokenRepository.findByUserId(user.getUserId());
+        assertThat(result).isEmpty();
     }
 
     @Test

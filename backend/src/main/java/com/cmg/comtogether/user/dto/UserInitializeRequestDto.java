@@ -21,4 +21,7 @@ public class UserInitializeRequestDto {
 
     @JsonProperty("interest_ids")
     private List<Long> interestIds;
+
+    @JsonProperty("custom_interests")
+    private List<String> customInterests;
 }
