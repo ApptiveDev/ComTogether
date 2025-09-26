@@ -14,10 +14,30 @@ public class InterestService {
 
     private final InterestRepository interestRepository;
 
-    public List<InterestDto> getAllInterest(){
-        return interestRepository.findAll()
+    public List<InterestDto> getCommonInterests(){
+        return interestRepository.findByIsCustomFalse()
                 .stream()
-                .map(interest -> new InterestDto(interest.getInterestId(), interest.getName()))
+                .map(this::toDto)
                 .toList();
+    }
+
+    public List<Interest> findAllById(List<Long> ids){
+        return interestRepository.findAllById(ids)
+                .stream()
+                .toList();
+    }
+
+    public List<Interest> saveCustomInterests(List<String> interestNames){
+        return interestNames.stream()
+                .map(interestName -> Interest.builder()
+                        .name(interestName)
+                        .isCustom(true)
+                        .build())
+                .map(interestRepository::save)
+                .toList();
+    }
+
+    private InterestDto toDto(Interest interest) {
+        return new InterestDto(interest.getInterestId(), interest.getName());
     }
 }

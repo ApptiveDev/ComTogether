@@ -1,3 +1,4 @@
-INSERT INTO interest (name) VALUES ('3D');
-INSERT INTO interest (name) VALUES ('디자인');
-INSERT INTO interest (name) VALUES ('게임');
+INSERT INTO interest (name, is_custom) VALUES ('3D', false);
+INSERT INTO interest (name, is_custom) VALUES ('디자인', false);
+INSERT INTO interest (name, is_custom) VALUES ('게임', false);
+INSERT INTO interest (name, is_custom) VALUES ('커스텀', true);
