@@ -50,5 +50,9 @@ public class JwtService {
                 .refreshToken(newRefreshToken)
                 .build();
     }
+
+    public void deleteRefreshToken(Long userId) {
+        refreshTokenRepository.findByUserId(userId).ifPresent(refreshTokenRepository::delete);
+    }
 }
 
