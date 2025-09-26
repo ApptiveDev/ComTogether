@@ -2,21 +2,29 @@ package com.cmg.comtogether.product.service;
 
 import com.cmg.comtogether.common.exception.BusinessException;
 import com.cmg.comtogether.common.exception.ErrorCode;
+import com.cmg.comtogether.interest.entity.Interest;
 import com.cmg.comtogether.product.dto.NaverProductResponseDto;
+import com.cmg.comtogether.user.entity.User;
+import com.cmg.comtogether.user.entity.UserInterest;
+import com.cmg.comtogether.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class ProductService {
 
     private final RestClient restClient;
+    private final UserRepository userRepository;
 
     @Value("${naver.shopping.client-id}")
     private String clientId;
@@ -28,10 +36,27 @@ public class ProductService {
     private String baseUrl;
 
     public NaverProductResponseDto searchProducts(String category, String query, int display, int start, String sort, String exclude) {
+        String searchQuery = category + " " + query;
+        return getNaverProducts(searchQuery, display, start, sort, exclude);
+    }
+
+    public NaverProductResponseDto recommendProducts(Long userId, String category, String query, int display, int start, String sort, String exclude) {
+        User user = userRepository.findByIdWithInterests(userId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+
+        String interestString = user.getInterests().stream()
+                .map(UserInterest::getInterest)
+                .map(Interest::getName)
+                .collect(Collectors.joining(" "));
+        String searchQuery = category + " " + interestString + query;
+        return getNaverProducts(searchQuery, display, start, sort, exclude);
+    }
+
+    private NaverProductResponseDto getNaverProducts(String searchQuery, int display, int start, String sort, String exclude) {
         return restClient.get()
                 .uri(UriComponentsBuilder
                         .fromUriString(baseUrl)
-                        .queryParam("query", category + " " + query)
+                        .queryParam("query", searchQuery)
                         .queryParam("display", display)
                         .queryParam("start", start)
                         .queryParam("sort", sort)
