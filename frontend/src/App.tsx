@@ -10,6 +10,7 @@ import SignIn from "./pages/signIn";
 import Setting from "./pages/setting";
 import SecondSetting from "./pages/secondSetting";
 import RedirectPage from "./pages/oauth/kakao/RedirectPage";
+import ExpertVerifyLayout from "./components/layout/expertVerifyLayout";
 import { ProtectedRoute } from "./components/common/ProtectedRoute";
 
 const Router = () => {
@@ -24,6 +25,7 @@ const Router = () => {
         <Route path={"/community"} element={<Community />} />
         <Route path={"/mypage"} element={<MyPage />} />
         <Route path={"/sign-up"} element={<SignIn />} />
+        <Route path={"/expert-verify"} element={<ExpertVerifyLayout />} />
         <Route
           path="/setting"
           element={

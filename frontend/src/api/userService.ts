@@ -7,7 +7,6 @@ import type { UserData } from "../types/user";
 const API_URL = import.meta.env.VITE_API_URL;
 
 export const fetchUser = async (): Promise<UserData> => {
-  // Zustand 스토어에서 직접 토큰 상태를 가져옵니다.
   const { accessToken } = useTokenStore.getState();
 
   if (!accessToken) {
@@ -18,13 +17,10 @@ export const fetchUser = async (): Promise<UserData> => {
     `${import.meta.env.VITE_API_URL}/users/me`,
     {
       headers: {
-        // 'Authorization' 헤더에 Bearer 토큰을 추가합니다.
         Authorization: `Bearer ${accessToken}`,
       },
     }
   );
-  
-  // 백엔드의 ApiResponse 형식에 맞춰 실제 데이터(data)를 반환합니다.
   return response.data.data;
 };
 
