@@ -12,20 +12,40 @@ interface AuthState {
     setLoading: (loading: boolean) => void;
     setAuthError: (error: string | null) => void;
     setAuthenticated: (authenticated: boolean) => void;
+    isProfileComplete: () => boolean;
 }
 
 export const useAuthStore = create<AuthState>()(
     persist(
-        (set) => ({
+        (set, get) => ({
             user: null,
             isLoading: false,
             isAuthenticated: false,
             authError: null,
+
             setUser: (user) => set({ user, isAuthenticated: true, authError: null }),
+
             clearUser: () => set({ user: null, isAuthenticated: false, authError: null }),
+            
             setLoading: (isLoading) => set({ isLoading }),
+
             setAuthError: (authError) => set({ authError, isLoading: false }),
+
             setAuthenticated: (isAuthenticated) => set({ isAuthenticated }),
+
+            isProfileComplete: () => {
+                const { user } = get();
+                if (!user) return false;
+                
+                return !!(
+                    user.nickname &&
+                    user.role &&
+                    user.interests &&
+                    user.interests.length > 0 &&
+                    user.skillLevel &&
+                    user.bio
+                );
+            },
         }),
         {
             name: "auth-store",

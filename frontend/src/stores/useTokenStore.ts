@@ -14,7 +14,7 @@ export const useTokenStore = create<TokenState>()(
             accessToken: null,
             refreshToken: null,
             setTokens: (accessToken, refreshToken) => {
-                console.log("🔑 토큰 저장:", { 
+                console.log("토큰 저장:", {
                     accessToken: accessToken ? `${accessToken.substring(0, 20)}...` : null,
                     refreshToken: refreshToken ? `${refreshToken.substring(0, 20)}...` : null
                 });

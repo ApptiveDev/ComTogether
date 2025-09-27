@@ -2,9 +2,10 @@
 import { useMutation } from '@tanstack/react-query';
 import { useAuthStore } from '../stores/useAuthStore';
 import { useTokenStore } from '../stores/useTokenStore';
-
+import type UserData from '../types/user';
+import type { UserRoleType } from '../types/user';
 interface UpdateProfileRequest {
-  role?: keyof UserRole;
+  role?: UserRoleType;
   interest_ids?: number[];
 }
 
@@ -50,7 +51,21 @@ export const useUpdateProfile = () => {
             if (!response.ok) {
                 const errorData = await response.json().catch(() => ({}));
                 console.error("프로필 업데이트 에러:", errorData);
-                throw new Error(`HTTP error! status: ${response.status}`);
+                console.error("요청 URL:", url);
+                console.error("요청 데이터:", updateData);
+                console.error("응답 상태:", response.status);
+                
+                // 더 구체적인 에러 메시지 제공
+                let errorMessage = `HTTP error! status: ${response.status}`;
+                if (errorData.message) {
+                    errorMessage = errorData.message;
+                } else if (response.status === 400) {
+                    errorMessage = "요청 데이터가 올바르지 않습니다. 다시 시도해주세요.";
+                } else if (response.status === 401) {
+                    errorMessage = "인증이 만료되었습니다. 다시 로그인해주세요.";
+                }
+                
+                throw new Error(errorMessage);
             }
 
             const result: UpdateProfileResponse = await response.json();
