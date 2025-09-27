@@ -6,7 +6,7 @@ import { useTokenStore } from "../stores/useTokenStore";
 
 export const useKakaoLogin = () => {
     // setUser 대신 setAuthenticated를 사용해 인증 상태만 변경
-    const { setLoading, setAuthError, setAuthenticated } = useAuthStore();
+    const { setLoading, setAuthError, setAuthenticated, isProfileComplete } = useAuthStore();
     const { setTokens } = useTokenStore();
 
     const mutation = useMutation({
@@ -29,10 +29,17 @@ export const useKakaoLogin = () => {
                 // 토큰 저장 및 인증 상태 true로 변경
                 setTokens(access_token, refresh_token);
                 setAuthenticated(true);
+                if (!isProfileComplete()) {
+                    // 프로필이 완성되지 않은 경우 설정 페이지로 리다이렉트
+                    window.location.href = "/setting";
+                } else {
+                    // 프로필이 완성된 경우 홈 페이지로 리다이렉트
+                    window.location.href = "/home";
+                }
             }
             setLoading(false);
         },
-        onError: (error: any) => { // 타입을 any로 변경하여 유연하게 처리
+        onError: (error: any) => {
             let errorMessage = "로그인에 실패했습니다.";
             if (error.response?.data?.message) {
                 errorMessage = error.response.data.message;
