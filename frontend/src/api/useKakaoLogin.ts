@@ -51,7 +51,9 @@ export const useKakaoLogin = () => {
 
     const initiateKakaoLogin = () => {
         setAuthError(null);
-        const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${import.meta.env.VITE_KAKAO_CLIENT_ID}&redirect_uri=${import.meta.env.VITE_KAKAO_REDIRECT_URI}&response_type=code`;
+        // prompt=login 추가로 강제 재로그인, nonce 추가로 캐시 방지
+        const nonce = Date.now();
+        const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${import.meta.env.VITE_KAKAO_CLIENT_ID}&redirect_uri=${import.meta.env.VITE_KAKAO_REDIRECT_URI}&response_type=code&prompt=login&nonce=${nonce}`;
         window.location.href = kakaoAuthUrl;
     };
 
