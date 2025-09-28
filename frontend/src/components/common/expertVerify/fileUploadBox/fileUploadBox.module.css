@@ -1,4 +1,4 @@
-.boxContainer{
+.boxContainer {
     width: 750px;
     height: 270px;
     background-color: #f4f4f4;
@@ -9,14 +9,27 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 
-.boxContainer img{
+.boxContainer:hover {
+    background-color: #e8e8e8;
+    border-color: #ff5525;
+}
+
+.boxContainer.dragOver {
+    background-color: #fff3f0;
+    border-color: #ff5525;
+    border-style: solid;
+}
+
+.boxContainer img {
     width: 40px;
     height: 40px;
 }
 
-.content{
+.content {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -25,11 +38,71 @@
     margin-top: 25px;
 }
 
-.upload-instruction{
+.upload-instruction {
     font-size: 23px;
     font-weight: bold;
 }
 
-.fileLimit{
+.fileLimit {
     color: #828282;
+}
+
+/* 미리보기 관련 스타일 */
+.previewContainer {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+}
+
+.previewImage {
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.fileInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+}
+
+.fileName {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    word-break: break-all;
+}
+
+.fileSize {
+    font-size: 14px;
+    color: #666;
+}
+
+.removeButton {
+    background: none;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #666;
+    transition: all 0.3s ease;
+}
+
+.removeButton:hover {
+    background-color: #f5f5f5;
+    border-color: #999;
+}
+
+/* 버튼 그룹 스타일 */
+.buttonGroup {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
 }

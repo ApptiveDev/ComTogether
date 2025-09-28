@@ -18,14 +18,63 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route path={"/"} element={<Navigate to="/sign-up" replace />} />
-        <Route path={"/home"} element={<Home />} />
-        <Route path={"/compatibility-check"} element={<CompatibilityCheck />} />
-        <Route path={"/expert-consultation"} element={<ExpertConsultation />} />
-        <Route path={"/guide"} element={<Guide />} />
-        <Route path={"/community"} element={<Community />} />
-        <Route path={"/mypage"} element={<MyPage />} />
+        <Route
+          path={"/home"}
+          element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={"/compatibility-check"}
+          element={
+            <ProtectedRoute>
+              <CompatibilityCheck />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={"/expert-consultation"}
+          element={
+            <ProtectedRoute>
+              <ExpertConsultation />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={"/guide"}
+          element={
+            <ProtectedRoute>
+              <Guide />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={"/community"}
+          element={
+            <ProtectedRoute>
+              <Community />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path={"/mypage"}
+          element={
+            <ProtectedRoute>
+              <MyPage />
+            </ProtectedRoute>
+          }
+        />
         <Route path={"/sign-up"} element={<SignIn />} />
-        <Route path={"/expert-verify"} element={<ExpertVerifyLayout />} />
+        <Route
+          path={"/expert-verify"}
+          element={
+            <ProtectedRoute>
+              <ExpertVerifyLayout />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/setting"
           element={
