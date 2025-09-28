@@ -5,8 +5,10 @@ import { useQuery } from "@tanstack/react-query";
 import { useKakaoLogin } from "../../../api/useKakaoLogin";
 import { useAuthStore } from "../../../stores/useAuthStore";
 import { fetchUser } from "../../../api/userService";
+import RedirectPageLayout from "../../../components/layout/redirectPageLayout";
+import type { RedirectStep } from "../../../utils/redirectHelpers";
 
-export default function KakaoRedirectPage() {
+export default function RedirectPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { mutation: loginMutation } = useKakaoLogin();
@@ -57,10 +59,23 @@ export default function KakaoRedirectPage() {
     }
   }, [loginMutation.isError, userFetchError, setAuthError, navigate]);
 
-  // 로딩 또는 에러 메시지 표시
+  // 현재 진행 단계 결정
+  const getCurrentStep = (): RedirectStep => {
+    if (loginMutation.isError || userFetchError) return "error";
+    if (userFetchSuccess && user) return "completed";
+    if (isAuthenticated) return "fetchingUser";
+    if (loginMutation.isPending) return "authenticating";
+    return "starting";
+  };
+
+  const currentStep = getCurrentStep();
   const authError = useAuthStore((state) => state.authError);
-  if (authError) {
-    return <div>{authError}</div>;
-  }
-  return <div>로그인 처리 중입니다...</div>;
+
+  return (
+    <RedirectPageLayout
+      currentStep={currentStep}
+      authError={authError}
+      onRetry={() => navigate("/signIn")}
+    />
+  );
 }

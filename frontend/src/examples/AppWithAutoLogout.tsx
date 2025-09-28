@@ -1,8 +1,8 @@
 // App.tsx 또는 메인 레이아웃 컴포넌트에서 사용하는 예시
 
 import React from "react";
-import { useAutoLogout } from "./hooks/useAutoLogout";
-import { useAuthStore } from "./stores/useAuthStore";
+import { useAutoLogout } from "../hooks/useAutoLogout";
+import { useAuthStore } from "../stores/useAuthStore";
 
 function AppWithAutoLogout() {
   const { user } = useAuthStore();
