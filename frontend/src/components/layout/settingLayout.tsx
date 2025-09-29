@@ -75,12 +75,13 @@ export default function SettingLayout() {
           />
         </div>
         <div className={style.btnContainer}>
-          <NextButton
-            btnAbled={abled && !updateProfileMutation.isPending}
-            onClick={handleNext}
-          />
-          {updateProfileMutation.isPending && (
+          {updateProfileMutation.isPending ? (
             <div className={style.loadingIndicator}>저장 중...</div>
+          ) : (
+            <NextButton
+              btnAbled={abled && !updateProfileMutation.isPending}
+              onClick={handleNext}
+            />
           )}
         </div>
       </div>

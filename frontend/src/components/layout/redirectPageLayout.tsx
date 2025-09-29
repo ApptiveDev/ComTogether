@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import LoadingSpinner from "../common/LoadingSpinner";
+import LoadingSpinner from "../common/LoadingSpinner/LoadingSpinner";
 import type { RedirectStep } from "../../utils/redirectHelpers";
 import { getLoadingText } from "../../utils/redirectHelpers";
 import { getStepClass } from "../../utils/redirectHelpers";

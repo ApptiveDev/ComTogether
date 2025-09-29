@@ -1,12 +1,20 @@
 import React from "react";
 import MoreButton from "../moreButton/moreButton";
+import NoSearchResult from "../noSearchResult/noSearchResult";
 import { useSearchChatBotStore } from "@/stores/useSearchChatBotStore";
 import style from "./searchResult.module.css";
 import ReactMarkdown from "react-markdown";
 
 export default function SearchResult() {
-  const { result, showMore, setShowMore } = useSearchChatBotStore();
+  const { result, showMore, setShowMore, hasSearched } =
+    useSearchChatBotStore();
 
+  // 검색을 했지만 결과가 없는 경우
+  if (hasSearched && !result) {
+    return <NoSearchResult message="검색 결과가 없습니다." />;
+  }
+
+  // 검색 결과가 있는 경우에만 표시
   if (!result) return null;
 
   const highlight = result.highlight || result.title;
