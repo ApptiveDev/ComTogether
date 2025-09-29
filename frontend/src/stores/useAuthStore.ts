@@ -38,12 +38,9 @@ export const useAuthStore = create<AuthState>()(
                 if (!user) return false;
                 
                 return !!(
-                    user.nickname &&
                     user.role &&
                     user.interests &&
-                    user.interests.length > 0 &&
-                    user.skillLevel &&
-                    user.bio
+                    user.interests.length > 0
                 );
             },
         }),

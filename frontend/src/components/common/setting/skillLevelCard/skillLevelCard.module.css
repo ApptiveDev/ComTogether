@@ -52,6 +52,7 @@
     background-origin: border-box;
     background-clip: padding-box, border-box;
     box-shadow: 0 6px 50px 0 rgba(255, 85, 37, 0.2);
+    transform: scale(1.2);
 }
 
 .image.check {

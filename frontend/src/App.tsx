@@ -66,7 +66,7 @@ const Router = () => {
             </ProtectedRoute>
           }
         />
-        <Route path={"/sign-up"} element={<SignIn />} />
+        <Route path={"/signIn"} element={<SignIn />} /
         <Route
           path={"/expert-verify"}
           element={

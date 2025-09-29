@@ -16,10 +16,12 @@ interface SearchChatBotState {
   recentSearches: string[];
   result: DummyChatBotItem | null;
   showMore: boolean;
+  hasSearched: boolean;
   setSearch: (v: string) => void;
   handleSearch: () => void;
   handleRemoveRecent: (keyword: string) => void;
   setShowMore: (v: boolean) => void;
+  useClearRecentSearches: () => void;
 }
 
 export const useSearchChatBotStore = create<SearchChatBotState>()(
@@ -29,6 +31,7 @@ export const useSearchChatBotStore = create<SearchChatBotState>()(
       recentSearches: [],
       result: null,
       showMore: false,
+      hasSearched: false,
       setSearch: (v) => set({ search: v }),
       handleSearch: () => {
         const search = get().search.trim();
@@ -39,7 +42,7 @@ export const useSearchChatBotStore = create<SearchChatBotState>()(
         const found = (dummy_chatBot as DummyChatBotItem[]).find(
           (item) => item.keyword.toLowerCase() === search.toLowerCase()
         );
-        set({ result: found || null, showMore: false, search: "" });
+        set({ result: found || null, showMore: false, search: "", hasSearched: true });
       },
       handleRemoveRecent: (keyword) => {
         set((state) => ({
