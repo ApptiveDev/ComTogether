@@ -13,6 +13,7 @@ interface AuthState {
     setAuthError: (error: string | null) => void;
     setAuthenticated: (authenticated: boolean) => void;
     isProfileComplete: () => boolean;
+    clearAuthState: () => void;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -42,6 +43,10 @@ export const useAuthStore = create<AuthState>()(
                     user.interests &&
                     user.interests.length > 0
                 );
+            },
+
+            clearAuthState: () => {
+                set({ user: null, isAuthenticated: false, authError: null });
             },
         }),
         {

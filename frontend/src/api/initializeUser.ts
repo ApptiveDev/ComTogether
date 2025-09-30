@@ -59,20 +59,3 @@ export const initializeUser = async (userData: InitializeUserRequest): Promise<I
     throw error;
   }
 };
-
-// 테스트용 함수
-export const testInitializeUser = async () => {
-  const testData = {
-    role: 'BEGINNER' as keyof UserRole,
-    interest_ids: [1, 2, 3]
-  };
-  
-  try {
-    const result = await initializeUser(testData);
-    console.log('API Test Result:', result);
-    return result;
-  } catch (error) {
-    console.error('API Test Failed:', error);
-    throw error;
-  }
-};

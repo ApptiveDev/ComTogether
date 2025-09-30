@@ -5,8 +5,7 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { useKakaoLogin } from "../../../api/useKakaoLogin";
 import RedirectPageLayout from "../../../components/layout/redirectPageLayout";
 import { useAuthStore } from "../../../stores/useAuthStore";
-import { fetchUser } from "../../../api/userService";
-import { useQuery } from "@tanstack/react-query";
+import { useUser } from "../../../api/userService";
 
 export default function RedirectPage() {
   const [searchParams] = useSearchParams();
@@ -17,17 +16,12 @@ export default function RedirectPage() {
   const codeProcessed = useRef(false);
   const code = searchParams.get("code");
 
-  // 1. 로그인 후 사용자 정보를 가져오는 useQuery (isError 추가)
+  // 1. 로그인 후 사용자 정보를 가져오는 useUser 훅 (isError 추가)
   const {
     data: userData,
     isSuccess: isUserFetchSuccess,
-    isError: isUserFetchError, // fetchUser 에러 상태를 받습니다.
-  } = useQuery({
-    queryKey: ["user"],
-    queryFn: fetchUser,
-    enabled: isAuthenticated, // 로그인 성공 시에만 실행됩니다.
-    retry: false, // 실패 시 재시도하지 않습니다.
-  });
+    isError: isUserFetchError,
+  } = useUser({ enabled: isAuthenticated });
 
   useEffect(() => {
     if (code && !codeProcessed.current && !loginMutation.isPending) {

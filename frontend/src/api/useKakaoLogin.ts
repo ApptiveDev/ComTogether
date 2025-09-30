@@ -42,7 +42,7 @@ export const useKakaoLogin = () => {
             }
             setLoading(false);
         },
-        onError: (error: any) => {
+        onError: (error) => {
             let errorMessage = "로그인에 실패했습니다.";
             if (error.response?.data?.message) {
                 errorMessage = error.response.data.message;
