@@ -43,10 +43,15 @@ export const useKakaoLogin = () => {
             setLoading(false);
         },
         onError: (error: any) => {
-            // ... (기존 에러 처리 로직)
+            let errorMessage = "로그인에 실패했습니다.";
+            if (error.response?.data?.message) {
+                errorMessage = error.response.data.message;
+            }
+            setAuthError(errorMessage);
+            setLoading(false);
         },
     });
-    
+
     const initiateKakaoLogin = () => {
         setAuthError(null);
         // prompt=login 추가로 강제 재로그인, nonce 추가로 캐시 방지
