@@ -1,0 +1,21 @@
+.container{
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.step{
+    color: #ff5525;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.container img{
+    width: 1200px;
+}
+
+.question{
+    font-size: 25px;
+    font-weight: bold;
+}
