@@ -1,4 +1,4 @@
-import { useTokenStore } from "../stores/useTokenStore";
+import { useTokenStore } from "../../stores/useTokenStore";
 
 interface ExpertVerifyData {
     certification?: string;

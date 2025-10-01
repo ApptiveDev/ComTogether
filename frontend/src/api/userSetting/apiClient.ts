@@ -1,4 +1,4 @@
-import { useTokenStore } from '../stores/useTokenStore';
+import { useTokenStore } from '../../stores/useTokenStore';
 import axios from 'axios';
 import type { AxiosResponse, InternalAxiosRequestConfig } from 'axios';
 

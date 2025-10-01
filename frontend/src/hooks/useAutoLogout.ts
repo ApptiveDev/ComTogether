@@ -1,7 +1,7 @@
 import { useEffect, useCallback, useRef } from 'react';
-import { useLogout } from '../api/useLogout';
+import { useLogout } from '../api/userSetting/useLogout';
 import { useTokenStore } from '../stores/useTokenStore';
-import { refreshAccessToken } from '../api/apiClient';
+import { refreshAccessToken } from '../api/userSetting/apiClient';
 
 interface UseAutoLogoutOptions {
   // 비활성 타임아웃 (기본 30분)

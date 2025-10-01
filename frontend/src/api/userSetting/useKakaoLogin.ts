@@ -1,8 +1,8 @@
 // frontend/src/api/useKakaoLogin.ts
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
-import { useAuthStore } from "../stores/useAuthStore";
-import { useTokenStore } from "../stores/useTokenStore";
+import { useAuthStore } from "../../stores/useAuthStore";
+import { useTokenStore } from "../../stores/useTokenStore";
 import { useNavigate } from "react-router-dom"; // useNavigate import
 
 export const useKakaoLogin = () => {
