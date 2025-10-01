@@ -1,6 +1,6 @@
 // src/api/userService.ts
-import { useTokenStore } from "../stores/useTokenStore";
-import type { UserData } from "../types/user";
+import { useTokenStore } from "../../stores/useTokenStore";
+import type { UserData } from "../../types/user";
 import apiClient from "./apiClient";
 import { useQuery } from "@tanstack/react-query";
 

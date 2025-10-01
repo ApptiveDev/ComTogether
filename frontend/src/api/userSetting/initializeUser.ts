@@ -1,6 +1,6 @@
-import type { UserData } from "../types/user";
-import { useTokenStore } from "../stores/useTokenStore";
-import { useAuthStore } from "../stores/useAuthStore";
+import type { UserData } from "../../types/user";
+import { useTokenStore } from "../../stores/useTokenStore";
+import { useAuthStore } from "../../stores/useAuthStore";
 
 interface InitializeUserRequest {
   role: keyof UserRole;
@@ -20,7 +20,7 @@ export const initializeUser = async (userData: InitializeUserRequest): Promise<I
     
     console.log("초기화 API 요청 전 토큰 상태:", {
       hasToken: !!accessToken,
-      tokenPreview: accessToken ? `${accessToken.substring(0, 20)}...` : "없음"
+      tokenPreview: accessToken ? `${accessToken}...` : "없음"
     });
     
     if (!accessToken) {

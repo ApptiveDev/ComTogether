@@ -2,10 +2,10 @@
 
 import { useEffect, useRef } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { useKakaoLogin } from "../../../api/useKakaoLogin";
+import { useKakaoLogin } from "../../../api/userSetting/useKakaoLogin";
 import RedirectPageLayout from "../../../components/layout/redirectPageLayout";
 import { useAuthStore } from "../../../stores/useAuthStore";
-import { useUser } from "../../../api/userService";
+import { useUser } from "../../../api/userSetting/userService";
 
 export default function RedirectPage() {
   const [searchParams] = useSearchParams();
