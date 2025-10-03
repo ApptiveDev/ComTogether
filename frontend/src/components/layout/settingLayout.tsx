@@ -81,6 +81,7 @@ export default function SettingLayout() {
             <NextButton
               btnAbled={abled && !updateProfileMutation.isPending}
               onClick={handleNext}
+              text="다음"
             />
           )}
         </div>

@@ -1,0 +1,11 @@
+.container {
+    display: flex;
+    width: 100%;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding-top: 70px;
+}
+
+.inputContainer{
+    margin: 0 70px;
+}
