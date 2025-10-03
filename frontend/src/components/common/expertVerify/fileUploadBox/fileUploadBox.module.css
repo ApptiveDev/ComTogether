@@ -24,11 +24,6 @@
     border-style: solid;
 }
 
-.boxContainer img {
-    width: 40px;
-    height: 40px;
-}
-
 .content {
     display: flex;
     flex-direction: column;
@@ -47,7 +42,6 @@
     color: #828282;
 }
 
-/* 미리보기 관련 스타일 */
 .previewContainer {
     display: flex;
     align-items: center;
@@ -58,9 +52,11 @@
 }
 
 .previewImage {
-    max-width: 200px;
-    max-height: 200px;
-    object-fit: cover;
+    max-width: 400px;
+    max-height: 220px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

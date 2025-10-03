@@ -1,28 +1,23 @@
 // src/api/userService.ts
-import axios from "axios";
-import { useTokenStore } from "../stores/useTokenStore";
-import type { UserData } from "../types/user";
+import { useTokenStore } from "../../stores/useTokenStore";
+import type { UserData } from "../../types/user";
+import apiClient from "./apiClient";
+import { useQuery } from "@tanstack/react-query";
 
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-export const fetchUser = async (): Promise<UserData> => {
-  const { accessToken } = useTokenStore.getState();
-
-  if (!accessToken) {
-    throw new Error("인증 토큰이 없습니다.");
-  }
-
-  const response = await axios.get(
-    `${import.meta.env.VITE_API_URL}/users/me`,
-    {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    }
-  );
-  return response.data.data;
-};
+export const useUser = (options?: { enabled?: boolean }) => {
+  return useQuery({
+    queryKey: ['user', 'me'],
+    queryFn: async () => {
+      const response = await apiClient.get('/users/me');
+      return response.data;
+    },
+    staleTime: 5 * 60 * 1000,
+    enabled: options?.enabled ?? true,
+  })
+}
 
 export const updateUserProfile = async (userData: {
   role: UserData['role'];
@@ -42,12 +37,7 @@ export const updateUserProfile = async (userData: {
   }
   
   try {
-    const response = await axios.post(`${API_URL}/users/me`, userData, {
-      headers: {
-        'Authorization': `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-    });
+    const response = await apiClient.put('/users/me', userData);
     
     console.log('API 응답:', response.data);
     return response.data;

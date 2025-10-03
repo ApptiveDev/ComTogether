@@ -8,7 +8,7 @@ import stepImg from "@/assets/image/step-status.svg";
 import ExpertPopup from "../common/setting/expertPopup/expertPopup";
 import { useNavigate } from "react-router";
 import { useState, useEffect } from "react";
-import { useUpdateProfile } from "../../hooks/useUpdateProfile";
+import { useProfileSetupStore } from "../../stores/useProfileSetupStore";
 
 export default function SettingLayout() {
   const [abled, setAbled] = useState(false);
@@ -18,31 +18,24 @@ export default function SettingLayout() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const navigate = useNavigate();
-  const updateProfileMutation = useUpdateProfile();
+  const { setTempRole } = useProfileSetupStore(); // 추가
 
   useEffect(() => {
     setAbled(selectedLevel !== null);
   }, [selectedLevel]);
+
   const handleLevelSelect = (level: "BEGINNER" | "EXPERT" | null) => {
     setSelectedLevel(level);
   };
 
   const handleNext = async () => {
     if (!selectedLevel) return;
-    try {
-      await updateProfileMutation.mutateAsync({
-        role: selectedLevel,
-      });
+    setTempRole(selectedLevel);
 
-      // 성공 시 다음 페이지로 이동
-      if (selectedLevel === "EXPERT") {
-        setIsPopupOpen(true);
-      } else if (selectedLevel == "BEGINNER") {
-        navigate("/second-setting");
-      }
-    } catch (error) {
-      console.error("레벨 저장 실패:", error);
-      alert("레벨 저장에 실패했습니다. 다시 시도해주세요.");
+    if (selectedLevel === "EXPERT") {
+      setIsPopupOpen(true);
+    } else if (selectedLevel === "BEGINNER") {
+      navigate("/second-setting");
     }
   };
 
@@ -75,15 +68,7 @@ export default function SettingLayout() {
           />
         </div>
         <div className={style.btnContainer}>
-          {updateProfileMutation.isPending ? (
-            <div className={style.loadingIndicator}>저장 중...</div>
-          ) : (
-            <NextButton
-              btnAbled={abled && !updateProfileMutation.isPending}
-              onClick={handleNext}
-              text="다음"
-            />
-          )}
+          <NextButton btnAbled={abled} onClick={handleNext} text="다음" />
         </div>
       </div>
     </div>

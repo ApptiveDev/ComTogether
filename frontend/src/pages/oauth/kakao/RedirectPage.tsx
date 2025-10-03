@@ -2,40 +2,30 @@
 
 import { useEffect, useRef } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { useKakaoLogin } from "../../../api/useKakaoLogin";
-import { useAuthStore } from "../../../stores/useAuthStore";
-import { fetchUser } from "../../../api/userService";
+import { useKakaoLogin } from "../../../api/userSetting/useKakaoLogin";
 import RedirectPageLayout from "../../../components/layout/redirectPageLayout";
-import type { RedirectStep } from "../../../utils/redirectHelpers";
+import { useAuthStore } from "../../../stores/useAuthStore";
+import { useUser } from "../../../api/userSetting/userService";
 
 export default function RedirectPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { mutation: loginMutation } = useKakaoLogin();
-  const { isAuthenticated, setUser, setAuthError } = useAuthStore();
+  const { isAuthenticated, setUser } = useAuthStore();
 
   const codeProcessed = useRef(false);
   
   // 1. URL에서 'code' 파라미터를 가져옵니다.
   const code = searchParams.get("code");
 
-  // ✨ --- 추가된 로직 --- ✨
-  // 페이지가 처음 렌더링될 때 URL의 인가 코드를 확인합니다.
-  useEffect(() => {
-    if (code) {
-      console.log("✅ 카카오 서버로부터 인가 코드를 성공적으로 받았습니다.");
-      console.log("인가 코드:", code);
-    } else {
-      console.error("❌ 카카오 서버로부터 인가 코드를 받지 못했습니다. 카카오 개발자 설정의 Redirect URI를 확인하세요.");
-      setAuthError("카카오 인증 코드를 받지 못했습니다.");
-      // 3초 후 로그인 페이지로 이동
-      setTimeout(() => navigate("/signIn"), 3000); 
-    }
-  }, [code, navigate, setAuthError]); // code가 변경될 때마다 실행
-  // ✨ --- 여기까지 --- ✨
 
-  // 2. URL의 code를 사용하여 로그인(토큰 발급) 요청
+  // 1. 로그인 후 사용자 정보를 가져오는 useUser 훅 (isError 추가)
+  const {
+    data: userData,
+    isSuccess: isUserFetchSuccess,
+    isError: isUserFetchError,
+  } = useUser({ enabled: isAuthenticated });
+
   useEffect(() => {
     if (code && !codeProcessed.current && !loginMutation.isPending) {
       console.log("🚀 백엔드 서버로 인가 코드를 전송하여 로그인을 시도합니다.");
@@ -44,17 +34,6 @@ export default function RedirectPage() {
     }
   }, [code, loginMutation]);
 
-  // (이하 기존 로직은 동일)
-  const {
-    data: user,
-    isSuccess: userFetchSuccess,
-    isError: userFetchError,
-  } = useQuery({
-    queryKey: ["userProfile"],
-    queryFn: fetchUser,
-    enabled: isAuthenticated && !useAuthStore.getState().user,
-    retry: false,
-  });
 
   useEffect(() => {
     if (userFetchSuccess && user) {
@@ -85,10 +64,42 @@ export default function RedirectPage() {
   const currentStep = getCurrentStep();
   const authError = useAuthStore((state) => state.authError);
 
+  // 2. 사용자 정보 조회 성공 시의 로직 (기존과 동일)
+  useEffect(() => {
+    if (isUserFetchSuccess && userData) {
+      setUser(userData);
+      if (userData.initialized) {
+        navigate("/home");
+      } else {
+        navigate("/setting");
+      }
+    }
+  }, [isUserFetchSuccess, userData, navigate, setUser]);
+
+  // 3. ✨ 사용자 정보 조회 실패 시의 로직 (새로 추가) ✨
+  useEffect(() => {
+    // 만약 로그인은 성공했는데 사용자 정보 조회가 실패했다면,
+    // 아직 초기화가 필요한 신규 사용자일 가능성이 매우 높습니다.
+    // 따라서 /setting 페이지로 보내 초기 설정을 유도합니다.
+    if (isUserFetchError) {
+      navigate("/setting");
+    }
+  }, [isUserFetchError, navigate]);
+
+  const getStep = () => {
+    if (
+      loginMutation.isPending ||
+      (isAuthenticated && !isUserFetchSuccess && !isUserFetchError)
+    ) {
+      return "authenticating";
+    }
+    return "starting";
+  };
+
   return (
     <RedirectPageLayout
-      currentStep={currentStep}
-      authError={authError}
+      currentStep={getStep()}
+      authError={loginMutation.error?.message}
       onRetry={() => navigate("/signIn")}
     />
   );

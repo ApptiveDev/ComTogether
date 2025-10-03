@@ -1,6 +1,6 @@
-import type { UserData } from "../types/user";
-import { useTokenStore } from "../stores/useTokenStore";
-import { useAuthStore } from "../stores/useAuthStore";
+import type { UserData } from "../../types/user";
+import { useTokenStore } from "../../stores/useTokenStore";
+import { useAuthStore } from "../../stores/useAuthStore";
 
 interface InitializeUserRequest {
   role: keyof UserRole;
@@ -20,7 +20,7 @@ export const initializeUser = async (userData: InitializeUserRequest): Promise<I
     
     console.log("초기화 API 요청 전 토큰 상태:", {
       hasToken: !!accessToken,
-      tokenPreview: accessToken ? `${accessToken.substring(0, 20)}...` : "없음"
+      tokenPreview: accessToken ? `${accessToken}...` : "없음"
     });
     
     if (!accessToken) {
@@ -56,23 +56,6 @@ export const initializeUser = async (userData: InitializeUserRequest): Promise<I
     return result;
   } catch (error) {
     console.error('사용자 초기화 실패:', error);
-    throw error;
-  }
-};
-
-// 테스트용 함수
-export const testInitializeUser = async () => {
-  const testData = {
-    role: 'BEGINNER' as keyof UserRole,
-    interest_ids: [1, 2, 3]
-  };
-  
-  try {
-    const result = await initializeUser(testData);
-    console.log('API Test Result:', result);
-    return result;
-  } catch (error) {
-    console.error('API Test Failed:', error);
     throw error;
   }
 };

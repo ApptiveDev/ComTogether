@@ -1,8 +1,8 @@
 // frontend/src/api/useKakaoLogin.ts
 import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
-import { useAuthStore } from "../stores/useAuthStore";
-import { useTokenStore } from "../stores/useTokenStore";
+import { useAuthStore } from "../../stores/useAuthStore";
+import { useTokenStore } from "../../stores/useTokenStore";
 import { useNavigate } from "react-router-dom"; // useNavigate import
 
 export const useKakaoLogin = () => {
@@ -42,11 +42,16 @@ export const useKakaoLogin = () => {
             }
             setLoading(false);
         },
-        onError: (error: any) => {
-            // ... (기존 에러 처리 로직)
+        onError: (error) => {
+            let errorMessage = "로그인에 실패했습니다.";
+            if (error.response?.data?.message) {
+                errorMessage = error.response.data.message;
+            }
+            setAuthError(errorMessage);
+            setLoading(false);
         },
     });
-    
+
     const initiateKakaoLogin = () => {
         setAuthError(null);
         // prompt=login 추가로 강제 재로그인, nonce 추가로 캐시 방지

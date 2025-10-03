@@ -1,6 +1,6 @@
 import style from "./signInButton.module.css";
 import kakao from "@/assets/image/kakao.svg";
-import { useKakaoLogin } from "@/api/useKakaoLogin";
+import { useKakaoLogin } from "@/api/userSetting/useKakaoLogin";
 
 export default function SignInButton() {
   const { initiateKakaoLogin } = useKakaoLogin();
