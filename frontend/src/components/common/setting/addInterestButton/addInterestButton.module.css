@@ -1,0 +1,14 @@
+.addInterestBtn{
+    background-color: transparent;
+    color: #ff5525;
+    font-size: 16px;
+    font-weight: 500;
+    border: dashed 1px #ff5525;
+    cursor: pointer;
+    border-radius: 22px;
+    padding: 10px 70px;
+}
+
+.addInterestBtn:hover{
+    background-color: #fff0eb;
+}

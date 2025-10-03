@@ -1,0 +1,28 @@
+.container{
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px calc((100vw - 1200px) / 2);
+}
+
+.stepContent{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.interestFooter{
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.interestCount{
+    color: #828282;
+    font-weight: 500;
+}

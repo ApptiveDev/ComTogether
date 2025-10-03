@@ -1,0 +1,19 @@
+.button {
+    background-color: white;
+    padding: 10px 0;
+    border-radius: 22px;
+    border: 1px solid #b9b9b9;
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.15);
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+.selected{
+    border: 2px solid transparent;
+    background-image: linear-gradient(white, white), linear-gradient(90deg, #ff5525, #ffcd7d);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+    box-shadow: 0 6px 30px 0 rgba(255, 85, 37, 0.35);
+}

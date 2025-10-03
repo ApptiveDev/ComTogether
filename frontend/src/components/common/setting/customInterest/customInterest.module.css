@@ -1,0 +1,49 @@
+.interestContent {
+    display: flex;
+}
+
+.inputContainer {
+    margin: 0 70px;
+}
+
+.addInterestInput {
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    width: 150px;
+}
+
+.btnContainer {
+    display: flex;
+    gap: 10px;
+    margin-right: 20px;
+}
+
+.btnContainer img{
+    width: 8px;
+    height: 8px;
+}
+
+.btnContainer button{
+    border: none;
+    cursor: pointer;
+    border-radius: 100%;
+}
+
+.confirmBtn{
+    background-color: #ff5525;
+}
+
+.confirmBtn:hover{
+    background-color: #d74319;
+}
+
+.cancelBtn{
+    background-color: #b9b9b9;
+}
+
+.cancelBtn:hover{
+    background-color: #828282;
+}

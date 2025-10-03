@@ -68,7 +68,7 @@ export default function SettingLayout() {
           />
         </div>
         <div className={style.btnContainer}>
-          <NextButton btnAbled={abled} onClick={handleNext} />
+          <NextButton btnAbled={abled} onClick={handleNext} text="다음" />
         </div>
       </div>
     </div>
