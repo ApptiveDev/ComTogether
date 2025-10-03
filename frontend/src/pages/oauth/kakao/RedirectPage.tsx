@@ -14,10 +14,7 @@ export default function RedirectPage() {
   const { isAuthenticated, setUser } = useAuthStore();
 
   const codeProcessed = useRef(false);
-  
-  // 1. URL에서 'code' 파라미터를 가져옵니다.
   const code = searchParams.get("code");
-
 
   // 1. 로그인 후 사용자 정보를 가져오는 useUser 훅 (isError 추가)
   const {
@@ -28,41 +25,16 @@ export default function RedirectPage() {
 
   useEffect(() => {
     if (code && !codeProcessed.current && !loginMutation.isPending) {
-      console.log("🚀 백엔드 서버로 인가 코드를 전송하여 로그인을 시도합니다.");
       codeProcessed.current = true;
       loginMutation.mutate(code);
     }
   }, [code, loginMutation]);
 
-
   useEffect(() => {
-    if (userFetchSuccess && user) {
-      setUser(user);
-      if (user.initialized) {
-        navigate("/home");
-      } else {
-        navigate("/setting");
-      }
-    }
-  }, [userFetchSuccess, user, setUser, navigate]);
-
-  useEffect(() => {
-    if (loginMutation.isError || userFetchError) {
-      setAuthError("로그인에 실패했습니다. 다시 시도해주세요.");
+    if (loginMutation.isError) {
       setTimeout(() => navigate("/signIn"), 3000);
     }
-  }, [loginMutation.isError, userFetchError, setAuthError, navigate]);
-
-  const getCurrentStep = (): RedirectStep => {
-    if (loginMutation.isError || userFetchError) return "error";
-    if (userFetchSuccess && user) return "completed";
-    if (isAuthenticated) return "fetchingUser";
-    if (loginMutation.isPending) return "authenticating";
-    return "starting";
-  };
-
-  const currentStep = getCurrentStep();
-  const authError = useAuthStore((state) => state.authError);
+  }, [loginMutation.isError, navigate]);
 
   // 2. 사용자 정보 조회 성공 시의 로직 (기존과 동일)
   useEffect(() => {
