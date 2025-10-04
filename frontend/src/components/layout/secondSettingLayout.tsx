@@ -1,40 +1,46 @@
-import style from './secondSettingLayout.module.css'
-import StepHeader from '../common/setting/stepHeader/stepHeader'
-import stepImg from '@/assets/image/second-step-status.svg'
-import InterestSelector from '../common/setting/interestSelector/interestSelector'
-import NextButton from '../common/setting/nextButton/nextButton'
-import { useState } from 'react'
-import { useNavigate } from 'react-router'
+import style from "./secondSettingLayout.module.css";
+import StepHeader from "../common/setting/stepHeader/stepHeader";
+import stepImg from "@/assets/image/second-step-status.svg";
+import InterestSelector from "../common/setting/interestSelector/interestSelector";
+import NextButton from "../common/setting/nextButton/nextButton";
+import { useState } from "react";
+import { useInitialize } from "../../api/userSetting/initialize";
 
-export default function SecondSettingLayout(){
-    const navigate = useNavigate();
-    const handleNext = () => {
-        navigate('/home')
+export default function SecondSettingLayout() {
+  const [count, setCount] = useState(0);
+  const initializeMutation = useInitialize();
+
+  const handleNext = () => {
+    if (count > 0) {
+      console.log("🎯 사용자 초기화 시작");
+      initializeMutation.mutate();
     }
+  };
 
-    const [count, setCount] = useState(0);
-
-    return(
-        <div className={style.container}>
-            <div className={style.stepContent}>
-                <StepHeader
-                step="STEP 02"
-                image={stepImg}
-                question="관심사가 무엇인가요?"
-                />
-                <InterestSelector
-                    count={count}
-                    setCount={setCount}
-                />
-            </div>
-            <div className={style.interestFooter}>
-                <div className={style.interestCount}>선택된 관심사: {count}개</div>
-                <NextButton
-                btnAbled={count > 0}
-                onClick={handleNext}
-                text="완료"
-                />
-            </div>
-        </div>
-    )
+  return (
+    <div className={style.container}>
+      <div className={style.stepContent}>
+        <StepHeader
+          step="STEP 02"
+          image={stepImg}
+          question="관심사가 무엇인가요?"
+        />
+        <InterestSelector count={count} setCount={setCount} />
+      </div>
+      <div className={style.interestFooter}>
+        <div className={style.interestCount}>선택된 관심사: {count}개</div>
+        <NextButton
+          btnAbled={count > 0 && !initializeMutation.isPending}
+          onClick={handleNext}
+          text={initializeMutation.isPending ? "처리 중..." : "완료"}
+        />
+        {initializeMutation.isError && (
+          <div className={style.errorMessage}>
+            {initializeMutation.error?.message ||
+              "초기화에 실패했습니다. 다시 시도해주세요."}
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
