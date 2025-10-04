@@ -64,16 +64,31 @@ export const useKakaoLogin = () => {
     const initiateKakaoLogin = () => {
         setAuthError(null);
         
-        // 동적으로 리다이렉트 URI 생성 (현재 도메인 기반)
+        // 환경 변수와 현재 도메인 정보 로깅
         const currentOrigin = window.location.origin;
-        const redirectUri = import.meta.env.VITE_KAKAO_REDIRECT_URI || `${currentOrigin}/oauth/kakao/redirect`;
+        const envRedirectUri = import.meta.env.VITE_KAKAO_REDIRECT_URI;
+        const isLocalhost = currentOrigin.includes('localhost');
+        const isVercel = currentOrigin.includes('vercel.app');
+        
+        // 환경별 리다이렉트 URI 결정
+        let redirectUri: string;
+        if (isLocalhost) {
+            redirectUri = envRedirectUri || 'http://localhost:3000/oauth/kakao/redirect';
+        } else {
+            redirectUri = envRedirectUri || `${currentOrigin}/oauth/kakao/redirect`;
+        }
+        
+        console.log('🌍 현재 도메인:', currentOrigin);
+        console.log('⚙️ 환경변수 REDIRECT_URI:', envRedirectUri);
+        console.log('🏠 로컬호스트 여부:', isLocalhost);
+        console.log('☁️ Vercel 여부:', isVercel);
+        console.log('✅ 최종 사용할 REDIRECT_URI:', redirectUri);
         
         // prompt=login 추가로 강제 재로그인, nonce 추가로 캐시 방지
         const nonce = Date.now();
         const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${import.meta.env.VITE_KAKAO_CLIENT_ID}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&prompt=login&nonce=${nonce}`;
         
         console.log('🔗 카카오 로그인 URL:', kakaoAuthUrl);
-        console.log('📍 리다이렉트 URI:', redirectUri);
         
         window.location.href = kakaoAuthUrl;
     };
