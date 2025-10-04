@@ -13,4 +13,4 @@ export interface UserData {
 }
 export type UserRoleType = 'BEGINNER' | 'EXPERT';
 
-export default UserData;
+// export default UserData; // 타입만 있으므로 default export 제거

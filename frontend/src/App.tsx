@@ -9,7 +9,7 @@ import MyPage from "./pages/myPage";
 import SignIn from "./pages/signIn";
 import Setting from "./pages/setting";
 import SecondSetting from "./pages/secondSetting";
-import RedirectPage from "./pages/oauth/kakao/redirectPage";
+import RedirectPage from "./pages/oauth/kakao/RedirectPage";
 import ExpertVerifyLayout from "./components/layout/expertVerifyLayout";
 import { ProtectedRoute } from "./components/common/ProtectedRoute";
 

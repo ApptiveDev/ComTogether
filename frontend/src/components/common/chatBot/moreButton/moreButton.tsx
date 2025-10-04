@@ -1,4 +1,3 @@
-import React from "react";
 import ArrowDown from "../../../../assets/image/icon/arrowDown";
 import styles from "./moreButton.module.css";
 

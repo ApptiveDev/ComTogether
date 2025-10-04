@@ -1,4 +1,3 @@
-import React from "react";
 import RecentSearchItem from "../chatBot/recentSearchItem";
 import { useSearchChatBotStore } from "../../../stores/useSearchChatBotStore";
 import style from "./SearchBar.module.css";

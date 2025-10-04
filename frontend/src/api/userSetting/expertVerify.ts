@@ -8,9 +8,8 @@ interface ExpertVerifyData {
 
 export const expertVerify = async (verificationData: ExpertVerifyData) => {
     try {
-        const { accessToken } = useTokenStore.getState(
-            (state) => ({ accessToken: state.accessToken })
-        );
+        const { getAccessToken } = useTokenStore.getState();
+        const accessToken = getAccessToken();
         
         if (!accessToken) {
             throw new Error('인증 토큰이 없습니다. 다시 로그인해주세요.');

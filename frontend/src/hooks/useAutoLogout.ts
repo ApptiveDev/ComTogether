@@ -22,9 +22,9 @@ export const useAutoLogout = (options: UseAutoLogoutOptions = {}) => {
   const { forceLogout } = useLogout();
   const { getAccessToken, getRefreshToken } = useTokenStore();
   
-  const idleTimerRef = useRef<NodeJS.Timeout>();
-  const refreshTimerRef = useRef<NodeJS.Timeout>();
-  const hiddenTimeRef = useRef<number>();
+  const idleTimerRef = useRef<number | null>(null);
+  const refreshTimerRef = useRef<number | null>(null);
+  const hiddenTimeRef = useRef<number | null>(null);
 
   // 토큰 갱신 함수
   const refreshToken = useCallback(async () => {
@@ -152,7 +152,7 @@ export const useAutoLogout = (options: UseAutoLogoutOptions = {}) => {
 
   // 토큰 상태 체크 (주기적)
   useEffect(() => {
-    const checkTokenValidity = () => {
+    const checkTokenValidity = async () => {
       const accessToken = getAccessToken();
       const refreshToken = getRefreshToken();
 
@@ -169,7 +169,7 @@ export const useAutoLogout = (options: UseAutoLogoutOptions = {}) => {
         
         if (tokenData.exp && tokenData.exp < currentTime) {
           console.log('Access token 만료, 갱신 시도');
-          refreshToken();
+          await refreshAccessToken();
         }
       } catch (error) {
         console.warn('토큰 파싱 실패:', error);

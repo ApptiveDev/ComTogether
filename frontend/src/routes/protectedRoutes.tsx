@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Navigate } from "react-router-dom";
-import { useTokenStore } from "../../stores/useTokenStore"; // 스토어 파일의 실제 경로로 수정해주세요.
+import { useTokenStore } from "../stores/useTokenStore";
 
 // children prop의 타입을 명시해줍니다.
 interface ProtectedRouteProps {
