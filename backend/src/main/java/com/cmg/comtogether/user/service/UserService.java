@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -63,5 +64,17 @@ public class UserService {
         user.completeInitialization();
 
         return userMapper.toResponse(user);
+    }
+
+    public void deleteUser(User user) {
+        Optional<User> deleteUser = userRepository.findById(user.getUserId());
+        if (deleteUser.isEmpty()) {
+            throw new BusinessException(ErrorCode.USER_NOT_FOUND);
+        }
+        userRepository.delete(deleteUser.get());
+    }
+
+    public void deleteAllUsers() {
+        userRepository.deleteAll();
     }
 }
