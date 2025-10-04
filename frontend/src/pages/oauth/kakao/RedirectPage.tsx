@@ -25,20 +25,26 @@ export default function RedirectPage() {
 
   useEffect(() => {
     if (code && !codeProcessed.current && !loginMutation.isPending) {
+      console.log("🚀 로그인 시도");
       codeProcessed.current = true;
       loginMutation.mutate(code);
     }
-  }, [code, loginMutation]);
+  }, [code, loginMutation, isAuthenticated]);
 
   useEffect(() => {
     if (loginMutation.isError) {
+      console.error("❌ 로그인 에러:", loginMutation.error);
       setTimeout(() => navigate("/signIn"), 3000);
     }
-  }, [loginMutation.isError, navigate]);
+  }, [loginMutation.isError, loginMutation.error, navigate]);
 
-  // 2. 사용자 정보 조회 성공 시의 로직 (기존과 동일)
+  // 2. 사용자 정보 조회 성공 시의 로직
   useEffect(() => {
     if (isUserFetchSuccess && userData) {
+      console.log(
+        "✅ 사용자 정보 조회 성공, 이동:",
+        userData.initialized ? "home" : "setting"
+      );
       setUser(userData);
       if (userData.initialized) {
         navigate("/home");
@@ -48,12 +54,10 @@ export default function RedirectPage() {
     }
   }, [isUserFetchSuccess, userData, navigate, setUser]);
 
-  // 3. ✨ 사용자 정보 조회 실패 시의 로직 (새로 추가) ✨
+  // 3. 사용자 정보 조회 실패 시의 로직
   useEffect(() => {
-    // 만약 로그인은 성공했는데 사용자 정보 조회가 실패했다면,
-    // 아직 초기화가 필요한 신규 사용자일 가능성이 매우 높습니다.
-    // 따라서 /setting 페이지로 보내 초기 설정을 유도합니다.
     if (isUserFetchError) {
+      console.log("❌ 사용자 정보 조회 실패 → 설정 페이지로 이동");
       navigate("/setting");
     }
   }, [isUserFetchError, navigate]);

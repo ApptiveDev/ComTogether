@@ -75,22 +75,8 @@ const Router = () => {
             </ProtectedRoute>
           }
         />
-        <Route
-          path="/setting"
-          element={
-            <ProtectedRoute>
-              <Setting />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/second-setting"
-          element={
-            <ProtectedRoute>
-              <SecondSetting />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/setting" element={<Setting />} />
+        <Route path="/second-setting" element={<SecondSetting />} />
         <Route path={"/oauth/kakao/redirect"} element={<RedirectPage />} />
       </Routes>
     </BrowserRouter>
