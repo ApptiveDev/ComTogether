@@ -22,8 +22,8 @@ export const useAutoLogout = (options: UseAutoLogoutOptions = {}) => {
   const { forceLogout } = useLogout();
   const { getAccessToken, getRefreshToken } = useTokenStore();
   
-  const idleTimerRef = useRef<number | null>(null);
-  const refreshTimerRef = useRef<number | null>(null);
+  const idleTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const refreshTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const hiddenTimeRef = useRef<number | null>(null);
 
   // 토큰 갱신 함수
