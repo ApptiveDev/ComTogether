@@ -74,8 +74,13 @@ export const useKakaoLogin = () => {
         if (isLocalhost) {
             redirectUri = envRedirectUri || 'http://localhost:3000/oauth/kakao/redirect';
         } else {
-            redirectUri = envRedirectUri || `https://com-together.vercel.app/oauth/kakao/redirect`;
+            redirectUri = envRedirectUri || `${currentOrigin}/oauth/kakao/redirect`;
         }
+        
+        console.log('🌍 현재 도메인:', currentOrigin);
+        console.log('⚙️ 환경변수 REDIRECT_URI:', envRedirectUri);
+        console.log('✅ 최종 사용할 REDIRECT_URI:', redirectUri);
+        
         // prompt=login 추가로 강제 재로그인, nonce 추가로 캐시 방지
         const nonce = Date.now();
         const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${import.meta.env.VITE_KAKAO_CLIENT_ID}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&prompt=login&nonce=${nonce}`;
