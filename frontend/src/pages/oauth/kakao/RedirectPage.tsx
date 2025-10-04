@@ -75,7 +75,11 @@ export default function RedirectPage() {
   return (
     <RedirectPageLayout
       currentStep={getStep()}
-      authError={loginMutation.error?.message}
+      authError={
+        loginMutation.error instanceof Error
+          ? loginMutation.error.message
+          : "알 수 없는 오류가 발생했습니다."
+      }
       onRetry={() => navigate("/signIn")}
     />
   );

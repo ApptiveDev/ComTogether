@@ -42,11 +42,15 @@ export const updateUserProfile = async (userData: {
     console.log('API 응답:', response.data);
     return response.data;
   } catch (error: unknown) {
-    console.error('API 에러 상세:', {
-      status: error.response?.status,
-      data: error.response?.data,
-      message: error.message
-    });
+    if (error && typeof error === 'object' && 'response' in error) {
+      const axiosError = error as { response: { status: number; data: unknown } };
+      console.error('API 에러 상세:', {
+        status: axiosError.response?.status,
+        data: axiosError.response?.data
+      });
+    } else {
+      console.error('API 에러:', error);
+    }
     throw error;
   }
 };

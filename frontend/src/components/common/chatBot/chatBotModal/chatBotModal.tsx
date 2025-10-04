@@ -1,11 +1,11 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import styles from "./chatBotModal.module.css";
 import close_icon from "@/assets/image/icon/close_icon.svg";
 
-import SearchBar from "@/components/common/searchBar/searchBar";
-import SearchResult from "@/components/common/chatBot/searchResult/searchResult";
-import NoSearchResult from "@/components/common/chatBot/noSearchResult/noSearchResult";
-import { useSearchChatBotStore } from "@/stores/useSearchChatBotStore";
+import SearchBar from "../../searchBar/searchBar";
+import SearchResult from "../searchResult/searchResult";
+import NoSearchResult from "../noSearchResult/noSearchResult";
+import { useSearchChatBotStore } from "../../../../stores/useSearchChatBotStore";
 import { useShallow } from "zustand/shallow";
 
 interface ChatBotModalProps {

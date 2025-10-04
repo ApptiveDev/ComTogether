@@ -2,9 +2,9 @@ import style from "./interestSelector.module.css";
 import InterestButton from "../interestButton/interestButton";
 import CustomInterest from "../customInterest/customInterest";
 import AddInterestButton from "../addInterestButton/addInterestButton";
-import data from "@/dummy/dummy_interest.json";
+import data from "../../../../dummy/dummy_interest.json";
 import { useState, useEffect } from "react";
-import { useProfileSetupStore } from "@/stores/useProfileSetupStore";
+import { useProfileSetupStore } from "../../../../stores/useProfileSetupStore";
 
 type InterestItem = {
   id: number;

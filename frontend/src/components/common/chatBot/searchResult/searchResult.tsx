@@ -1,7 +1,6 @@
-import React from "react";
 import MoreButton from "../moreButton/moreButton";
 import NoSearchResult from "../noSearchResult/noSearchResult";
-import { useSearchChatBotStore } from "@/stores/useSearchChatBotStore";
+import { useSearchChatBotStore } from "../../../../stores/useSearchChatBotStore";
 import style from "./searchResult.module.css";
 import ReactMarkdown from "react-markdown";
 
@@ -55,14 +54,16 @@ export default function SearchResult() {
       {showMore && (
         <div className={style.searchResultScroll}>
           <ul className={style.searchResultDetails}>
-            {result.details.map((d, idx) => (
-              <li key={idx} className={style.searchResultDetailsItem}>
-                <span className={style.searchResultDetailsItemTitle}>
-                  <ReactMarkdown>{d.title}</ReactMarkdown>
-                </span>
-                <ReactMarkdown>{d.desc}</ReactMarkdown>
-              </li>
-            ))}
+            {result.details.map(
+              (d: { title: string; desc: string }, idx: number) => (
+                <li key={idx} className={style.searchResultDetailsItem}>
+                  <span className={style.searchResultDetailsItemTitle}>
+                    <ReactMarkdown>{d.title}</ReactMarkdown>
+                  </span>
+                  <ReactMarkdown>{d.desc}</ReactMarkdown>
+                </li>
+              )
+            )}
           </ul>
           <div className={style.searchResultMore}>
             <ReactMarkdown>

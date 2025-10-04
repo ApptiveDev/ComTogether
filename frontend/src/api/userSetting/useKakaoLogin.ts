@@ -43,13 +43,18 @@ export const useKakaoLogin = () => {
             }
             setLoading(false);
         },
-        onError: (error) => {
-            console.error('❌ 로그인 실패:', error?.response?.data?.message || error.message);
-            
+        onError: (error: unknown) => {
+            // Axios 에러 타입 체크
             let errorMessage = "로그인에 실패했습니다.";
-            if (error.response?.data?.message) {
-                errorMessage = error.response.data.message;
+            
+            if (error && typeof error === 'object' && 'response' in error) {
+                const axiosError = error as { response: { data: { message?: string } } };
+                if (axiosError.response?.data?.message) {
+                    errorMessage = axiosError.response.data.message;
+                }
             }
+            
+            console.error('❌ 로그인 실패:', errorMessage);
             
             setAuthError(errorMessage);
             setLoading(false);

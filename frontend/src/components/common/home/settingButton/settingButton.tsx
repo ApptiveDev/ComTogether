@@ -1,4 +1,3 @@
-import React from "react";
 import style from "./settingButton.module.css";
 import profileImg from "@/assets/image/profile_temp.png";
 import { useNavigate } from "react-router";

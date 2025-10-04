@@ -1,4 +1,3 @@
-import React from "react";
 import style from "./header.module.css";
 import NavButton from "../home/navButton/navButton";
 import SettingButton from "../home/settingButton/settingButton";
@@ -24,7 +23,7 @@ export default function Header() {
           text="가이드 화면"
           onClick={() => {
             navigate("/guide");
-          }}    
+          }}
         />
         <NavButton
           text="호환성 체크"

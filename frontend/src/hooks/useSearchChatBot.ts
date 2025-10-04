@@ -1,5 +1,5 @@
 import { useState } from "react";
-import dummy_chatBot from "../../dummy/dummy_chatBot.json";
+import dummy_chatBot from "../dummy/dummy_chatBot.json";
 
 export type DummyChatBotItem = {
   keyword: string;

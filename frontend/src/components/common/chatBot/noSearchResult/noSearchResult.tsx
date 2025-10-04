@@ -1,7 +1,11 @@
-import React from "react";
-import noSearchImage from "@/assets/image/no_search.png";
+import noSearchImage from "../../../../assets/image/no_search.png";
 import styles from "./noSearchResult.module.css";
-export default function NoSearchResult() {
+
+interface NoSearchResultProps {
+  message?: string;
+}
+
+export default function NoSearchResult({ message }: NoSearchResultProps) {
   return (
     <div className={styles.noSearchContainer}>
       <img
@@ -9,6 +13,7 @@ export default function NoSearchResult() {
         alt="검색 결과 없음"
         className={styles.noSearchImage}
       />
+      {message && <p>{message}</p>}
     </div>
   );
 }

@@ -16,7 +16,6 @@ export default function ChatBotIcon({ text }: { text: string }) {
           dominantBaseline="middle"
           fontSize="23.657px"
           fontWeight="700"
-          lineheight="150%"
           fill="#fff"
         >
           {text}
