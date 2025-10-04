@@ -43,4 +43,16 @@ public class UserController {
         UserResponseDto userResponseDto = userService.initializeUser(userDetails.getUser().getUserId(), request);
         return ResponseEntity.ok(ApiResponse.success(userResponseDto));
     }
+
+    @DeleteMapping
+    public ResponseEntity<ApiResponse<Void>> deleteUser(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        userService.deleteUser(userDetails.getUser());
+        return ResponseEntity.ok(ApiResponse.success(null));
+    }
+
+    @DeleteMapping("/all")
+    public ResponseEntity<ApiResponse<Void>> deleteAllUser() {
+        userService.deleteAllUsers();
+        return ResponseEntity.ok(ApiResponse.success(null));
+    }
 }
