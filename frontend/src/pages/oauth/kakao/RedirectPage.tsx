@@ -24,12 +24,22 @@ export default function RedirectPage() {
   } = useUser({ enabled: isAuthenticated });
 
   useEffect(() => {
+    console.log("🔍 RedirectPage 상태:", {
+      code: !!code,
+      codeProcessed: codeProcessed.current,
+      isPending: loginMutation.isPending,
+      currentURL: window.location.href,
+    });
+
     if (code && !codeProcessed.current && !loginMutation.isPending) {
-      console.log("🚀 로그인 시도");
+      console.log("🚀 로그인 시도 - code:", code);
       codeProcessed.current = true;
       loginMutation.mutate(code);
+    } else if (!code) {
+      console.error("❌ 인증 코드가 없습니다. URL을 확인해주세요.");
+      setTimeout(() => navigate("/signIn"), 3000);
     }
-  }, [code, loginMutation, isAuthenticated]);
+  }, [code, loginMutation, isAuthenticated, navigate]);
 
   useEffect(() => {
     if (loginMutation.isError) {

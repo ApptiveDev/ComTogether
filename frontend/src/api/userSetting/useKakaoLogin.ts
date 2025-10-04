@@ -63,9 +63,18 @@ export const useKakaoLogin = () => {
 
     const initiateKakaoLogin = () => {
         setAuthError(null);
+        
+        // 동적으로 리다이렉트 URI 생성 (현재 도메인 기반)
+        const currentOrigin = window.location.origin;
+        const redirectUri = import.meta.env.VITE_KAKAO_REDIRECT_URI || `${currentOrigin}/oauth/kakao/redirect`;
+        
         // prompt=login 추가로 강제 재로그인, nonce 추가로 캐시 방지
         const nonce = Date.now();
-        const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${import.meta.env.VITE_KAKAO_CLIENT_ID}&redirect_uri=${import.meta.env.VITE_KAKAO_REDIRECT_URI}&response_type=code&prompt=login&nonce=${nonce}`;
+        const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${import.meta.env.VITE_KAKAO_CLIENT_ID}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&prompt=login&nonce=${nonce}`;
+        
+        console.log('🔗 카카오 로그인 URL:', kakaoAuthUrl);
+        console.log('📍 리다이렉트 URI:', redirectUri);
+        
         window.location.href = kakaoAuthUrl;
     };
 
