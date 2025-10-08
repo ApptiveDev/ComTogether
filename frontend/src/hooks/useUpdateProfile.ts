@@ -26,15 +26,8 @@ export const useUpdateProfile = () => {
             console.log("프로필 업데이트:", { isFirstTimeUser, updateData });
 
             try {
-                let response;
-                
-                if (isFirstTimeUser) {
-                    // 최초 사용자라면 initialize API 사용
-                    response = await apiClient.put('/users/initialize', updateData);
-                } else {
-                    // 기존 사용자라면 일반 업데이트 API 사용
-                    response = await apiClient.patch('/users/me', updateData);
-                }
+                // 백엔드에서 initialize API만 제공하므로 항상 initialize 사용
+                const response = await apiClient.put('/users/initialize', updateData);
 
                 const result: UpdateProfileResponse = response.data;
                 

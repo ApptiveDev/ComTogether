@@ -35,21 +35,8 @@ export const useLogout = () => {
                     if (response.data.success) {
                         console.log('✅ 서버 로그아웃 성공:', response.data.message);
                         
-                        // 카카오 세션도 해제 (선택적)
-                        try {
-                            const iframe = document.createElement('iframe');
-                            iframe.style.display = 'none';
-                            iframe.src = `https://kauth.kakao.com/oauth/logout?client_id=${import.meta.env.VITE_KAKAO_CLIENT_ID}&logout_redirect_uri=${encodeURIComponent(window.location.origin)}`;
-                            document.body.appendChild(iframe);
-                            
-                            setTimeout(() => {
-                                document.body.removeChild(iframe);
-                            }, 3000);
-                            
-                            console.log('🔄 카카오 세션 해제 요청 완료');
-                        } catch (kakaoError) {
-                            console.warn('⚠️ 카카오 세션 해제 실패:', kakaoError);
-                        }
+                        // 카카오 세션은 해제하지 않음 (재로그인 시 기존 사용자로 인식하기 위해)
+                        console.log('ℹ️ 카카오 세션은 유지됩니다. 재로그인 시 기존 계정으로 연결됩니다.');
                     } else {
                         console.warn('⚠️ 서버 로그아웃 응답 실패:', response.data);
                     }

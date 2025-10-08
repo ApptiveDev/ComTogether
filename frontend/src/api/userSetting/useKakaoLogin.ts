@@ -3,12 +3,9 @@ import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { useAuthStore } from "../../stores/useAuthStore";
 import { useTokenStore } from "../../stores/useTokenStore";
-import { useNavigate } from "react-router-dom"; // useNavigate import
-
 export const useKakaoLogin = () => {
     const { setLoading, setAuthError, setAuthenticated } = useAuthStore();
     const { setTokens } = useTokenStore();
-    const navigate = useNavigate(); // useNavigate 훅 사용
 
     const mutation = useMutation({
         mutationFn: async (code: string) => {
@@ -26,20 +23,16 @@ export const useKakaoLogin = () => {
             return response.data;
         },
         onSuccess: (data) => {
-            console.log('✅ 로그인 성공');
+            console.log('✅ 로그인 성공', data);
             
-            const { access_token, refresh_token, user_info } = data.data;
+            const { access_token, refresh_token } = data.data;
             
             if (access_token && refresh_token) {
                 setTokens(access_token, refresh_token);
                 setAuthenticated(true);
-
-                // 백엔드에서 보내준 user_info.initialized 값으로 바로 분기 처리
-                if (user_info && user_info.initialized) {
-                    navigate("/home");
-                } else {
-                    navigate("/setting");
-                }
+                
+                console.log('🔄 토큰 저장 완료, RedirectPage에서 라우팅 처리 예정');
+                // 사용자 정보는 별도의 /users/me API 호출로 가져와야 함
             }
             setLoading(false);
         },
