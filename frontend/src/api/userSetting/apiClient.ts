@@ -122,7 +122,7 @@ apiClient.interceptors.response.use(
     if (
       error.response?.status === 401 && 
       !originalRequest._retry &&
-      !originalRequest.url?.includes('/oauth/refresh') // 토큰 갱신 API는 제외
+      !originalRequest.url?.includes('/refresh') // 토큰 갱신 API는 제외
     ) {
       originalRequest._retry = true;
 

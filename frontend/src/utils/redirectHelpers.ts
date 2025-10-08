@@ -9,6 +9,8 @@ export function getLoadingText(step: string): string {
       return "사용자 정보를 가져오고 있습니다...";
     case "completed":
       return "로그인이 완료되었습니다!";
+    case "success":
+      return "로그인 성공! 페이지를 이동합니다...";
     case "error":
       return "오류가 발생했습니다.";
     default:
@@ -26,4 +28,4 @@ export function getStepClass(currentStep: string, targetStep: string): string {
   return "";
 }
 
-export type RedirectStep = "starting" | "authenticating" | "fetchingUser" | "completed" | "error";
+export type RedirectStep = "starting" | "authenticating" | "fetchingUser" | "completed" | "success" | "error";
