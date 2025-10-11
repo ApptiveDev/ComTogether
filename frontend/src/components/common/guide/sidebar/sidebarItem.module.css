@@ -1,0 +1,38 @@
+.container{
+    width: 220px;
+    height: fit-content;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.selected{
+    background-color: #ff5525;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.selected .category{
+    color: white;
+}
+
+.selected img{
+    filter: brightness(0) invert(1);;
+}
+
+.container img{
+    width: 15px;
+    height: 15px;
+}
+
+.content{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.category{
+    color: black;
+}
