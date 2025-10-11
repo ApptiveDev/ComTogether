@@ -1,3 +1,6 @@
+import GuideLayout from "../components/layout/guideLayout";
 export default function Guide() {
-  return <div>가이드</div>;
+  return (
+    <GuideLayout />
+  )
 }
