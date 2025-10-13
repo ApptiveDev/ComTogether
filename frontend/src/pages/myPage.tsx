@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useLogout } from "../api/userSetting/useLogout";
+import UserInfoDisplay from "../api/userDataManage/UserInfoDisplay";
 import DeleteAccountModal from "../components/common/DeleteAccountModal";
 
 export default function MyPage() {
@@ -9,6 +10,8 @@ export default function MyPage() {
   return (
     <div style={{ padding: "20px" }}>
       <h1>마이페이지</h1>
+
+      <UserInfoDisplay />
 
       <div
         style={{

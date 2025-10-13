@@ -11,7 +11,7 @@ import Setting from "./pages/setting";
 import SecondSetting from "./pages/secondSetting";
 import RedirectPage from "./pages/oauth/kakao/redirectPage";
 import ExpertVerifyLayout from "./components/layout/expertVerifyLayout";
-import { ProtectedRoute } from "./components/common/ProtectedRoute";
+import { ProtectedRoute } from "./routes/ProtectedRoute";
 
 const Router = () => {
   return (
