@@ -1,6 +1,6 @@
 import { Navigate } from "react-router-dom";
-import { useAuthStore } from "../../stores/useAuthStore";
-import { useTokenStore } from "../../stores/useTokenStore";
+import { useAuthStore } from "../stores/useAuthStore";
+import { useTokenStore } from "../stores/useTokenStore";
 import { useEffect } from "react";
 
 interface ProtectedRouteProps {

@@ -1,9 +1,10 @@
 // src/api/userService.ts
 import { useTokenStore } from "../../stores/useTokenStore";
+import { useAuthStore } from "../../stores/useAuthStore";
 import type { UserData } from "../../types/user";
 import apiClient from "./apiClient";
 import { useQuery } from "@tanstack/react-query";
-
+import { useEffect } from "react";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -17,6 +18,32 @@ export const useUser = (options?: { enabled?: boolean }) => {
     staleTime: 5 * 60 * 1000,
     enabled: options?.enabled ?? true,
   })
+}
+
+// 사용자 정보를 자동으로 스토어에 저장하는 훅
+export const useUserWithAutoSave = (options?: { enabled?: boolean }) => {
+  const { updateUserFromApi } = useAuthStore();
+  
+  const query = useQuery({
+    queryKey: ['user', 'me'],
+    queryFn: async () => {
+      console.log('🔍 사용자 정보 API 호출: /users/me');
+      const response = await apiClient.get('/users/me');
+      console.log('📦 사용자 정보 API 응답:', response.data);
+      return response.data;
+    },
+    staleTime: 5 * 60 * 1000,
+    enabled: options?.enabled ?? true,
+  });
+
+  // API 호출 성공 시 자동으로 스토어에 저장
+  useEffect(() => {
+    if (query.data && query.isSuccess) {
+      updateUserFromApi(query.data);
+    }
+  }, [query.data, query.isSuccess, updateUserFromApi]);
+
+  return query;
 }
 
 export const initializeUserProfile = async (userData: {
