@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "../../stores/useAuthStore";
-import { useUser } from "../../api/userSetting/userService";
+import { useAuthStore } from "../stores/useAuthStore";
+import { useUserWithAutoSave } from "../api/userSetting/userService";
 
 interface HomeProtectedRouteProps {
   children: React.ReactNode;
@@ -14,28 +14,13 @@ interface HomeProtectedRouteProps {
 export default function HomeProtectedRoute({
   children,
 }: HomeProtectedRouteProps) {
-  const { user, isAuthenticated, setUser } = useAuthStore();
+  const { user, isAuthenticated } = useAuthStore();
   const navigate = useNavigate();
 
-  // 사용자 정보가 없을 때 자동으로 조회
-  const {
-    data: userResponse,
-    isLoading,
-    isError,
-  } = useUser({
+  // 사용자 정보가 없을 때 자동으로 조회하고 스토어에 저장
+  const { isLoading, isError } = useUserWithAutoSave({
     enabled: isAuthenticated && !user,
   });
-
-  // 사용자 정보 조회 완료 시 스토어에 저장
-  useEffect(() => {
-    if (userResponse?.success && userResponse.data && !user) {
-      console.log(
-        "📦 사용자 정보 조회 성공, 스토어에 저장:",
-        userResponse.data
-      );
-      setUser(userResponse.data);
-    }
-  }, [userResponse, user, setUser]);
 
   useEffect(() => {
     // 인증되지 않은 사용자는 로그인 페이지로

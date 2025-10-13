@@ -31,8 +31,8 @@ export const useKakaoLogin = () => {
                 setTokens(access_token, refresh_token);
                 setAuthenticated(true);
                 
-                console.log('🔄 토큰 저장 완료, RedirectPage에서 라우팅 처리 예정');
-                // 사용자 정보는 별도의 /users/me API 호출로 가져와야 함
+                console.log('🔄 토큰 저장 완료');
+                console.log('📋 사용자 정보는 HomeProtectedRoute에서 자동으로 조회됩니다');
             }
             setLoading(false);
         },

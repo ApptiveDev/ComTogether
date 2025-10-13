@@ -14,6 +14,7 @@ interface AuthState {
     setAuthenticated: (authenticated: boolean) => void;
     isProfileComplete: () => boolean;
     clearAuthState: () => void;
+    updateUserFromApi: (apiResponse: { success: boolean; data: UserData }) => void;
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -47,6 +48,18 @@ export const useAuthStore = create<AuthState>()(
 
             clearAuthState: () => {
                 set({ user: null, isAuthenticated: false, authError: null });
+            },
+
+            // 사용자 정보 자동 업데이트 (API 응답에서 데이터 추출)
+            updateUserFromApi: (apiResponse: { success: boolean; data: UserData }) => {
+                if (apiResponse.success && apiResponse.data) {
+                    set({ 
+                        user: apiResponse.data, 
+                        isAuthenticated: true, 
+                        authError: null 
+                    });
+                    console.log('✅ 사용자 정보 스토어에 자동 저장:', apiResponse.data);
+                }
             },
         }),
         {
