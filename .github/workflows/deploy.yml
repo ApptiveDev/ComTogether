@@ -46,7 +46,7 @@ jobs:
             git pull --ff-only
 
             echo "🛑 기존 컨테이너 종료..."
-            docker compose down || docker-compose down || true
+            docker-compose down || true
 
             echo "🚀 새 컨테이너 빌드 및 실행..."
             docker compose up --build -d || docker-compose up --build -d
