@@ -1,6 +1,7 @@
-.settingBtn{
+.settingBtn {
     display: flex;
     align-items: center;
+    padding: 10px;
     gap: 10px;
     min-width: 170px;
     min-height: 30px;
@@ -9,18 +10,20 @@
     border-radius: 15px;
     cursor: pointer;
     transition: background-color 0.2s ease;
+    margin-bottom: 20px;
 }
 
-.settingBtn:hover{
+.settingBtn:hover {
     background-color: #f2f2f2;
 }
 
-.settingBtn img{
-    width: 20px;
-    height: 20px;
+.settingBtn img {
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
 }
 
-.settingBtn span{
+.settingBtn span {
+    font-size: 14px;
     font-weight: 500;
 }

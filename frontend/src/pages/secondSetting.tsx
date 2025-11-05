@@ -1,5 +1,5 @@
 import SecondSettingLayout from "../components/layout/secondSettingLayout";
-import SettingProtectedRoute from "../components/common/SettingProtectedRoute";
+import SettingProtectedRoute from "../routes/SettingProtectedRoute";
 
 export default function SecondSetting() {
   return (
