@@ -9,6 +9,7 @@ import com.cmg.comtogether.user.entity.UserInterest;
 import com.cmg.comtogether.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -50,7 +51,11 @@ public class ProductService {
         return getNaverProducts(searchQuery, display, start, sort, exclude);
     }
 
-    private NaverProductResponseDto getNaverProducts(String searchQuery, int display, int start, String sort, String exclude) {
+    @Cacheable(
+            value = "naverProducts",
+            key = "T(java.util.Objects).hash(#searchQuery, #display, #start, #sort, #exclude)"
+    )
+    public NaverProductResponseDto getNaverProducts(String searchQuery, int display, int start, String sort, String exclude) {
         return restClient.get()
                 .uri(UriComponentsBuilder
                         .fromUriString(baseUrl)
