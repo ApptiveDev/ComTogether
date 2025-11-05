@@ -11,15 +11,18 @@ export const useKakaoLogin = () => {
         mutationFn: async (code: string) => {
             console.log('🔑 카카오 로그인 API 호출');
             
+            const redirect_uri = `${window.location.origin}/oauth/kakao/redirect`;
+            console.log('🔁 전달할 redirect_uri:', redirect_uri);
+
             const response = await axios.post(
                 `${import.meta.env.VITE_API_URL}/oauth/login/kakao`,
-                { code },
+                { code, redirect_uri },
                 {
                     headers: { 'Content-Type': 'application/json' },
                     timeout: 10000,
                 }
             );
-            
+
             return response.data;
         },
         onSuccess: (data) => {

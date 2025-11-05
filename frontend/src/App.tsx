@@ -42,14 +42,8 @@ const Router = () => {
             </ProtectedRoute>
           }
         />
-        <Route
-          path={"/guide"}
-          element={
-            <ProtectedRoute>
-              <Guide />
-            </ProtectedRoute>
-          }
-        />
+        {/* 가이드는 일시적으로 비인증 사용자도 접근 허용 */}
+        <Route path={"/guide"} element={<Guide />} />
         <Route
           path={"/community"}
           element={
