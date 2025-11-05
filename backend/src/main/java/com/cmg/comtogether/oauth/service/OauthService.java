@@ -8,6 +8,7 @@ import com.cmg.comtogether.user.entity.Role;
 import com.cmg.comtogether.user.entity.SocialType;
 import com.cmg.comtogether.user.entity.User;
 import com.cmg.comtogether.user.repository.UserRepository;
+import io.micrometer.common.lang.Nullable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +20,8 @@ public class OauthService {
     private final JwtService jwtService;
     private final UserRepository userRepository;
 
-    public TokenDto kakaoLogin(String code) {
-        TokenDto kakaoToken = kakaoService.getToken(code);
+    public TokenDto kakaoLogin(String code, @Nullable String redirectUri) {
+        TokenDto kakaoToken = kakaoService.getToken(code, redirectUri);
         KakaoProfileDto profile = kakaoService.getKakaoProfile(kakaoToken.getAccessToken());
 
         User user = userRepository.findBySocialId(String.valueOf(profile.getId()))

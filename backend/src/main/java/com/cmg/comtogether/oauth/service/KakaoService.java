@@ -4,6 +4,7 @@ import com.cmg.comtogether.common.exception.BusinessException;
 import com.cmg.comtogether.common.exception.ErrorCode;
 import com.cmg.comtogether.jwt.dto.TokenDto;
 import com.cmg.comtogether.oauth.dto.KakaoProfileDto;
+import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -24,7 +25,7 @@ public class KakaoService {
     private String clientId;
 
     @Value("${oauth.kakao.redirect-uri}")
-    private String redirectUri;
+    private String defaultRedirectUri;
 
     @Value("${oauth.kakao.user-info-uri}")
     private String userInfoUri;
@@ -32,11 +33,11 @@ public class KakaoService {
     @Value("${oauth.kakao.token-uri}")
     private String tokenUri;
 
-    public TokenDto getToken(String code) {
+    public TokenDto getToken(String code, @Nullable String redirectUri) {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
         params.add("client_id", clientId);
-        params.add("redirect_uri", redirectUri);
+        params.add("redirect_uri", redirectUri != null ? redirectUri : defaultRedirectUri);
         params.add("code", code);
 
         return restClient.post()

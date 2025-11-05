@@ -24,7 +24,8 @@ public class OauthController {
     @PostMapping("/kakao")
     public ResponseEntity<ApiResponse<TokenDto>> kakaoLogin(@Valid @RequestBody OauthLoginRequestDto requestDto) {
         String code = requestDto.getCode();
-        TokenDto tokenDto = oauthService.kakaoLogin(code);
+        String redirect_uri = requestDto.getRedirect_uri();
+        TokenDto tokenDto = oauthService.kakaoLogin(code, redirect_uri);
         return ResponseEntity.ok(ApiResponse.success(tokenDto));
     }
 }

@@ -11,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.Optional;
@@ -62,12 +63,12 @@ class OauthServiceTest {
     @DisplayName("성공 - 신규회원일 경우 DB에 저장 후 JWT 발급")
     void kakaoLogin_success_newUser() {
         // given
-        given(kakaoService.getToken(code)).willReturn(createKakaoToken());
+        given(kakaoService.getToken(code, null)).willReturn(createKakaoToken());
         given(kakaoService.getKakaoProfile("kakao-access-token"))
                 .willReturn(createKakaoProfile(12345L, "new@example.com", "new-user", "img-url"));
 
         // when
-        TokenDto tokenDto = oauthService.kakaoLogin(code);
+        TokenDto tokenDto = oauthService.kakaoLogin(code, null);
 
         // then
         assertThat(tokenDto.getAccessToken()).isNotBlank();
@@ -77,7 +78,7 @@ class OauthServiceTest {
         assertThat(saved).isPresent();
         assertThat(saved.get().getEmail()).isEqualTo("new@example.com");
 
-        verify(kakaoService).getToken(code);
+        verify(kakaoService).getToken(code, null);
         verify(kakaoService).getKakaoProfile("kakao-access-token");
     }
 
@@ -95,12 +96,12 @@ class OauthServiceTest {
                 .build();
         userRepository.save(existingUser);
 
-        given(kakaoService.getToken(code)).willReturn(createKakaoToken());
+        given(kakaoService.getToken(code, null)).willReturn(createKakaoToken());
         given(kakaoService.getKakaoProfile("kakao-access-token"))
                 .willReturn(createKakaoProfile(12345L, "exist@example.com", "exist-user", "exist-img"));
 
         // when
-        TokenDto tokenDto = oauthService.kakaoLogin(code);
+        TokenDto tokenDto = oauthService.kakaoLogin(code, null);
 
         // then
         assertThat(tokenDto.getAccessToken()).isNotBlank();
@@ -110,7 +111,7 @@ class OauthServiceTest {
         assertThat(found).isPresent();
         assertThat(found.get().getEmail()).isEqualTo("exist@example.com");
 
-        verify(kakaoService).getToken(code);
+        verify(kakaoService).getToken(code, null);
         verify(kakaoService).getKakaoProfile("kakao-access-token");
     }
 }
