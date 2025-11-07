@@ -58,7 +58,6 @@ export const useAuthStore = create<AuthState>()(
                         isAuthenticated: true, 
                         authError: null 
                     });
-                    console.log('✅ 사용자 정보 스토어에 자동 저장:', apiResponse.data);
                 }
             },
         }),

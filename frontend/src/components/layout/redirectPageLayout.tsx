@@ -26,7 +26,6 @@ export default function RedirectPageLayout({
     }
   };
 
-  // 에러 상태 UI
   if (authError) {
     return (
       <div className={styles.container}>
@@ -47,7 +46,6 @@ export default function RedirectPageLayout({
     );
   }
 
-  // 로딩 상태 UI
   return (
     <div className={styles.container}>
       <div className={styles.content}>
