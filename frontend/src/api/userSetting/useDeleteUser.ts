@@ -11,26 +11,29 @@ export const useDeleteUser = () => {
 
     const mutation = useMutation({
         mutationFn: deleteUser,
-        onSuccess: (data) => {
-            console.log('✅ 사용자 삭제 성공:', data);
-            
+        onSuccess: () => {
             // 로컬 상태 정리
             clearTokens();
             clearAuthState();
             
+            // 로컬 스토리지 완전 정리 (Zustand persist 데이터 포함)
+            localStorage.removeItem('token-store');
+            localStorage.removeItem('auth-store');
+            localStorage.clear();
+            
             // 삭제 완료 후 로그인 페이지로 이동
-            setTimeout(() => {
-                navigate('/signIn');
-            }, 100);
+            navigate('/signIn', { replace: true });
         },
         onError: (error: Error) => {
-            console.error('❌ 사용자 삭제 실패:', error.message);
+            console.error('계정 삭제 실패:', error.message);
             
             // 401 에러 등 인증 오류인 경우 로그아웃 처리
             if (error.message.includes('401') || error.message.includes('인증')) {
                 clearTokens();
                 clearAuthState();
-                navigate('/signIn');
+                localStorage.removeItem('token-store');
+                localStorage.removeItem('auth-store');
+                navigate('/signIn', { replace: true });
             }
         },
     });

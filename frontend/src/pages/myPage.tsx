@@ -22,7 +22,7 @@ export default function MyPage() {
         }}
       >
         <button
-          onClick={() => handleLogout("사용자 요청")}
+          onClick={() => handleLogout()}
           disabled={isLoggingOut || isDeleteModalOpen}
           style={{
             padding: "10px 20px",

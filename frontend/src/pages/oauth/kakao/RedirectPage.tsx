@@ -14,63 +14,33 @@ export default function RedirectPage() {
 
   const codeProcessed = useRef(false);
   const code = searchParams.get("code");
+  const loginSuccessRef = useRef(false);
 
   useEffect(() => {
-    console.log("🔍 RedirectPage 상태:", {
-      code: !!code,
-      codeProcessed: codeProcessed.current,
-      isPending: loginMutation.isPending,
-      currentURL: window.location.href,
-    });
-
     if (code && !codeProcessed.current && !loginMutation.isPending) {
-      console.log("🚀 로그인 시도 - code:", code);
       codeProcessed.current = true;
       loginMutation.mutate(code);
     } else if (!code) {
-      console.error("❌ 인증 코드가 없습니다. URL을 확인해주세요.");
-      setTimeout(() => navigate("/signIn"), 3000);
+      navigate("/signIn", { replace: true });
     }
-  }, [code, loginMutation, navigate]);
+  }, [code, loginMutation, navigate, isAuthenticated]);
 
   useEffect(() => {
     if (loginMutation.isError && loginMutation.error) {
-      console.error("❌ 로그인 에러:", loginMutation.error);
-
-      const error = loginMutation.error as Error & {
-        response?: { data?: unknown; status?: number };
-        code?: string;
-      };
-      console.error("❌ 에러 상세:", {
-        message: error?.message,
-        response: error?.response?.data,
-        status: error?.response?.status,
-      });
-
-      // CORS 오류인지 확인
-      const isCorsError =
-        error?.message?.includes("blocked by CORS") ||
-        error?.code === "ERR_NETWORK";
-
-      if (isCorsError) {
-        console.warn("🚫 CORS 오류 감지 - 백엔드 설정이 필요합니다");
-      }
-
-      setTimeout(() => navigate("/signIn"), 5000); // 5초로 연장
+      navigate("/signIn", { replace: true });
     }
   }, [loginMutation.isError, loginMutation.error, navigate]);
 
-  // 로그인 성공 시 라우팅 처리
   useEffect(() => {
-    if (loginMutation.isSuccess && isAuthenticated && !loginMutation.isError) {
-      console.log("✅ 로그인 성공! 사용자 정보 조회 후 라우팅 처리");
+    // isAuthenticated가 true가 되면 바로 이동 (mutation 상태와 무관하게)
+    if (isAuthenticated && !loginSuccessRef.current && !loginMutation.isError) {
+      loginSuccessRef.current = true;
+      navigate("/home", { replace: true });
+      return;
+    }
 
-      // 로그인 성공 후 사용자 정보를 별도로 조회해야 함
-      // 잠시 대기 후 사용자 정보 API 호출을 위해 홈으로 이동
-      // 홈에서 사용자 정보를 확인하고 초기화 여부에 따라 리다이렉트
-      setTimeout(() => {
-        navigate("/home");
-      }, 1000);
+    if (loginMutation.isSuccess && !loginMutation.isError) {
+      navigate("/home", { replace: true });
     }
   }, [
     loginMutation.isSuccess,

@@ -7,11 +7,6 @@ export default function SettingButton() {
   const navigate = useNavigate();
   const user = useAuthStore((state) => state.user);
 
-  // 디버깅을 위한 로그 추가
-  console.log("🔍 SettingButton - user:", user);
-  console.log("🔍 SettingButton - profile_image_url:", user?.profile_image_url);
-
-  // user가 null인 경우 처리
   if (!user) {
     return null;
   }
