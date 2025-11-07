@@ -3,13 +3,26 @@ import axios from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { useAuthStore } from "../../stores/useAuthStore";
 import { useTokenStore } from "../../stores/useTokenStore";
+
+const getRedirectUri = (): string => {
+    const currentOrigin = window.location.origin;
+    const envRedirectUri = import.meta.env.VITE_KAKAO_REDIRECT_URI;
+    const isLocalhost = currentOrigin.includes('localhost');
+    
+    if (isLocalhost && envRedirectUri) {
+        return envRedirectUri;
+    }
+    
+    return envRedirectUri || `${currentOrigin}/oauth/kakao/redirect`;
+};
+
 export const useKakaoLogin = () => {
     const { setLoading, setAuthError, setAuthenticated } = useAuthStore();
     const { setTokens } = useTokenStore();
 
     const mutation = useMutation({
         mutationFn: async (code: string) => {
-            const redirect_uri = `${window.location.origin}/oauth/kakao/redirect`;
+            const redirect_uri = getRedirectUri();
 
             const response = await axios.post(
                 `${import.meta.env.VITE_API_URL}/oauth/login/kakao`,
@@ -51,16 +64,8 @@ export const useKakaoLogin = () => {
     const initiateKakaoLogin = () => {
         setAuthError(null);
         
-        const currentOrigin = window.location.origin;
-        const envRedirectUri = import.meta.env.VITE_KAKAO_REDIRECT_URI;
-        const isLocalhost = currentOrigin.includes('localhost');
-        
-        let redirectUri: string;
-        if (isLocalhost) {
-            redirectUri = envRedirectUri || 'http://localhost:3000/oauth/kakao/redirect';
-        } else {
-            redirectUri = envRedirectUri || `${currentOrigin}/oauth/kakao/redirect`;
-        }
+        // 동일한 redirect_uri 계산 로직 사용
+        const redirectUri = getRedirectUri();
         
         const nonce = Date.now();
         const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${import.meta.env.VITE_KAKAO_CLIENT_ID}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&prompt=login&nonce=${nonce}`;
