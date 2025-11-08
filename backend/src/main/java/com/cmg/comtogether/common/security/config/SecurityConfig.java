@@ -41,7 +41,8 @@ public class SecurityConfig {
                                 "/v3/api-docs/**",
                                 "/products/**",
                                 "/guide/**",
-                                "/users/all"
+                                "/users/all",
+                                "/glossary/**"
                         ).permitAll()
                         .anyRequest().authenticated()
                 )
