@@ -1,0 +1,47 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-6);
+}
+
+.warningSection {
+    line-height: var(--line-height-relaxed);
+}
+
+.warningTitle {
+    margin: 0 0 var(--spacing-4) 0;
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+}
+
+.warningList {
+    margin: 0 0 var(--spacing-4) 0;
+    padding-left: var(--spacing-5);
+    color: var(--text-secondary);
+}
+
+.warningList li {
+    margin-bottom: var(--spacing-1);
+}
+
+.dangerText {
+    margin: 0;
+    color: var(--text-error);
+    font-weight: var(--font-weight-semibold);
+}
+
+.confirmSection {
+    margin: var(--spacing-4) 0;
+}
+
+.confirmText {
+    color: var(--text-error);
+    font-weight: var(--font-weight-semibold);
+}
+
+.buttonGroup {
+    display: flex;
+    gap: var(--spacing-3);
+    justify-content: flex-end;
+    margin-top: var(--spacing-6);
+}

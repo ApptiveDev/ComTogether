@@ -1,0 +1,41 @@
+.container {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    border-radius: var(--border-radius-default);
+}
+
+.image {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: opacity var(--transition-normal);
+}
+
+.loading {
+    opacity: 0;
+}
+
+.loaded {
+    opacity: 1;
+}
+
+.spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+}
+
+.error {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--text-danger);
+    font-size: var(--font-size-sm);
+    text-align: center;
+    padding: var(--spacing-2);
+}

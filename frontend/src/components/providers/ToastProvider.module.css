@@ -1,0 +1,91 @@
+.container {
+    position: fixed;
+    top: var(--spacing-4);
+    right: var(--spacing-4);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+    max-width: 400px;
+}
+
+.toast {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-3) var(--spacing-4);
+    border-radius: var(--border-radius-default);
+    box-shadow: var(--shadow-lg);
+    background-color: var(--bg-primary);
+    border-left: 4px solid;
+    animation: slideIn 0.3s ease-out;
+    min-height: 60px;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.content {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    flex: 1;
+}
+
+.icon {
+    font-size: var(--font-size-lg);
+    flex-shrink: 0;
+}
+
+.message {
+    font-size: var(--font-size-sm);
+    color: var(--text-primary);
+    line-height: var(--line-height-relaxed);
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: var(--font-size-lg);
+    padding: var(--spacing-1);
+    border-radius: var(--border-radius-sm);
+    transition: all var(--transition-fast);
+    flex-shrink: 0;
+}
+
+.closeButton:hover {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+}
+
+/* Toast types */
+.success {
+    border-left-color: var(--color-success-500);
+    background-color: var(--color-success-50);
+}
+
+.error {
+    border-left-color: var(--color-danger-500);
+    background-color: var(--color-danger-50);
+}
+
+.warning {
+    border-left-color: var(--color-warning-500);
+    background-color: var(--color-warning-50);
+}
+
+.info {
+    border-left-color: var(--color-info-500);
+    background-color: var(--color-info-50);
+}
