@@ -53,6 +53,7 @@ export default function ContentArea() {
   const containerRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
 
+  // 스크롤 애니메이션 구현
   useLayoutEffect(() => {
     const container = containerRef.current;
     const content = contentRef.current;
@@ -63,16 +64,16 @@ export default function ContentArea() {
 
     gsap.fromTo(
       image,
-      { opacity: 1 },
+      { opacity: 1 },//애니메이션 시작 상태
       {
         opacity: 0,
         ease: "none",
         scrollTrigger: {
           trigger: content,
           scroller: container,
-          start: `top ${imageHeight}px`,
+          start: `top ${imageHeight}px`, //trigger 요소의 top이 scroll 대상의 imageHeight 위치에 도달했을 때 애니메이션 시작
           end: `+=${imageHeight}px`,
-          scrub: true,
+          scrub: true, //스크롤 위치에 따라 애니메이션 진행
         },
       }
     );
@@ -95,8 +96,9 @@ export default function ContentArea() {
           className={style.categoryImg}
         />
       </div>
+
       <div className={style.contentWrapper} ref={contentRef}>
-        <div className={style.content}>
+        <div className={`${style.content} ${showMore ? style.showMore : ""}`}>
           <div className={style.title}>
             <img src={iconMap[selectCategory]} alt="category icon" />
             <div className={style.category}>{selectCategory}</div>

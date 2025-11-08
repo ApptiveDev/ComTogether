@@ -10,6 +10,6 @@
 .content{
     display: flex;
     justify-content: center;
-    height: 550px;
+    height: 600px;
     overflow-y: hidden;
 }
