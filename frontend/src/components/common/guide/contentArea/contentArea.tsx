@@ -5,10 +5,13 @@ import data from "../../../../dummy/dummy_guide.json";
 import category from "@/assets/image/guideNav/category.svg";
 import mainboard from "@/assets/image/guideNav/mainboard.svg";
 import GuidePartButton from "../guidePartButton/guidePartButton";
+import ShowMoreButton from "../showMoreButton/showMoreButton";
 import info from "@/assets/image/info.svg";
 import check from "@/assets/image/check.svg";
 import warning from "@/assets/image/warning.svg";
-import dropdown from "@/assets/image/dropdown.svg";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLayoutEffect, useRef } from "react";
 
 const iconMap: Record<string, string> = {
   CPU: category,
@@ -42,8 +45,38 @@ const partIconMap: Record<string, string> = {
 };
 
 export default function ContentArea() {
-  const { selectCategory, contentPart, setContentPart } = useGuidePart();
+  const { selectCategory, contentPart, setContentPart, showMore, setShowMore } = useGuidePart();
   const currentData = data.find((item) => item.category === selectCategory);
+  gsap.registerPlugin(ScrollTrigger);
+
+  const imageRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    const container = containerRef.current;
+    const content = contentRef.current;
+    const image = imageRef.current;
+    if (!content ||!container || !image || !showMore) return;
+
+    const imageHeight = image.clientHeight;
+
+    gsap.fromTo(
+      image,
+      { opacity: 1 },
+      {
+        opacity: 0,
+        ease: "none",
+        scrollTrigger: {
+          trigger: content,
+          scroller: container,
+          start: `top ${imageHeight}px`,
+          end: `+=${imageHeight}px`,
+          scrub: true,
+        },
+      }
+    );
+  }, [showMore]);
 
   if (!currentData) {
     return <div>오류 발생</div>;
@@ -54,36 +87,51 @@ export default function ContentArea() {
   );
 
   return (
-    <div className={style.container}>
-      <img
-        src={imageMap[selectCategory]}
-        alt="category icon"
-        className={style.categoryImg}
-      />
-      <div className={style.content}>
-        <div className={style.title}>
-          <img src={iconMap[selectCategory]} alt="category icon" />
-          <div className={style.category}>{selectCategory}</div>
-          <div className={style.order}>조립순서 #{currentData.id}</div>
-        </div>
-        <div className={style.btnContainer}>
-          {currentData.content.map((item) => (
-            <GuidePartButton
-              key={item.title}
-              img={partIconMap[item.title]}
-              content={item.title}
-              isActive={item.title === contentPart}
-              onClick={() => {
-                setContentPart(item.title);
-              }}
+    <div className={style.container} ref={containerRef}>
+      <div className={style.imageWrapper} ref={imageRef}>
+        <img
+          src={imageMap[selectCategory]}
+          alt="category"
+          className={style.categoryImg}
+        />
+      </div>
+      <div className={style.contentWrapper} ref={contentRef}>
+        <div className={style.content}>
+          <div className={style.title}>
+            <img src={iconMap[selectCategory]} alt="category icon" />
+            <div className={style.category}>{selectCategory}</div>
+            <div className={style.order}>조립순서 #{currentData.id}</div>
+          </div>
+          <div className={style.btnContainer}>
+            {currentData.content.map((item) => (
+              <GuidePartButton
+                key={item.title}
+                img={partIconMap[item.title]}
+                content={item.title}
+                isActive={item.title === contentPart}
+                onClick={() => {
+                  setContentPart(item.title);
+                  setShowMore(false);
+                }}
+              />
+            ))}
+          </div>
+          <div className={style.textContent}>
+            <div className={style.description}>{currentPart?.description}</div>
+            {showMore && (
+              <div className={style.detail}>
+                {currentPart?.details.map(detail => (
+                  <div key={detail.title} className={style.detailItem}>
+                    <div className={style.detailItemTitle}>{detail.title}</div>
+                    <div className={style.detailItemDesc}>{detail.description}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+            <ShowMoreButton
+              isExpanded={showMore}
+              onClick={() => setShowMore(!showMore)}
             />
-          ))}
-        </div>
-        <div className={style.textContent}>
-          <div className={style.text}>{currentPart?.text}</div>
-          <div className={style.btn}>
-            <span>자세히보기</span>
-            <img src={dropdown} alt="dropdown" />
           </div>
         </div>
       </div>

@@ -18,7 +18,7 @@ const iconMap: Record<string, string> = {
 };
 
 export default function Sidebar(){
-    const { selectCategory, setCurrentStep, setSelectCategory, setContentPart } = useGuidePart();
+    const { selectCategory, setCurrentStep, setSelectCategory, setContentPart, setShowMore } = useGuidePart();
 
     return(
         <div className={style.container}>
@@ -31,6 +31,7 @@ export default function Sidebar(){
                         setSelectCategory(item.category);
                         setCurrentStep(item.id);
                         setContentPart("개요");
+                        setShowMore(false);
                     }}
                     isSelected={selectCategory === item.category}
                 />
