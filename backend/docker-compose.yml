@@ -7,8 +7,8 @@ services:
       - "8080:8080"
     env_file: ".env" #EC2에 올려둔 .env 사용
     depends_on:
-      - mysql
-      - elasticsearch
+      elasticsearch:
+        condition: service_healthy
 
   mysql:
     image: mysql:8.0
@@ -24,7 +24,7 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
 
-  elastic:
+  elasticsearch:
     build:
       context: .
       dockerfile: Dockerfile.elastic
@@ -36,5 +36,10 @@ services:
       - xpack.security.enabled=false
       - xpack.security.http.ssl.enabled=false
       - ES_JAVA_OPTS=-Xms256m -Xmx256m
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9200 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 volumes:
   mysql_data:
