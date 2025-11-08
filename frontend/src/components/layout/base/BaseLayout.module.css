@@ -1,0 +1,68 @@
+.layout {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.withHeader {
+    margin-top: calc(var(--header-height) + var(--spacing-3));
+    /* Header height + spacing */
+}
+
+/* Common layout patterns */
+.centered {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-6);
+}
+
+.fullWidth {
+    width: 100%;
+}
+
+.container {
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+    padding: 0 var(--spacing-4);
+    width: 100%;
+}
+
+.verticalSpacing {
+    padding-top: var(--spacing-12);
+    padding-bottom: var(--spacing-12);
+}
+
+.horizontalSpacing {
+    padding-left: var(--spacing-6);
+    padding-right: var(--spacing-6);
+}
+
+/* Title section styles */
+.titleSection {
+    text-align: center;
+    margin-bottom: var(--spacing-8);
+}
+
+.title {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    margin: 0 0 var(--spacing-4) 0;
+}
+
+.description {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-secondary);
+    line-height: var(--line-height-relaxed);
+    margin: 0;
+}

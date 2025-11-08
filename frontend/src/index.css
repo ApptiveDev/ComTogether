@@ -1,13 +1,46 @@
+/* Design System Imports */
+@import './styles/globals/variables.css';
+@import './styles/globals/tokens.css';
+@import './styles/globals/base.css';
+
+/* Font Face */
 @font-face {
   font-family: "Pretendard";
   src: url("@/assets/fonts/PretendardVariable.woff2");
 }
 
-html, body{
-  width:100%;
+/* Global Application Styles */
+html,
+body {
+  width: 100%;
   margin: 0;
 }
 
-body{
-  font-family: "Pretendard";
+body {
+  font-family: var(--font-primary);
+}
+
+/* Additional utility classes for legacy compatibility */
+.legacy-container {
+  max-width: var(--container-max-width);
+  margin: 0 auto;
+  padding: 0 var(--spacing-4);
+}
+
+.legacy-page-spacing {
+  padding-top: calc(var(--header-height) + var(--spacing-3));
+  /* Header height + extra spacing */
+}
+
+/* Brand color utilities for legacy components */
+.brand-primary {
+  color: #ff5525;
+}
+
+.brand-bg-primary {
+  background-color: #ff5525;
+}
+
+.brand-border-primary {
+  border-color: #ff5525;
 }

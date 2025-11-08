@@ -1,4 +1,6 @@
 import { BrowserRouter, Route, Routes, Navigate } from "react-router";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import "./App.css";
 import Home from "./pages/home";
 import CompatibilityCheck from "./pages/compatibilityCheck";
@@ -9,9 +11,15 @@ import MyPage from "./pages/myPage";
 import SignIn from "./pages/signIn";
 import Setting from "./pages/setting";
 import SecondSetting from "./pages/secondSetting";
-import RedirectPage from "./pages/oauth/kakao/redirectPage";
+import RedirectPage from "./pages/oauth/kakao/RedirectPage";
 import ExpertVerifyLayout from "./components/layout/expertVerifyLayout";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
+import {
+  ErrorBoundary,
+  GlobalLoader,
+  ToastProvider,
+} from "./components/providers";
+import { queryClient } from "./api/core/query-config";
 
 const Router = () => {
   return (
@@ -85,9 +93,14 @@ const Router = () => {
 
 function App() {
   return (
-    <>
-      <Router />
-    </>
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <Router />
+        <GlobalLoader />
+        <ToastProvider />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 }
 

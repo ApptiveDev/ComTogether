@@ -1,0 +1,101 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: var(--spacing-4);
+    background-color: var(--bg-secondary);
+}
+
+.errorCard {
+    background-color: var(--bg-primary);
+    border-radius: var(--border-radius-xl);
+    padding: var(--spacing-8);
+    box-shadow: var(--shadow-lg);
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+}
+
+.errorIcon {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-4);
+}
+
+.title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    margin: 0 0 var(--spacing-4) 0;
+}
+
+.message {
+    font-size: var(--font-size-base);
+    color: var(--text-secondary);
+    line-height: var(--line-height-relaxed);
+    margin: 0 0 var(--spacing-6) 0;
+}
+
+.actions {
+    display: flex;
+    gap: var(--spacing-3);
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.devSection {
+    margin-top: var(--spacing-6);
+    padding-top: var(--spacing-4);
+    border-top: 1px solid var(--border-default);
+}
+
+.detailsToggle {
+    background: none;
+    border: 1px solid var(--border-brand);
+    color: var(--text-brand);
+    padding: var(--spacing-2) var(--spacing-4);
+    border-radius: var(--border-radius-default);
+    cursor: pointer;
+    font-size: var(--font-size-sm);
+    transition: all var(--transition-fast);
+}
+
+.detailsToggle:hover {
+    background-color: var(--color-primary-50);
+}
+
+.errorDetails {
+    margin-top: var(--spacing-4);
+    text-align: left;
+}
+
+.errorDetails h4 {
+    margin: 0 0 var(--spacing-2) 0;
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+}
+
+.stackTrace {
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--border-default);
+    border-radius: var(--border-radius-default);
+    padding: var(--spacing-3);
+    font-family: var(--font-mono);
+    font-size: var(--font-size-xs);
+    color: var(--text-secondary);
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.apiErrorContent {
+    text-align: center;
+}
+
+.apiErrorActions {
+    margin-top: var(--spacing-4);
+    display: flex;
+    justify-content: center;
+}
