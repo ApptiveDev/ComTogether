@@ -4,7 +4,7 @@ import { useGuidePart } from "../../../../stores/useGuidePart";
 import data from "../../../../dummy/dummy_guide.json";
 
 export default function StepIndicator() {
-  const { currentStep, setCurrentStep, setSelectCategory, setContentPart } =
+  const { currentStep, setCurrentStep, setSelectCategory, setContentPart, setShowMore } =
     useGuidePart();
   const isActive = (stepId: number) => currentStep === stepId;
 
@@ -19,6 +19,7 @@ export default function StepIndicator() {
                 setCurrentStep(step.id);
                 setSelectCategory(step.category);
                 setContentPart("개요");
+                setShowMore(false);
               }}
             />
             <div
