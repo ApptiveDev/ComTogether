@@ -10,17 +10,13 @@ export const useLogout = () => {
     const navigate = useNavigate();
 
     const mutation = useMutation({
-        mutationFn: async (reason?: string) => {
-            if (reason) {
-                console.log(`로그아웃 사유: ${reason}`);
-            }
-
+        mutationFn: async () => {
             const accessToken = getAccessToken();
             
             // 서버에 로그아웃 요청 (토큰 무효화)
             if (accessToken) {
                 try {
-                    const response = await axios.post(
+                    await axios.post(
                         `${import.meta.env.VITE_API_URL}/users/logout`,
                         {},
                         {
@@ -31,17 +27,8 @@ export const useLogout = () => {
                             timeout: 5000,
                         }
                     );
-                    
-                    if (response.data.success) {
-                        console.log('✅ 서버 로그아웃 성공:', response.data.message);
-                        
-                        // 카카오 세션은 해제하지 않음 (재로그인 시 기존 사용자로 인식하기 위해)
-                        console.log('ℹ️ 카카오 세션은 유지됩니다. 재로그인 시 기존 계정으로 연결됩니다.');
-                    } else {
-                        console.warn('⚠️ 서버 로그아웃 응답 실패:', response.data);
-                    }
                 } catch (error) {
-                    console.error('❌ 서버 로그아웃 요청 실패:', error);
+                    console.error('서버 로그아웃 요청 실패:', error);
                 }
             }
         },
@@ -50,36 +37,41 @@ export const useLogout = () => {
             clearTokens();
             clearAuthState();
             
+            // 로컬 스토리지 완전 정리
+            localStorage.removeItem('token-store');
+            localStorage.removeItem('auth-store');
+            
             // 로그인 페이지로 이동
-            setTimeout(() => {
-                navigate('/signIn');
-            }, 100);
+            navigate('/signIn', { replace: true });
         },
         onError: () => {
             // 서버 요청이 실패해도 로컬 상태는 정리
             clearTokens();
             clearAuthState();
             
+            // 로컬 스토리지 완전 정리
+            localStorage.removeItem('token-store');
+            localStorage.removeItem('auth-store');
+            
             // 로그인 페이지로 이동
-            setTimeout(() => {
-                navigate('/signIn');
-            }, 100);
+            navigate('/signIn', { replace: true });
         },
     });
 
-    const logout = (reason?: string) => {
-        mutation.mutate(reason);
+    const logout = () => {
+        mutation.mutate();
     };
 
     // 즉시 로그아웃 (API 호출 없이)
-    const forceLogout = (reason?: string) => {
-        if (reason) {
-            console.log(`강제 로그아웃 사유: ${reason}`);
-        }
-        
+    const forceLogout = () => {
         clearTokens();
         clearAuthState();
-        navigate('/signIn');
+        
+        // 로컬 스토리지 완전 정리
+        localStorage.removeItem('token-store');
+        localStorage.removeItem('auth-store');
+        
+        navigate('/signIn', { replace: true });
     };
 
     return { 

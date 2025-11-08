@@ -1,19 +1,28 @@
-.container{
+.content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 30px;
+    gap: var(--spacing-8);
+    width: 100%;
+    max-width: 800px;
 }
 
-.title{
-    font-size: 30px;
-    font-weight: bold;
+/* CenteredLayout의 title과 description 스타일 확장 */
+.titleSection {
+    text-align: center;
+    margin-bottom: var(--spacing-8);
 }
 
-.description{
-    font-size: 20px;
-    font-weight: 500;
-    color: #828282;
-    margin-top: 18px;
-    margin-bottom: 30px;
+.title {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-4);
+}
+
+.description {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-secondary);
+    line-height: var(--line-height-relaxed);
 }

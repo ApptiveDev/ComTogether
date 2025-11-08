@@ -68,7 +68,7 @@ class KakaoServiceTest {
                 .andRespond(withSuccess(responseJson, MediaType.APPLICATION_JSON));
 
         // when
-        TokenDto tokenDto = kakaoService.getToken(code);
+        TokenDto tokenDto = kakaoService.getToken(code, null);
 
         // then
         assertThat(tokenDto.getAccessToken()).isEqualTo("access-token");
@@ -81,7 +81,7 @@ class KakaoServiceTest {
         server.expect(requestTo("https://kauth.kakao.com/oauth/token"))
                 .andRespond(withStatus(HttpStatus.BAD_REQUEST));
 
-        assertThatThrownBy(() -> kakaoService.getToken("invalid-code"))
+        assertThatThrownBy(() -> kakaoService.getToken("invalid-code", null))
                 .isInstanceOf(BusinessException.class)
                 .hasMessageContaining(ErrorCode.OAUTH_INVALID_CODE.getMessage());
     }
@@ -91,7 +91,7 @@ class KakaoServiceTest {
     public void getToken_fail_serverError() {
         server.expect(requestTo("https://kauth.kakao.com/oauth/token"))
                 .andRespond(withServerError());
-        assertThatThrownBy(() -> kakaoService.getToken("any-code"))
+        assertThatThrownBy(() -> kakaoService.getToken("any-code", null))
                 .isInstanceOf(BusinessException.class)
                 .hasMessageContaining(ErrorCode.OAUTH_PROVIDER_ERROR.getMessage());
     }

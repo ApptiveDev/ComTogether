@@ -29,7 +29,10 @@ public enum ErrorCode {
     NAVER_API_ERROR(502, "NAVER-999", "네이버 서버와 통신 중 오류가 발생했습니다."),
     
     // 가이드
-    GUIDE_NOT_FOUND(404, "GUIDE-001", "가이드를 찾을 수 없습니다");
+    GUIDE_NOT_FOUND(404, "GUIDE-001", "가이드를 찾을 수 없습니다"),
+
+    // 용어사전
+    WORD_NOT_FOUND(404, "GLOSSARY-001", "해당 용어를 찾을 수 없습니다.");
 
     private final int status;
     private final String code;

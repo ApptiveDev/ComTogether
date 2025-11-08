@@ -1,99 +1,150 @@
-* {
-    box-sizing: border-box;
-}
-
 .searchBar {
-    margin-top: 12px;
+    margin-top: var(--spacing-3);
+    /* 12px */
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     position: relative;
     flex-wrap: wrap;
     margin-bottom: 0;
+    width: 100%;
+}
+
+.searchForm {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    /* 8px */
+    width: 100%;
+    max-width: 500px;
+    /* 기존 428px + 여백 */
+    margin-bottom: var(--spacing-5);
+    /* 20px */
 }
 
 .searchInputWrapper {
-    width: 428px;
-    height: 40px;
-    background: #fff;
-    border-radius: 3px;
-    border: 2px solid #FF5525;
+    position: relative;
+    flex: 1;
     display: flex;
     align-items: center;
-    padding: 0;
-    margin-bottom: 20px;
+}
+
+.searchIcon {
+    position: absolute;
+    left: var(--spacing-3);
+    z-index: 1;
+    color: var(--text-tertiary);
+    display: flex;
+    align-items: center;
+    pointer-events: none;
 }
 
 .searchInput {
     width: 100%;
-    height: 100%;
-    padding: 10px 24px;
-    border: none;
+    height: var(--input-height);
+    /* 40px와 동일 */
+    padding: 0 var(--spacing-3) 0 2.5rem;
+    /* 왼쪽은 아이콘 공간 확보 */
+    font-family: var(--font-primary);
+    font-size: var(--font-size-base);
+    color: var(--input-text);
+    background-color: var(--input-bg);
+    border: 2px solid #FF5525;
+    /* 브랜드 색상 유지 */
+    border-radius: var(--border-radius-md);
+    /* 기존 3px와 유사 */
+    transition: all var(--transition-fast);
     outline: none;
-    border-radius: 3px;
-    font-size: 16px;
-    background: transparent;
 }
 
-.searchBtn {
-    background: #FF5525;
-    color: #fff;
-    border: none;
-    border-radius: 3px;
-    margin-left: 8px;
-    padding: 10px 24px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.2s;
-    white-space: nowrap;
+.searchInput:focus {
+    border-color: #FF5525;
+    box-shadow: 0 0 0 3px rgba(255, 85, 37, 0.1);
 }
 
-.searchBtn:hover {
-    background: #e04a1f;
+.searchInput::placeholder {
+    color: var(--input-placeholder);
 }
 
 .recentSearches {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
-    margin: 12px 0 30px 0;
+    gap: var(--spacing-2);
+    /* 8px */
+    margin: var(--spacing-3) 0 var(--spacing-8) 0;
+    /* 12px 0 30px 0 */
     width: 100%;
 }
 
 .recentSearchLabel {
     display: flex;
     align-items: center;
-    font-size: 15px;
-    color: #888;
+    font-size: var(--font-size-sm);
+    /* 15px → 14px */
+    color: var(--text-tertiary);
+    margin-right: var(--spacing-4);
 }
 
 .recentSearchClock {
-    margin-left: 8px;
-    font-size: 18px;
-    color: #bbb;
+    margin-left: var(--spacing-2);
+    /* 8px */
+    font-size: var(--font-size-lg);
+    color: var(--text-tertiary);
+    display: flex;
+    align-items: center;
 }
 
 .recentSearchItem {
-    background: #fff;
-    border-radius: 8px;
-    border: 1.5px solid #eee;
-    padding: 8px 18px;
-    font-size: 15px;
-    color: #444;
+    background: var(--bg-primary);
+    border-radius: var(--border-radius-lg);
+    /* 8px */
+    border: 1.5px solid var(--border-default);
+    padding: var(--spacing-2) var(--spacing-4);
+    /* 8px 18px */
+    font-size: var(--font-size-sm);
+    /* 15px → 14px */
+    color: var(--text-primary);
     display: flex;
     align-items: center;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
-    font-weight: 500;
-    height: 40px;
+    box-shadow: var(--shadow-sm);
+    font-weight: var(--font-weight-medium);
+    height: var(--input-height);
+    /* 40px */
+    transition: all var(--transition-fast);
+}
+
+.recentSearchItem:hover {
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-default);
 }
 
 .recentSearchRemove {
-    margin-left: 4px;
+    margin-left: var(--spacing-1);
+    /* 4px */
     cursor: pointer;
-    font-size: 16px;
+    font-size: var(--font-size-base);
+    /* 16px */
     color: #FF5525;
-    transition: color 0.2s;
+    /* 브랜드 색상 유지 */
+    transition: color var(--transition-fast);
 }
 
 .recentSearchRemove:hover {
     color: #e04a1f;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .searchForm {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--spacing-3);
+    }
+
+    .searchInputWrapper {
+        width: 100%;
+    }
+
+    .recentSearches {
+        margin-top: var(--spacing-2);
+    }
 }

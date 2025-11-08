@@ -1,0 +1,34 @@
+.container {
+    overflow: auto;
+    border: 1px solid var(--border-default);
+    border-radius: var(--border-radius-default);
+    background-color: var(--bg-primary);
+}
+
+.container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.container::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+.container::-webkit-scrollbar-thumb {
+    background: var(--border-default);
+    border-radius: 4px;
+}
+
+.container::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-2);
+    border-bottom: 1px solid var(--border-light);
+}
+
+.item:last-child {
+    border-bottom: none;
+}

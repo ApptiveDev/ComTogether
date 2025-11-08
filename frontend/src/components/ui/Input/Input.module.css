@@ -1,0 +1,104 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-1);
+}
+
+.label {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    color: var(--text-primary);
+}
+
+.inputWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input {
+    width: 100%;
+    height: var(--input-height);
+    padding: 0 var(--input-padding-x);
+    font-family: var(--font-primary);
+    font-size: var(--font-size-base);
+    color: var(--input-text);
+    background-color: var(--input-bg);
+    border: var(--border-width-1) solid var(--input-border);
+    border-radius: var(--border-radius-lg);
+    transition: all var(--transition-fast);
+}
+
+.input:focus {
+    outline: none;
+    border-color: var(--input-border-focus);
+    box-shadow: 0 0 0 3px var(--color-primary-100);
+}
+
+.input::placeholder {
+    color: var(--input-placeholder);
+}
+
+.input:disabled {
+    background-color: var(--input-bg-disabled);
+    cursor: not-allowed;
+}
+
+/* Variants */
+.filled {
+    background-color: var(--bg-tertiary);
+    border-color: transparent;
+}
+
+.filled:focus {
+    background-color: var(--input-bg);
+    border-color: var(--input-border-focus);
+}
+
+/* Icon styles */
+.hasLeftIcon {
+    padding-left: 2.5rem;
+}
+
+.hasRightIcon {
+    padding-right: 2.5rem;
+}
+
+.leftIcon,
+.rightIcon {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-tertiary);
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+}
+
+.leftIcon {
+    left: var(--spacing-3);
+}
+
+.rightIcon {
+    right: var(--spacing-3);
+}
+
+/* Error state */
+.error {
+    border-color: var(--input-border-error);
+}
+
+.error:focus {
+    border-color: var(--input-border-error);
+    box-shadow: 0 0 0 3px var(--color-error-light);
+}
+
+.errorText {
+    font-size: var(--font-size-sm);
+    color: var(--text-error);
+}
+
+.helperText {
+    font-size: var(--font-size-sm);
+    color: var(--text-tertiary);
+}
