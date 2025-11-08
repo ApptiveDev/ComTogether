@@ -1,0 +1,20 @@
+{
+  "analysis": {
+    "filter": {
+      "glossary_synonyms": {
+        "type": "synonym",
+        "synonyms": [
+          "AI, 인공지능",
+          "CPU, 중앙처리장치, 씨피유",
+          "RAM, 램, 메모리, random access memory"
+        ]
+      }
+    },
+    "analyzer": {
+      "glossary_name_analyzer": {
+        "tokenizer": "nori_tokenizer",
+        "filter": ["nori_part_of_speech", "nori_readingform", "lowercase", "glossary_synonyms"]
+      }
+    }
+  }
+}

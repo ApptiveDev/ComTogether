@@ -20,6 +20,12 @@ spring:
   sql:
     init:
       mode: always
+  elasticsearch:
+    uris: ${ELASTICSEARCH_URI}
+
+logging:
+  level:
+    org.elasticsearch.client: TRACE
 
 oauth:
   kakao:
