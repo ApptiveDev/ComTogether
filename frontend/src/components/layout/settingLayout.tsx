@@ -18,7 +18,7 @@ export default function SettingLayout() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const navigate = useNavigate();
-  const { setTempRole } = useProfileSetupStore(); // 추가
+  const { setTempRole } = useProfileSetupStore();
 
   useEffect(() => {
     setAbled(selectedLevel !== null);

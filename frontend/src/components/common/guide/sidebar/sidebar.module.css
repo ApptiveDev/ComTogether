@@ -1,6 +1,10 @@
-.container{
+.container {
     width: fit-content;
     display: flex;
     flex-direction: column;
     gap: 18px;
+    position: sticky;
+    top: 125px;
+    /* header + stepIndicator 높이만큼 아래에 고정 */
+    align-self: flex-start;
 }

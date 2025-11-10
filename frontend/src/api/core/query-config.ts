@@ -54,6 +54,7 @@ export const queryKeys = {
   GUIDE: {
     ALL: ['guide'] as const,
     CATEGORIES: ['guide', 'categories'] as const,
+    BY_CATEGORY: (category: string) => ['guide', 'category', category] as const,
     ITEMS: (category?: string) => category ? ['guide', 'items', category] : ['guide', 'items'] as const,
   },
   
