@@ -3,11 +3,13 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    padding-top: 60px;
+    padding-top: 50px;
     gap: 70px;
 }
 
 .content{
     display: flex;
     justify-content: center;
+    height: 600px;
+    overflow-y: hidden;
 }

@@ -1,9 +1,94 @@
-.btn{
-    min-width: 155px;
-    min-height: 55px;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    font-weight: bold;
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-2);
+    font-family: var(--font-primary);
+    font-weight: var(--font-weight-bold);
+    line-height: 1;
+    text-decoration: none;
+    border: var(--border-width-1) solid transparent;
+    border-radius: var(--border-radius-lg);
     cursor: pointer;
+    transition: all var(--transition-fast);
+    user-select: none;
+    position: relative;
+
+    /* 기존 스타일 유지 */
+    min-width: 155px;
+    font-size: var(--font-size-base);
+}
+
+.btn:focus {
+    outline: 2px solid var(--color-primary-500);
+    outline-offset: 2px;
+}
+
+/* Sizes */
+.sm {
+    height: var(--button-height-sm);
+    padding: 0 var(--spacing-3);
+    font-size: var(--font-size-sm);
+    min-width: 100px;
+}
+
+.md {
+    height: var(--button-height-md);
+    padding: 0 var(--spacing-4);
+    font-size: var(--font-size-base);
+    min-width: 120px;
+}
+
+.lg {
+    height: var(--button-height-lg);
+    padding: 0 var(--spacing-6);
+    font-size: var(--font-size-lg);
+    min-width: 140px;
+}
+
+.xl {
+    height: var(--button-height-xl);
+    padding: 0 var(--spacing-6);
+    font-size: var(--font-size-base);
+    min-width: 155px;
+    /* 기존 값 유지 */
+}
+
+/* Variants - 새로운 디자인 시스템 */
+.primary {
+    background-color: var(--button-primary-bg);
+    color: var(--button-primary-text);
+}
+
+.primary:hover:not(.disabled) {
+    background-color: var(--button-primary-bg-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.secondary {
+    background-color: var(--button-secondary-bg);
+    color: var(--button-secondary-text);
+}
+
+.secondary:hover:not(.disabled) {
+    background-color: var(--button-secondary-bg-hover);
+}
+
+.outline {
+    background-color: var(--button-outline-bg);
+    color: var(--button-outline-text);
+    border-color: var(--button-outline-border);
+}
+
+.outline:hover:not(.disabled) {
+    background-color: var(--button-outline-bg-hover);
+}
+
+/* States */
+.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
 }

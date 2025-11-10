@@ -1,18 +1,21 @@
 .header {
     display: flex;
     justify-content: space-between;
-    gap: 180px;
+    gap: var(--spacing-20);
+    /* 180px → 5rem (80px) 반응형 고려 */
     align-items: center;
-    padding: 20px 60px 0 60px;
-    height: 75px;
-    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+    padding: var(--spacing-5) var(--spacing-16) 0 var(--spacing-16);
+    /* 20px 60px 0 60px */
+    height: calc(var(--header-height) + var(--spacing-3));
+    /* 기존 75px와 유사 */
+    box-shadow: var(--shadow-md);
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 1;
-    background-color: white;
+    z-index: var(--z-index-fixed);
+    background-color: var(--bg-primary);
     opacity: 0;
-    transition: opacity 0.5s ease;
+    transition: opacity var(--transition-slow);
 }
 
 .header.show {
@@ -20,18 +23,53 @@
 }
 
 .logo {
-    font-size: 20px;
-    font-weight: bold;
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
     color: #ff5525;
+    /* 브랜드 색상 유지 */
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: var(--spacing-2);
     cursor: pointer;
     background-color: transparent;
     border: none;
+    line-height: var(--line-height-tight);
+    transition: all var(--transition-fast);
+}
+
+.logo:hover {
+    transform: scale(1.05);
 }
 
 .btnContainer {
     display: flex;
     justify-content: space-between;
-    gap: 100px;
+    gap: var(--spacing-12);
+    /* 100px → 3rem (48px) 반응형 고려 */
+}
+
+/* 반응형 디자인 */
+@media (max-width: 1024px) {
+    .header {
+        gap: var(--spacing-8);
+        padding: var(--spacing-4) var(--spacing-8) 0 var(--spacing-8);
+    }
+
+    .btnContainer {
+        gap: var(--spacing-6);
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        gap: var(--spacing-4);
+        padding: var(--spacing-3) var(--spacing-4) 0 var(--spacing-4);
+    }
+
+    .btnContainer {
+        gap: var(--spacing-3);
+    }
+
+    .logo {
+        font-size: var(--font-size-lg);
+    }
 }

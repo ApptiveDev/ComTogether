@@ -1,0 +1,67 @@
+:root {
+    /* ===== 텍스트 색상 ===== */
+    --text-primary: var(--color-gray-900);
+    --text-secondary: var(--color-gray-600);
+    --text-tertiary: var(--color-gray-400);
+    --text-inverse: #ffffff;
+    --text-brand: var(--color-primary-600);
+    --text-success: var(--color-success);
+    --text-warning: var(--color-warning);
+    --text-error: var(--color-error);
+
+    /* ===== 배경 색상 ===== */
+    --bg-primary: #ffffff;
+    --bg-secondary: var(--color-gray-50);
+    --bg-tertiary: var(--color-gray-100);
+    --bg-overlay: rgba(0, 0, 0, 0.5);
+
+    /* ===== 테두리 색상 ===== */
+    --border-default: var(--color-gray-200);
+    --border-strong: var(--color-gray-300);
+    --border-brand: var(--color-primary-300);
+    --border-success: var(--color-success);
+    --border-warning: var(--color-warning);
+    --border-error: var(--color-error);
+
+    /* ===== 버튼 스타일 ===== */
+    --button-primary-bg: var(--color-primary-600);
+    --button-primary-bg-hover: var(--color-primary-700);
+    --button-primary-text: #ffffff;
+
+    --button-secondary-bg: var(--color-gray-100);
+    --button-secondary-bg-hover: var(--color-gray-200);
+    --button-secondary-text: var(--color-gray-700);
+
+    --button-outline-bg: transparent;
+    --button-outline-bg-hover: var(--color-primary-50);
+    --button-outline-border: var(--color-primary-600);
+    --button-outline-text: var(--color-primary-600);
+
+    /* ===== 폼 요소 ===== */
+    --input-bg: #ffffff;
+    --input-bg-disabled: var(--color-gray-50);
+    --input-border: var(--border-default);
+    --input-border-focus: var(--color-primary-500);
+    --input-border-error: var(--color-error);
+    --input-text: var(--text-primary);
+    --input-placeholder: var(--text-tertiary);
+
+    /* ===== 컴포넌트 토큰 ===== */
+    --button-height-sm: 2rem;
+    /* 32px */
+    --button-height-md: 2.5rem;
+    /* 40px */
+    --button-height-lg: 3rem;
+    /* 48px */
+    --button-height-xl: 3.5rem;
+    /* 56px - 기존 55px와 유사 */
+
+    --input-height: 2.5rem;
+    --input-padding-x: var(--spacing-3);
+
+    /* ===== 레이아웃 ===== */
+    --container-max-width: 1200px;
+    --header-height: 4rem;
+    --sidebar-width: 16rem;
+    --content-padding: var(--spacing-6);
+}

@@ -30,8 +30,6 @@ export const refreshAccessToken = async (): Promise<{
   }
 
   try {
-    console.log('토큰 갱신 API 호출');
-    
     const response = await axios.post<RefreshTokenResponse>(
       `${import.meta.env.VITE_API_URL}/refresh`,
       {},
@@ -51,8 +49,6 @@ export const refreshAccessToken = async (): Promise<{
     
     // 새로운 토큰 저장
     setTokens(access_token, newRefreshToken || refreshToken);
-    
-    console.log('토큰 갱신 성공');
     
     return {
       success: true,
