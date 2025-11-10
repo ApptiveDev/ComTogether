@@ -62,10 +62,8 @@ export const API_ENDPOINTS = {
   
   // 가이드 관련
   GUIDE: {
-    BASE: '/guide',
-    CATEGORIES: '/guide/categories',
-    ITEMS: '/guide/items',
-    BY_CATEGORY: (category: string) => `/guide/categories/${category}/items`,
+    BASE: '/guides',
+    BY_CATEGORY: (category: string) => `/guides?category=${category}`,
   },
   
   // 제품 관련
