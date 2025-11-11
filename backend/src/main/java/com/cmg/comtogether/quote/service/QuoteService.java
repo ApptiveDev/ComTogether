@@ -3,6 +3,7 @@ package com.cmg.comtogether.quote.service;
 import com.cmg.comtogether.common.exception.BusinessException;
 import com.cmg.comtogether.common.exception.ErrorCode;
 import com.cmg.comtogether.quote.dto.AddQuoteItemRequestDto;
+import com.cmg.comtogether.quote.dto.QuoteItemResponseDto;
 import com.cmg.comtogether.quote.dto.QuoteResponseDto;
 import com.cmg.comtogether.quote.entity.Quote;
 import com.cmg.comtogether.quote.entity.QuoteItem;
@@ -45,7 +46,7 @@ public class QuoteService {
      * 견적이 없으면 자동으로 생성
      */
     @Transactional
-    public QuoteResponseDto addItem(Long userId, AddQuoteItemRequestDto requestDto) {
+    public QuoteItemResponseDto addItem(Long userId, AddQuoteItemRequestDto requestDto) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
 
@@ -79,17 +80,14 @@ public class QuoteService {
                 requestDto.getCategory1(),
                 requestDto.getCategory2(),
                 requestDto.getCategory3(),
-                requestDto.getCategory4(),
-                requestDto.getCategory()
+                requestDto.getCategory4()
         );
 
         quote.addItem(quoteItem);
         quoteItemRepository.save(quoteItem);
         quoteRepository.save(quote);
 
-        // 다시 조회하여 items 포함
-        Quote savedQuote = quoteRepository.findByUserUserIdOrderByUpdatedAtDesc(userId).get(0);
-        return QuoteResponseDto.from(savedQuote);
+        return QuoteItemResponseDto.from(quoteItem);
     }
 
     /**

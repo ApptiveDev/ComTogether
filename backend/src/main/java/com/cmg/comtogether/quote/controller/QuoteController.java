@@ -3,6 +3,7 @@ package com.cmg.comtogether.quote.controller;
 import com.cmg.comtogether.common.response.ApiResponse;
 import com.cmg.comtogether.common.security.CustomUserDetails;
 import com.cmg.comtogether.quote.dto.AddQuoteItemRequestDto;
+import com.cmg.comtogether.quote.dto.QuoteItemResponseDto;
 import com.cmg.comtogether.quote.dto.QuoteResponseDto;
 import com.cmg.comtogether.quote.service.QuoteService;
 import com.cmg.comtogether.user.entity.User;
@@ -37,12 +38,12 @@ public class QuoteController {
      * POST /quotes/items
      */
     @PostMapping("/items")
-    public ResponseEntity<ApiResponse<QuoteResponseDto>> addItem(
+    public ResponseEntity<ApiResponse<QuoteItemResponseDto>> addItem(
             @AuthenticationPrincipal CustomUserDetails userDetails,
             @Valid @RequestBody AddQuoteItemRequestDto requestDto
     ) {
         User user = userDetails.getUser();
-        QuoteResponseDto responseDto = quoteService.addItem(user.getUserId(), requestDto);
+        QuoteItemResponseDto responseDto = quoteService.addItem(user.getUserId(), requestDto);
         return ResponseEntity.ok(ApiResponse.success(responseDto));
     }
 

@@ -1,6 +1,7 @@
 package com.cmg.comtogether.quote.dto;
 
 import com.cmg.comtogether.quote.entity.Quote;
+import com.cmg.comtogether.quote.entity.QuoteItem;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,7 +20,7 @@ public class QuoteResponseDto {
     private List<QuoteItemResponseDto> items;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private Integer totalPrice;
+    private Integer totalPrice; //최저가(lprice) 합계
     private Integer itemCount;
 
     public static QuoteResponseDto from(Quote quote) {
@@ -27,8 +28,8 @@ public class QuoteResponseDto {
                 .map(QuoteItemResponseDto::from)
                 .collect(Collectors.toList());
 
-        Integer totalPrice = items.stream()
-                .map(QuoteItemResponseDto::getLprice)
+        Integer totalPrice = quote.getItems().stream()
+                .map(QuoteItem::getLprice)
                 .filter(price -> price != null)
                 .reduce(0, Integer::sum);
 

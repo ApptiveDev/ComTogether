@@ -52,10 +52,6 @@ public class QuoteItem {
     private String category3;
     private String category4;
 
-    // 견적 슬롯 구분용 카테고리 (CPU, 메모리 등)
-    @Column(nullable = false)
-    private String category;
-
     @Builder.Default
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -63,7 +59,7 @@ public class QuoteItem {
     public QuoteItem(Quote quote, Long productId, String title, Integer lprice, Integer hprice,
                      String image, String link, String mallName, String productType,
                      String maker, String brand, String category1, String category2,
-                     String category3, String category4, String category) {
+                     String category3, String category4) {
         this.quote = quote;
         this.productId = productId;
         this.title = title;
@@ -79,7 +75,6 @@ public class QuoteItem {
         this.category2 = category2;
         this.category3 = category3;
         this.category4 = category4;
-        this.category = category;
         this.createdAt = LocalDateTime.now();
     }
 }

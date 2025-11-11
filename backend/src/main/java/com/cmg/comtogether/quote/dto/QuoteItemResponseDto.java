@@ -22,15 +22,13 @@ public class QuoteItemResponseDto {
     private String link;
     private String mallName;
     private String productType;
-    private String maker;
     private String brand;
-    // 네이버 쇼핑 카테고리(대분류~세분류)
     private String category1;
     private String category2;
-    private String category3;
+    private String category3; // 견적 슬롯으로 활용 (예: CPU, 메모리 등)
     private String category4;
-    // 견적 슬롯 구분용 카테고리 (CPU, 메모리 등)
-    private String category;
+
+
     private LocalDateTime createdAt;
 
     public static QuoteItemResponseDto from(QuoteItem quoteItem) {
@@ -44,13 +42,11 @@ public class QuoteItemResponseDto {
                 .link(quoteItem.getLink())
                 .mallName(quoteItem.getMallName())
                 .productType(quoteItem.getProductType())
-                .maker(quoteItem.getMaker())
                 .brand(quoteItem.getBrand())
                 .category1(quoteItem.getCategory1())
                 .category2(quoteItem.getCategory2())
                 .category3(quoteItem.getCategory3())
                 .category4(quoteItem.getCategory4())
-                .category(quoteItem.getCategory())
                 .createdAt(quoteItem.getCreatedAt())
                 .build();
     }

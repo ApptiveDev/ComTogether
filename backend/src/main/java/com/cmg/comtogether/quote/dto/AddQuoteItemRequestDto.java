@@ -41,9 +41,5 @@ public class AddQuoteItemRequestDto {
     private String category2;
     private String category3;
     private String category4;
-
-    // 견적 슬롯 구분용 카테고리 (CPU, 메모리 등 상단 탭)
-    @NotBlank(message = "카테고리는 필수입니다.")
-    private String category;
 }
 
