@@ -2,6 +2,7 @@ package com.cmg.comtogether.jwt.util;
 
 import com.cmg.comtogether.common.exception.BusinessException;
 import com.cmg.comtogether.common.exception.ErrorCode;
+import com.cmg.comtogether.user.entity.User;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
@@ -25,21 +26,21 @@ public class JwtTokenProvider {
     @Value("${jwt.refresh-token-expire-time}")
     private long refreshTokenExpireTime;
 
-    public String createAccessToken(Long userId) {
-        return createToken(userId, accessTokenExpireTime);
+    public String createAccessToken(User user) {
+        return createToken(user, accessTokenExpireTime);
     }
 
-    public String createRefreshToken(Long userId) {
-        return createToken(userId, refreshTokenExpireTime);
+    public String createRefreshToken(User user) {
+        return createToken(user, refreshTokenExpireTime);
     }
 
-    private String createToken(Long userId, long validity) {
+    private String createToken(User user, long validity) {
         Date now = new Date();
         Date expiry = new Date(now.getTime() + validity);
 
         return Jwts.builder()
-                .setSubject(String.valueOf(userId))
-                .claim("auth", "ROLE_USER")
+                .setSubject(String.valueOf(user.getUserId()))
+                .claim("auth", user.getRole())
                 .claim("jti", UUID.randomUUID().toString())
                 .setIssuedAt(now)
                 .setExpiration(expiry)

@@ -3,6 +3,13 @@ INSERT INTO interest (name, is_custom) VALUES ('디자인', false);
 INSERT INTO interest (name, is_custom) VALUES ('게임', false);
 INSERT INTO interest (name, is_custom) VALUES ('커스텀', true);
 
+INSERT INTO user (name, email, password, role, social_type, social_id, point, profile_image_url, initialized)
+VALUES ('admin01', 'admin01@comtogether.com','$2a$10$bfTyi9V6o3kaOJnehJufCeLinAOXzkZrqdLOmMV9rFWj.SmHCo3Vy', 'ADMIN', NULL, NULL, 0, NULL,TRUE);
+INSERT INTO user (name, email, password, role, social_type, social_id, point, profile_image_url, initialized)
+VALUES ('expert01', 'expert01@comtogether.com', '$2a$10$aBLIdWBNt5te1Rf57lh/b.XYs9pshgW9xj.E3JI5w.BGg8x8j/N8O', 'EXPERT', NULL, NULL, 0, NULL, TRUE);
+INSERT INTO user (name, email, password, role, social_type, social_id, point, profile_image_url, initialized)
+VALUES ('beginner01', 'beginner01@comtogether.com', '$2a$10$q2cPZqXqu04FzPBV7Np94OtEi9M1P3q7/keSVGwPVZSonutRdWggm', 'BEGINNER', NULL, NULL, 0, NULL, TRUE);
+
 -- Guide 테이블 샘플 데이터
 INSERT INTO guide (category, intro, detail, caution, beginner) VALUES
     ('cpu',

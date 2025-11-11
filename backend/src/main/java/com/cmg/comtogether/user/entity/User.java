@@ -24,15 +24,18 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
+    @Column
+    private String password;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role = Role.BEGINNER;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column
     private SocialType socialType;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String socialId;
 
     @Builder.Default

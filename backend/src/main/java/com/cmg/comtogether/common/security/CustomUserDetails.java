@@ -19,18 +19,17 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // Role 기반 권한
-        return Collections.singleton(() -> "ROLE_USER");
+        return Collections.singleton(() -> "ROLE_" + user.getRole().name());
     }
 
     @Override
     public String getPassword() {
-        return null;
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return String.valueOf(user.getUserId());
+        return user.getEmail();
     }
 
     @Override

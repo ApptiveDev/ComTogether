@@ -41,9 +41,12 @@ public class SecurityConfig {
                                 "/v3/api-docs/**",
                                 "/products/**",
                                 "/guide/**",
-                                "/users/all",
-                                "/glossary/**"
+                                "/glossary/**",
+                                "/users/login"
                         ).permitAll()
+                        .requestMatchers(
+                                "/users/all"
+                        ).hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .exceptionHandling(ex -> ex

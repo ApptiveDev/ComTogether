@@ -36,7 +36,7 @@ public class SwaggerConfig {
     @Bean
     public OpenApiCustomizer oauthSecurityIgnoreCustomizer() {
         return openApi -> openApi.getPaths().forEach((path, pathItem) -> {
-            if (path.startsWith("/oauth") || path.startsWith("/refresh") || path.startsWith("/users/all")) {
+            if (path.startsWith("/users/login") || path.startsWith("/oauth") || path.startsWith("/refresh")) {
                 pathItem.readOperations().forEach(operation -> operation.setSecurity(Collections.emptyList()));
             }
         });
