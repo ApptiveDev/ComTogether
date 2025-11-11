@@ -33,7 +33,12 @@ public enum ErrorCode {
     GUIDE_NOT_FOUND(404, "GUIDE-001", "가이드를 찾을 수 없습니다"),
 
     // 용어사전
-    WORD_NOT_FOUND(404, "GLOSSARY-001", "해당 용어를 찾을 수 없습니다.");
+    WORD_NOT_FOUND(404, "GLOSSARY-001", "해당 용어를 찾을 수 없습니다."),
+
+    // 견적
+    QUOTE_NOT_FOUND(404, "QUOTE-001", "견적을 찾을 수 없습니다."),
+    QUOTE_ITEM_NOT_FOUND(404, "QUOTE-002", "견적 항목을 찾을 수 없습니다."),
+    QUOTE_ACCESS_DENIED(403, "QUOTE-003", "견적에 대한 접근 권한이 없습니다.");
 
     private final int status;
     private final String code;
