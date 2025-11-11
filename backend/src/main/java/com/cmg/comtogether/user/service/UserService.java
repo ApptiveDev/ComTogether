@@ -4,14 +4,17 @@ import com.cmg.comtogether.common.exception.BusinessException;
 import com.cmg.comtogether.common.exception.ErrorCode;
 import com.cmg.comtogether.interest.entity.Interest;
 import com.cmg.comtogether.interest.service.InterestService;
+import com.cmg.comtogether.jwt.dto.TokenDto;
 import com.cmg.comtogether.jwt.service.JwtService;
 import com.cmg.comtogether.user.dto.UserInitializeRequestDto;
 import com.cmg.comtogether.user.dto.UserResponseDto;
+import com.cmg.comtogether.user.entity.Role;
 import com.cmg.comtogether.user.entity.User;
 import com.cmg.comtogether.user.mapper.UserMapper;
 import com.cmg.comtogether.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +31,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final InterestService interestService;
     private final JwtService jwtService;
+    private final PasswordEncoder passwordEncoder;
 
     public void logout(Long userId) {
         if (!userRepository.existsById(userId)) {
@@ -74,7 +78,19 @@ public class UserService {
         userRepository.delete(deleteUser.get());
     }
 
+    @Transactional
     public void deleteAllUsers() {
-        userRepository.deleteAll();
+        userRepository.deleteAllByRoleNot(Role.ADMIN);
+    }
+
+    public TokenDto login(String email, String password) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new BusinessException(ErrorCode.INVALID_PASSWORD);
+        }
+
+        return jwtService.generateToken(user);
     }
 }

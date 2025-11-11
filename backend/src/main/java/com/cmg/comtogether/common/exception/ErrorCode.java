@@ -20,6 +20,7 @@ public enum ErrorCode {
     TOKEN_EXPIRED(401, "AUTH-002", "토큰이 만료되었습니다."),
     INVALID_TOKEN(401, "AUTH-003", "유효하지 않은 토큰입니다."),
     FORBIDDEN(403, "AUTH-004", "접근 권한이 없습니다."),
+    INVALID_PASSWORD(401, "AUTH-005", "비밀번호가 일치하지 않습니다."),
 
     // 카카오 API
     OAUTH_INVALID_CODE(400, "OAUTH-000", "유효하지 않은 인가 코드입니다."),

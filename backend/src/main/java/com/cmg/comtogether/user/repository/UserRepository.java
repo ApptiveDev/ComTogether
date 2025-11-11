@@ -1,5 +1,6 @@
 package com.cmg.comtogether.user.repository;
 
+import com.cmg.comtogether.user.entity.Role;
 import com.cmg.comtogether.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,4 +18,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
             "left join fetch ui.interest i " +
             "where u.userId = :userId")
     Optional<User> findByIdWithInterests(@Param("userId") Long userId);
+
+    Optional<User> findByEmail(String email);
+
+    void deleteAllByRoleNot(Role role);
 }

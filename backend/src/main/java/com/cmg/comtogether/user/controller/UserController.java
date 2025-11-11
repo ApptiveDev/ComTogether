@@ -2,6 +2,8 @@ package com.cmg.comtogether.user.controller;
 
 import com.cmg.comtogether.common.response.ApiResponse;
 import com.cmg.comtogether.common.security.CustomUserDetails;
+import com.cmg.comtogether.jwt.dto.TokenDto;
+import com.cmg.comtogether.user.dto.LoginRequestDto;
 import com.cmg.comtogether.user.dto.UserInitializeRequestDto;
 import com.cmg.comtogether.user.dto.UserResponseDto;
 import com.cmg.comtogether.user.entity.User;
@@ -20,6 +22,13 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponse<TokenDto>> login(
+            @Valid @RequestBody LoginRequestDto loginRequestDto) {
+        TokenDto tokenDto = userService.login(loginRequestDto.getEmail(), loginRequestDto.getPassword());
+        return ResponseEntity.ok(ApiResponse.success(tokenDto));
+    }
 
     @PostMapping("/logout")
     public ResponseEntity<ApiResponse<Void>> logout(@AuthenticationPrincipal CustomUserDetails userDetails) {
