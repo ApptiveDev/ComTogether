@@ -18,7 +18,6 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class QuoteService {
 
     private final QuoteRepository quoteRepository;
@@ -28,14 +27,15 @@ public class QuoteService {
     /**
      * 사용자의 현재 견적 조회 (가장 최근 업데이트된 견적)
      */
+    @Transactional
     public QuoteResponseDto getCurrentQuote(Long userId) {
         List<Quote> quotes = quoteRepository.findByUserUserIdOrderByUpdatedAtDesc(userId);
-        
+
         if (quotes.isEmpty()) {
             // 견적이 없으면 빈 견적 생성
             return createEmptyQuote(userId);
         }
-        
+
         Quote currentQuote = quotes.get(0);
         return QuoteResponseDto.from(currentQuote);
     }
@@ -52,7 +52,7 @@ public class QuoteService {
         // 가장 최근 견적 가져오기
         List<Quote> quotes = quoteRepository.findByUserUserIdOrderByUpdatedAtDesc(userId);
         Quote quote;
-        
+
         if (quotes.isEmpty()) {
             // 견적이 없으면 새로 생성
             quote = Quote.builder()
@@ -101,7 +101,7 @@ public class QuoteService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.QUOTE_ITEM_NOT_FOUND));
 
         Quote quote = quoteItem.getQuote();
-        
+
         // 권한 확인
         if (!quote.getUser().getUserId().equals(userId)) {
             throw new BusinessException(ErrorCode.QUOTE_ACCESS_DENIED);
@@ -122,17 +122,17 @@ public class QuoteService {
     @Transactional
     public QuoteResponseDto clearQuote(Long userId) {
         List<Quote> quotes = quoteRepository.findByUserUserIdOrderByUpdatedAtDesc(userId);
-        
+
         if (quotes.isEmpty()) {
             return createEmptyQuote(userId);
         }
-        
+
         Quote quote = quotes.get(0);
-        
+
         // 모든 상품 삭제 (orphanRemoval = true로 인해 자동 삭제됨)
         quote.getItems().clear();
         quoteRepository.save(quote);
-        
+
         // 다시 조회하여 items 포함
         Quote savedQuote = quoteRepository.findByUserUserIdOrderByUpdatedAtDesc(userId).get(0);
         return QuoteResponseDto.from(savedQuote);
@@ -141,11 +141,10 @@ public class QuoteService {
     /**
      * 빈 견적 생성 (조회용)
      */
-    @Transactional
-    public QuoteResponseDto createEmptyQuote(Long userId) {
+    private QuoteResponseDto createEmptyQuote(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
-        
+
         Quote quote = Quote.builder()
                 .user(user)
                 .build();
