@@ -142,7 +142,7 @@ public class QuoteService {
      * 빈 견적 생성 (조회용)
      */
     @Transactional
-    private QuoteResponseDto createEmptyQuote(Long userId) {
+    public QuoteResponseDto createEmptyQuote(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
         
