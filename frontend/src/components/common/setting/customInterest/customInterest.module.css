@@ -21,29 +21,33 @@
     margin-right: 20px;
 }
 
-.btnContainer img{
+.btnContainer img {
     width: 8px;
     height: 8px;
 }
 
-.btnContainer button{
+.btnContainer>div {
     border: none;
     cursor: pointer;
     border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
 }
 
-.confirmBtn{
+.confirmBtn {
     background-color: #ff5525;
 }
 
-.confirmBtn:hover{
+.confirmBtn:hover {
     background-color: #d74319;
 }
 
-.cancelBtn{
+.cancelBtn {
     background-color: #b9b9b9;
 }
 
-.cancelBtn:hover{
+.cancelBtn:hover {
     background-color: #828282;
 }

@@ -56,14 +56,14 @@ export const API_ENDPOINTS = {
     PROFILE: '/users/me',
     INITIALIZE: '/users/initialize',
     DELETE: '/users',
-    UPDATE: '/users/profile',
+    UPDATE: '/users/me',
     EXPERT_VERIFY: '/users/expert-verify',
   },
   
   // 가이드 관련
   GUIDE: {
-    BASE: '/guides',
-    BY_CATEGORY: (category: string) => `/guides?category=${category}`,
+    BASE: '/guide',
+    BY_CATEGORY: (category: string) => `/guide?category=${category}`,
   },
   
   // 제품 관련

@@ -1,9 +1,10 @@
 // src/hooks/useUpdateProfile.ts
 import { useMutation } from '@tanstack/react-query';
 import { useAuthStore } from '../stores/useAuthStore';
-import apiClient from '../api/userSetting/apiClient';
+import { apiClient } from '../api/core/client';
 import type { UserData } from '../types/user';
 import type { UserRoleType } from '../types/user';
+
 interface UpdateProfileRequest {
   role?: UserRoleType;
   interest_ids?: number[];
@@ -29,7 +30,7 @@ export const useUpdateProfile = () => {
                 // 백엔드에서 initialize API만 제공하므로 항상 initialize 사용
                 const response = await apiClient.put('/users/initialize', updateData);
 
-                const result: UpdateProfileResponse = response.data;
+                const result = response as UpdateProfileResponse;
                 
                 // 성공 시 사용자 정보 업데이트
                 if (result.success && result.data) {

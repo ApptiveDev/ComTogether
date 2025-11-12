@@ -4,16 +4,21 @@ import stepImg from "@/assets/image/second-step-status.svg";
 import InterestSelector from "../common/setting/interestSelector/interestSelector";
 import NextButton from "../common/setting/nextButton/nextButton";
 import { useState } from "react";
-import { useInitialize } from "../../api/userSetting/initialize";
+import { useInitializeUser } from "../../api/services/useInitializeUser";
+import { useProfileSetupStore } from "../../stores/useProfileSetupStore";
 
 export default function SecondSettingLayout() {
   const [count, setCount] = useState(0);
-  const initializeMutation = useInitialize();
+  const initializeMutation = useInitializeUser();
+  const { tempRole, tempInterestIds } = useProfileSetupStore();
 
   const handleNext = () => {
-    if (count > 0) {
+    if (count > 0 && tempRole) {
       console.log("🎯 사용자 초기화 시작");
-      initializeMutation.mutate();
+      initializeMutation.mutate({
+        role: tempRole,
+        interest_ids: tempInterestIds,
+      });
     }
   };
 
