@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes, Navigate } from "react-router";
+import { BrowserRouter, Route, Routes } from "react-router";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import "./App.css";
@@ -14,6 +14,7 @@ import SecondSetting from "./pages/secondSetting";
 import RedirectPage from "./pages/oauth/kakao/RedirectPage";
 import ExpertVerifyLayout from "./components/layout/expertVerifyLayout";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
+import RootRedirect from "./routes/RootRedirect";
 import {
   ErrorBoundary,
   GlobalLoader,
@@ -25,7 +26,7 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={"/"} element={<Navigate to="/signIn" replace />} />
+        <Route path={"/"} element={<RootRedirect />} />
         <Route
           path={"/home"}
           element={

@@ -1,17 +1,25 @@
 import { useState } from "react";
-import { useLogout } from "../api/userSetting/useLogout";
-import UserInfoDisplay from "../api/userDataManage/UserInfoDisplay";
+import { useLogout } from "../api/services/useLogout";
+import { useAuthStore } from "../stores/useAuthStore";
 import DeleteAccountModal from "../components/common/DeleteAccountModal";
 
 export default function MyPage() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const { logout: handleLogout, isLoading: isLoggingOut } = useLogout();
+  const { mutate: handleLogout, isPending: isLoggingOut } = useLogout();
+  const { user } = useAuthStore();
 
   return (
     <div style={{ padding: "20px" }}>
       <h1>마이페이지</h1>
 
-      <UserInfoDisplay />
+      {user && (
+        <div style={{ marginBottom: "20px" }}>
+          <h2>사용자 정보</h2>
+          <p>이름: {user.name || "미설정"}</p>
+          <p>역할: {user.role || "미설정"}</p>
+          <p>이메일: {user.email || "미설정"}</p>
+        </div>
+      )}
 
       <div
         style={{

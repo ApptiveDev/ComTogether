@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../stores/useAuthStore";
-import { useUserWithAutoSave } from "../api/userSetting/userService";
+import { useUserProfile } from "../api/services/useUserProfile";
 
 interface HomeProtectedRouteProps {
   children: React.ReactNode;
@@ -14,7 +14,7 @@ export default function HomeProtectedRoute({
   const navigate = useNavigate();
 
   // 사용자 정보가 없을 때 자동으로 조회하고 스토어에 저장
-  const { isLoading, isError } = useUserWithAutoSave({
+  const { isLoading, isError } = useUserProfile({
     enabled: isAuthenticated && !user,
   });
 

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDeleteUser } from "../../api/userSetting/useDeleteUser";
+import { useDeleteUser } from "../../api/services/useDeleteUser";
 import Modal from "../ui/Modal/Modal";
 import Input from "../ui/Input/Input";
 import Button from "../common/Button/button";
@@ -15,7 +15,7 @@ export default function DeleteAccountModal({
   onClose,
 }: DeleteAccountModalProps) {
   const [confirmText, setConfirmText] = useState("");
-  const { deleteUserAccount, isLoading } = useDeleteUser();
+  const { mutate: deleteUserAccount, isPending: isLoading } = useDeleteUser();
 
   const CONFIRM_TEXT = "계정삭제";
   const isConfirmValid = confirmText === CONFIRM_TEXT;

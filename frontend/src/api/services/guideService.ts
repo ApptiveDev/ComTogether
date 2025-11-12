@@ -22,13 +22,16 @@ class GuideService {
 
   /**
    * 카테고리별 가이드 데이터 조회
-   * @param category - 가이드 카테고리 (CPU, 메인보드, RAM 등)
+   * @param category - 가이드 카테고리 (cpu, mainboard, ram 등)
    */
   async getGuideByCategory(category: string): Promise<ApiGuideData> {
-    const response = await apiClient.get<ApiResponse<ApiGuideData>>(
-      API_ENDPOINTS.GUIDE.BY_CATEGORY(category)
+    const response = await apiClient.get<ApiGuideData>(
+      API_ENDPOINTS.GUIDE.BASE,
+      { 
+        params: { category } 
+      }
     );
-    return response.data.data;
+    return response.data;
   }
 
   /**

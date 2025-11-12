@@ -134,7 +134,7 @@ export const API_ENDPOINTS = {
   
   // 사용자 관련
   USERS: {
-    PROFILE: '/users/profile',
+    PROFILE: '/users/me',
     INITIALIZE: '/users/initialize',
     DELETE: '/users',
     EXPERT_VERIFY: '/users/expert-verify',

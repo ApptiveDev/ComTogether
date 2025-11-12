@@ -2,28 +2,42 @@
 
 import { useEffect, useRef } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { useKakaoLogin } from "../../../api/userSetting/useKakaoLogin";
+import { useKakaoLogin } from "../../../api/services/useKakaoLogin";
 import RedirectPageLayout from "../../../components/layout/redirectPageLayout";
 import { useAuthStore } from "../../../stores/useAuthStore";
+import { getRedirectUri } from "../../../config/api";
 
 export default function RedirectPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { mutation: loginMutation } = useKakaoLogin();
+  const loginMutation = useKakaoLogin();
   const { isAuthenticated } = useAuthStore();
 
   const codeProcessed = useRef(false);
   const code = searchParams.get("code");
+  const error = searchParams.get("error");
   const loginSuccessRef = useRef(false);
+
+  // 카카오 로그인 취소 또는 에러 처리
+  useEffect(() => {
+    if (error) {
+      console.error("카카오 로그인 에러:", error);
+      alert("카카오 로그인이 취소되었거나 오류가 발생했습니다.");
+      navigate("/signIn", { replace: true });
+    }
+  }, [error, navigate]);
 
   useEffect(() => {
     if (code && !codeProcessed.current && !loginMutation.isPending) {
       codeProcessed.current = true;
-      loginMutation.mutate(code);
-    } else if (!code) {
+      const redirect_uri = getRedirectUri();
+
+      loginMutation.mutate({ code, redirect_uri });
+    } else if (!code && !error) {
+      console.warn("code와 error 둘 다 없음 - 로그인 페이지로 이동");
       navigate("/signIn", { replace: true });
     }
-  }, [code, loginMutation, navigate, isAuthenticated]);
+  }, [code, error, loginMutation, navigate, isAuthenticated]);
 
   useEffect(() => {
     if (loginMutation.isError && loginMutation.error) {
