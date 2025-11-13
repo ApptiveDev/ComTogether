@@ -4,7 +4,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from '../stores/useAuthStore';
 import { useTokenStore } from '../stores/useTokenStore';
-import { useUserWithAutoSave } from '../api/userSetting/userService';
 import { apiClient } from "../api/core/client";
 import { ApiError } from "../types/api";
 import type { KakaoLoginResponse } from "../types/api";
@@ -25,10 +24,6 @@ export const useUserManager = () => {
   
   // 토큰이 있고 사용자 정보가 없을 때만 API 호출
   const shouldFetchUser = isAuthenticated && !!getAccessToken() && !user;
-  
-  const userQuery = useUserWithAutoSave({
-    enabled: shouldFetchUser,
-  });
 
   // 카카오 로그인
   const kakaoLoginMutation = useMutation({
@@ -161,9 +156,9 @@ export const useUserManager = () => {
     // 사용자 정보
     user,
     isAuthenticated,
-    isUserLoading: userQuery.isLoading,
-    userError: userQuery.error,
-    refetchUser: userQuery.refetch,
+    isUserLoading: false,
+    userError: null,
+    refetchUser: () => {},
     shouldFetchUser,
 
     // 카카오 로그인
@@ -183,6 +178,6 @@ export const useUserManager = () => {
     deleteUserError: deleteUserMutation.error,
 
     // 공통
-    isLoading: userQuery.isLoading || kakaoLoginMutation.isPending || logoutMutation.isPending || deleteUserMutation.isPending,
+    isLoading: kakaoLoginMutation.isPending || logoutMutation.isPending || deleteUserMutation.isPending,
   };
 };
