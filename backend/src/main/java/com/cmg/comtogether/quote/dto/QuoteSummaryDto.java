@@ -19,14 +19,21 @@ public class QuoteSummaryDto {
     private boolean saved;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private Integer itemCount;
+    private Integer totalQuantity;
     private Integer totalPrice;
 
     public static QuoteSummaryDto from(Quote quote) {
-        int itemCount = quote.getItems() != null ? quote.getItems().size() : 0;
+        int totalQuantity = quote.getItems() == null ? 0 :
+                quote.getItems().stream()
+                        .map(item -> item.getQuantity() == null ? 1 : item.getQuantity())
+                        .reduce(0, Integer::sum);
         int totalPrice = quote.getItems() == null ? 0 :
                 quote.getItems().stream()
-                        .map(item -> item.getLprice() == null ? 0 : item.getLprice())
+                        .map(item -> {
+                            int price = item.getLprice() == null ? 0 : item.getLprice();
+                            int quantity = item.getQuantity() == null ? 1 : item.getQuantity();
+                            return price * quantity;
+                        })
                         .reduce(0, Integer::sum);
 
         return QuoteSummaryDto.builder()
@@ -35,7 +42,7 @@ public class QuoteSummaryDto {
                 .saved(quote.isSaved())
                 .createdAt(quote.getCreatedAt())
                 .updatedAt(quote.getUpdatedAt())
-                .itemCount(itemCount)
+                .totalQuantity(totalQuantity)
                 .totalPrice(totalPrice)
                 .build();
     }
