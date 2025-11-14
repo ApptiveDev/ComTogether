@@ -24,6 +24,13 @@ public class Quote {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @Column(length = 100)
+    private String name;
+
+    @Builder.Default
+    @Column(nullable = false)
+    private boolean saved = false;
+
     @Builder.Default
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -43,6 +50,21 @@ public class Quote {
 
     public void removeItem(QuoteItem item) {
         this.items.remove(item);
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public void touch() {
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public void updateName(String name) {
+        this.name = name;
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public void markSaved(String name) {
+        this.name = name;
+        this.saved = true;
         this.updatedAt = LocalDateTime.now();
     }
 
