@@ -1,14 +1,16 @@
 import axios from 'axios';
-import type { 
-  AxiosInstance, 
-  AxiosResponse, 
+import type {
+  AxiosInstance,
+  AxiosResponse,
   AxiosRequestConfig,
-  InternalAxiosRequestConfig 
+  InternalAxiosRequestConfig,
 } from 'axios';
-import { useTokenStore } from '../../stores/useTokenStore';
-import type { ApiResponse, RefreshTokenResponse } from '../../types/api';
-import { ApiError, HTTP_STATUS } from '../../types/api';
-import { API_CONFIG, API_ENDPOINTS } from '../../config/api';
+// 1. 경로 수정: 별칭(alias) 사용
+import { useTokenStore } from '@/stores/useTokenStore';
+import type { ApiResponse, RefreshTokenResponse } from '@/types/api';
+// 2. 경로 수정: ApiError, HTTP_STATUS는 core/types.ts (같은 폴더)에 있습니다.
+import { ApiError, HTTP_STATUS } from './types';
+import { API_CONFIG, API_ENDPOINTS } from '@/config/api';
 
 class ApiClient {
   private client: AxiosInstance;
@@ -28,19 +30,28 @@ class ApiClient {
     // 요청 인터셉터
     this.client.interceptors.request.use(
       this.handleRequest.bind(this),
-      this.handleRequestError.bind(this)
+      this.handleRequestError.bind(this),
     );
 
     // 응답 인터셉터
     this.client.interceptors.response.use(
       this.handleResponse.bind(this),
-      this.handleResponseError.bind(this)
+      this.handleResponseError.bind(this),
     );
   }
 
-  private handleRequest(config: InternalAxiosRequestConfig): InternalAxiosRequestConfig {
+  private handleRequest(
+    config: InternalAxiosRequestConfig,
+  ): InternalAxiosRequestConfig {
     const { getAccessToken } = useTokenStore.getState();
     const accessToken = getAccessToken();
+
+    console.log('📤 [API] 요청:', {
+      url: config.url,
+      method: config.method,
+      hasToken: !!accessToken,
+      tokenPreview: accessToken ? `${accessToken.substring(0, 30)}...` : null,
+    });
 
     if (accessToken && config.headers) {
       config.headers.Authorization = `Bearer ${accessToken}`;
@@ -71,13 +82,13 @@ class ApiClient {
       status === HTTP_STATUS.UNAUTHORIZED &&
       originalRequest &&
       !originalRequest._retry &&
-      !originalRequest.url?.includes(API_ENDPOINTS.AUTH.REFRESH)
+      !originalRequest.url?.includes(API_ENDPOINTS.AUTH.REFRESH) // 백엔드 엔드포인트 참조 [cite: apptivedev/comtogether/ComTogether-4e5a77a7da27008233d42805cbb172110355e89e/backend/src/main/java/com/cmg/comtogether/jwt/controller/JwtController.java]
     ) {
       originalRequest._retry = true;
 
       try {
         const newAccessToken = await this.handleTokenRefresh();
-        
+
         if (newAccessToken && originalRequest.headers) {
           originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
           return this.client(originalRequest);
@@ -122,21 +133,22 @@ class ApiClient {
         {
           headers: { 'X-Refresh-Token': refreshToken },
           timeout: 5000,
-        }
+        },
       );
 
       if (!response.data.success) {
         throw new Error(response.data.message || 'Token refresh failed');
       }
 
-      const { access_token, refresh_token: newRefreshToken } = response.data.data;
-      
+      const { access_token, refresh_token: newRefreshToken } =
+        response.data.data;
+
       // 새로운 토큰 저장
       const { setTokens } = useTokenStore.getState();
       setTokens(access_token, newRefreshToken || refreshToken);
 
       // 대기 중인 요청들에게 새 토큰 전달
-      this.refreshSubscribers.forEach(callback => callback(access_token));
+      this.refreshSubscribers.forEach((callback) => callback(access_token));
       this.refreshSubscribers = [];
 
       return access_token;
@@ -162,43 +174,43 @@ class ApiClient {
 
   // 공통 요청 메서드들
   async get<T = unknown>(
-    url: string, 
-    config?: AxiosRequestConfig
+    url: string,
+    config?: AxiosRequestConfig,
   ): Promise<ApiResponse<T>> {
     const response = await this.client.get<ApiResponse<T>>(url, config);
     return response.data;
   }
 
   async post<T = unknown>(
-    url: string, 
-    data?: unknown, 
-    config?: AxiosRequestConfig
+    url: string,
+    data?: unknown,
+    config?: AxiosRequestConfig,
   ): Promise<ApiResponse<T>> {
     const response = await this.client.post<ApiResponse<T>>(url, data, config);
     return response.data;
   }
 
   async put<T = unknown>(
-    url: string, 
-    data?: unknown, 
-    config?: AxiosRequestConfig
+    url: string,
+    data?: unknown,
+    config?: AxiosRequestConfig,
   ): Promise<ApiResponse<T>> {
     const response = await this.client.put<ApiResponse<T>>(url, data, config);
     return response.data;
   }
 
   async patch<T = unknown>(
-    url: string, 
-    data?: unknown, 
-    config?: AxiosRequestConfig
+    url: string,
+    data?: unknown,
+    config?: AxiosRequestConfig,
   ): Promise<ApiResponse<T>> {
     const response = await this.client.patch<ApiResponse<T>>(url, data, config);
     return response.data;
   }
 
   async delete<T = unknown>(
-    url: string, 
-    config?: AxiosRequestConfig
+    url: string,
+    config?: AxiosRequestConfig,
   ): Promise<ApiResponse<T>> {
     const response = await this.client.delete<ApiResponse<T>>(url, config);
     return response.data;
@@ -208,7 +220,7 @@ class ApiClient {
   async uploadFile<T = unknown>(
     url: string,
     formData: FormData,
-    config?: AxiosRequestConfig
+    config?: AxiosRequestConfig,
   ): Promise<ApiResponse<T>> {
     const response = await this.client.post<ApiResponse<T>>(url, formData, {
       ...config,
@@ -227,5 +239,5 @@ class ApiClient {
 }
 
 // 싱글톤 인스턴스 생성
-export const apiClient = new ApiClient();
-export default apiClient;
+export const client = new ApiClient();
+export default client;

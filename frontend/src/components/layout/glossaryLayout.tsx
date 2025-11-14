@@ -1,9 +1,9 @@
 import { useState } from "react";
-import style from "./chatBotLayout.module.css";
-import ChatBotModal from "../common/chatBot/chatBotModal/chatBotModal";
+import style from "./glossaryLayout.module.css";
+import GlossaryModal from "../common/glossary/glossaryModal/glossaryModal";
 import ChatBotIcon from "../../assets/image/icon/chatBotIcon";
 
-export default function ChatBotLayout() {
+export default function GlossaryLayout() {
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
@@ -13,7 +13,7 @@ export default function ChatBotLayout() {
           <ChatBotIcon text={"?"} />
         </div>
       </div>
-      <ChatBotModal open={modalOpen} onClose={() => setModalOpen(false)} />
+      <GlossaryModal open={modalOpen} onClose={() => setModalOpen(false)} />
     </>
   );
 }

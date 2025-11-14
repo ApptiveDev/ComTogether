@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { useAuthStore } from '../../stores/useAuthStore';
 import { useTokenStore } from '../../stores/useTokenStore';
-import { apiClient } from '../core/client';
+import client from '../core';
 import { API_ENDPOINTS } from '../core/types';
 import { getRedirectUri } from '../../config/api';
 import type { UserData } from '../../types/user';
@@ -49,7 +49,7 @@ export function useKakaoLogin() {
 
   const mutation = useMutation({
     mutationFn: async (data: KakaoLoginRequest) => {
-      const response = await apiClient.post<KakaoLoginResponse>(
+      const response = await client.post<KakaoLoginResponse>(
         API_ENDPOINTS.AUTH.KAKAO_LOGIN,
         data
       );

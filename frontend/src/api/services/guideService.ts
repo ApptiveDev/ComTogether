@@ -1,6 +1,4 @@
-// src/api/services/guideService.ts - 가이드 API 서비스
-
-import { apiClient } from '../core';
+import client from '../core';
 import { API_ENDPOINTS } from '../../config/api';
 import type { 
   GuideQueryParams,
@@ -13,7 +11,7 @@ import type { ApiResponse } from '../../types/api';
  */
 class GuideService {
   async getAllGuides(params?: GuideQueryParams): Promise<ApiGuideData[]> {
-    const response = await apiClient.get<ApiResponse<ApiGuideData[]>>(
+    const response = await client.get<ApiResponse<ApiGuideData[]>>(
       API_ENDPOINTS.GUIDE.BASE,
       { params }
     );
@@ -25,7 +23,7 @@ class GuideService {
    * @param category - 가이드 카테고리 (cpu, mainboard, ram 등)
    */
   async getGuideByCategory(category: string): Promise<ApiGuideData> {
-    const response = await apiClient.get<ApiGuideData>(
+    const response = await client.get<ApiGuideData>(
       API_ENDPOINTS.GUIDE.BASE,
       { 
         params: { category } 

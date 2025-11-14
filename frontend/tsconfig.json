@@ -6,4 +6,8 @@
   ],
   "compilerOptions": {
     "forceConsistentCasingInFileNames": true
-},}
+},
+  "pathMappings": {
+    "@/*": ["src/*"]
+  }
+}

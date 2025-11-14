@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { apiClient } from '../core/client';
+import client from '../core';
 import { 
   invalidateQueries 
 } from '../core/query-config';
@@ -30,10 +30,10 @@ export function useExpertVerify(
           formData.append('portfolio_url', data.portfolio_url);
         }
 
-        return apiClient.uploadFile<void>(API_ENDPOINTS.USERS.EXPERT_VERIFY, formData);
+        return client.uploadFile<void>(API_ENDPOINTS.USERS.EXPERT_VERIFY, formData);
       } else {
         // 파일이 없는 경우 JSON 사용
-        return apiClient.post<void>(API_ENDPOINTS.USERS.EXPERT_VERIFY, {
+        return client.post<void>(API_ENDPOINTS.USERS.EXPERT_VERIFY, {
           certification: data.certification,
           portfolio_url: data.portfolio_url,
         });
