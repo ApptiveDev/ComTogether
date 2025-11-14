@@ -39,9 +39,6 @@ public class SecurityConfig {
                                 "/refresh/**",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",
-                                "/products/**",
-                                "/guide/**",
-                                "/glossary/**",
                                 "/users/login"
                         ).permitAll()
                         .requestMatchers(
