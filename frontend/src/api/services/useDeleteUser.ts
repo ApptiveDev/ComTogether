@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { useAuthStore } from '../../stores/useAuthStore';
-import { apiClient } from '../core/client';
+import client from '../core';
 import type { CommonMutationOptions } from '../core/query-config';
 import { API_ENDPOINTS } from '../core/types';
 
@@ -12,7 +12,7 @@ export function useDeleteUser(
 
   return useMutation({
     mutationFn: async () => {
-      const response = await apiClient.delete<void>(API_ENDPOINTS.USERS.DELETE);
+      const response = await client.delete<void>(API_ENDPOINTS.USERS.DELETE);
       return response;
     },
     onSuccess: () => {

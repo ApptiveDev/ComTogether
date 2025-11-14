@@ -43,36 +43,26 @@ export const queryClient = new QueryClient({
 
 // 공통 쿼리 키 팩토리
 export const queryKeys = {
-  // 사용자 관련 (기존 QUERY_KEYS.USER와 호환)
   USER: {
     ALL: ['user'] as const,
     PROFILE: ['user', 'me'] as const,
     PROFILE_BY_ID: (id: string) => ['user', 'profile', id] as const,
   },
   
-  // 가이드 관련 (기존 QUERY_KEYS.GUIDE와 호환)
   GUIDE: {
     ALL: ['guide'] as const,
     CATEGORIES: ['guide', 'categories'] as const,
     BY_CATEGORY: (category: string) => ['guide', 'category', category] as const,
     ITEMS: (category?: string) => category ? ['guide', 'items', category] : ['guide', 'items'] as const,
   },
-  
-  // 커뮤니티 관련 (기존 QUERY_KEYS.COMMUNITY와 호환)
-  COMMUNITY: {
-    ALL: ['community'] as const,
-    POSTS: ['community', 'posts'] as const,
-    POST: (id: string) => ['community', 'post', id] as const,
+
+  GLOSSARY: {
+    ALL: ['glossary'] as const,
+    AUTO_COMPLETE: (query: string) =>
+      ['glossary', 'autocomplete', query] as const,
+    DETAIL: (query: string) => ['glossary', 'detail', query] as const,
   },
   
-  // 챗봇 관련 (기존 QUERY_KEYS.CHATBOT와 호환)
-  CHATBOT: {
-    ALL: ['chatbot'] as const,
-    CONVERSATIONS: ['chatbot', 'conversations'] as const,
-    CONVERSATION: (id: string) => ['chatbot', 'conversation', id] as const,
-  },
-  
-  // 제품 관련 (추가)
   PRODUCTS: {
     ALL: ['products'] as const,
     SEARCH: (params: Record<string, unknown>) => 

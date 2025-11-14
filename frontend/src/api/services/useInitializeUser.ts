@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { useAuthStore } from '../../stores/useAuthStore';
-import { apiClient } from '../core/client';
+import client from '../core';
 import { 
   invalidateQueries 
 } from '../core/query-config';
@@ -22,7 +22,7 @@ export function useInitializeUser(
 
   return useMutation({
     mutationFn: async (data: InitializeUserRequest) => {
-      const response = await apiClient.put<UserData>(
+      const response = await client.put<UserData>(
         API_ENDPOINTS.USERS.INITIALIZE, 
         data
       );

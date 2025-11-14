@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { useAuthStore } from '../../stores/useAuthStore';
 import { useTokenStore } from '../../stores/useTokenStore';
-import { apiClient } from '../core/client';
+import client from '../core';
 import { API_ENDPOINTS } from '../core/types';
 
 // 로그아웃
@@ -13,7 +13,7 @@ export function useLogout() {
     mutationFn: async () => {
       try {
         // 서버에 로그아웃 요청
-        await apiClient.post<void>(API_ENDPOINTS.AUTH.LOGOUT);
+        await client.post<void>(API_ENDPOINTS.AUTH.LOGOUT);
       } catch (error) {
         // 서버 요청 실패해도 로컬 정리는 진행
         console.error('서버 로그아웃 실패:', error);

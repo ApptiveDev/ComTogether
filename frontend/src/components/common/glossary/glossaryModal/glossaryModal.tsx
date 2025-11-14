@@ -1,27 +1,28 @@
 import { useRef } from "react";
-import styles from "./chatBotModal.module.css";
+import styles from "./glossaryModal.module.css";
 import close_icon from "@/assets/image/icon/close_icon.svg";
 
 import SearchBar from "../../searchBar/searchBar";
 import SearchResult from "../searchResult/searchResult";
 import NoSearchResult from "../noSearchResult/noSearchResult";
-import { useSearchChatBotStore } from "../../../../stores/useSearchChatBotStore";
+import { useSearchGlossaryStore } from "../../../../stores/useSearchGlossaryStore";
 import { useShallow } from "zustand/shallow";
 
-interface ChatBotModalProps {
+interface GlossaryModalProps {
   open: boolean;
   onClose: () => void;
 }
 
-export default function ChatBotModal({ open, onClose }: ChatBotModalProps) {
+export default function GlossaryModal({ open, onClose }: GlossaryModalProps) {
   const modalBackground = useRef<HTMLDivElement>(null);
-  const { result, setShowMore, hasSearched } = useSearchChatBotStore(
-    useShallow((state) => ({
-      result: state.result,
-      setShowMore: state.setShowMore,
-      hasSearched: state.hasSearched,
-    }))
-  );
+  const { selectedGlossaryId, setShowMore, hasSearched } =
+    useSearchGlossaryStore(
+      useShallow((state) => ({
+        selectedGlossaryId: state.selectedGlossaryId,
+        setShowMore: state.setShowMore,
+        hasSearched: state.hasSearched,
+      }))
+    );
 
   if (!open) return null;
 
@@ -46,12 +47,12 @@ export default function ChatBotModal({ open, onClose }: ChatBotModalProps) {
         </button>
         <SearchBar />
         <div className={styles.searchResultScroll}>
-          {result ? (
+          {selectedGlossaryId ? (
             <SearchResult />
-          ) : !hasSearched ? (
-            <NoSearchResult />
+          ) : hasSearched ? (
+            <NoSearchResult message="검색 결과가 없습니다." />
           ) : (
-            <SearchResult />
+            <NoSearchResult />
           )}
         </div>
       </div>

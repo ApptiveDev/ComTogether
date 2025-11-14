@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useAuthStore } from '../../stores/useAuthStore';
-import { apiClient } from '../core/client';
+import client from '../core';
 import { 
   queryKeys,
   extractData,
@@ -16,7 +16,7 @@ export function useUserProfile(options?: CommonQueryOptions<UserData>) {
   return useQuery({
     queryKey: queryKeys.USER.PROFILE,
     queryFn: async () => {
-      const response = await apiClient.get<UserData>(API_ENDPOINTS.USERS.PROFILE);
+      const response = await client.get<UserData>(API_ENDPOINTS.USERS.PROFILE);
       
       // 성공 시 스토어에 자동 저장
       if (response.success) {
