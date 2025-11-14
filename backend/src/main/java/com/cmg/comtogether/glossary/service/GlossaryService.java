@@ -6,7 +6,7 @@ import com.cmg.comtogether.common.exception.ErrorCode;
 import com.cmg.comtogether.glossary.dto.GlossaryAutoCompleteResponseDto;
 import com.cmg.comtogether.glossary.dto.GlossaryDetailResponseDto;
 import com.cmg.comtogether.glossary.entity.GlossaryDocument;
-import com.cmg.comtogether.glossary.repository.GlossaryRepository;
+import com.cmg.comtogether.searchhistory.service.SearchHistoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.client.elc.NativeQuery;
@@ -14,13 +14,14 @@ import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class GlossaryService {
 
-    private final GlossaryRepository glossaryRepository;
     private final ElasticsearchOperations elasticsearchOperations;
+    private final SearchHistoryService searchHistoryService;
 
     public GlossaryAutoCompleteResponseDto  getAutoComplete(String query, int size) {
         Query autoComplete = MultiMatchQuery.of(m -> m
@@ -55,7 +56,10 @@ public class GlossaryService {
                 ).build();
     }
 
-    public GlossaryDetailResponseDto getDetail(String query) {
+    @Transactional
+    public GlossaryDetailResponseDto getDetail(Long userId, String query) {
+        searchHistoryService.saveSearchHistory(userId, query);
+
         Query q = TermQuery.of(t -> t
                 .field("name.raw")
                 .value(query)
