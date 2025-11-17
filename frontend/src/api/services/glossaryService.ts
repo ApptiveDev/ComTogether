@@ -1,5 +1,5 @@
 import { client as apiClient } from '@/api/core';
-import type { GlossaryAutoCompleteResponse, GlossaryDetail } from '@/types';
+import type { GlossaryAutoCompleteResponse, GlossaryDetail, SearchHistoryResponseDto } from '@/types';
 
 export const glossaryService = {
   /**
@@ -8,7 +8,6 @@ export const glossaryService = {
    * @param size 반환할 결과의 최대 개수 (기본값 5)
    */
   getAutoComplete: async (query: string, size: number = 5) => {
-    console.log('🔍 [Glossary] 자동완성 요청:', { query, size });
     try {
       const response = await apiClient.get<GlossaryAutoCompleteResponse>(
         '/glossary/autocomplete',
@@ -19,18 +18,11 @@ export const glossaryService = {
           },
         },
       );
-      console.log('✅ [Glossary] 자동완성 성공:', response);
-      console.log('   - response.data:', response.data);
-      console.log('   - response.data type:', typeof response.data);
-      
-      // response는 ApiResponse 형태: { success, message, data }
-      // response.data는 실제 데이터: { suggestions: string[] }
+
       const suggestions = (response.data as GlossaryAutoCompleteResponse)?.suggestions || [];
-      console.log('   - suggestions:', suggestions);
       
       return suggestions;
     } catch (error) {
-      console.error('❌ [Glossary] 자동완성 실패:', error);
       // 에러 정보 출력
       const axiosError = error as { 
         response?: { 
@@ -62,6 +54,45 @@ export const glossaryService = {
       return response.data;
     } catch (error) {
       console.error('❌ [Glossary] 상세 조회 실패:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * 검색 기록 조회
+   * @param size 조회할 검색 기록 개수 (기본값 30)
+   */
+  getGlossaryHistory: async (size: number = 30) => {
+    console.log('🔍 [Glossary] 검색 기록 조회 요청:', { size });
+    try {
+      const response = await apiClient.get<SearchHistoryResponseDto>(
+        '/glossary/history',
+        {
+          params: { size },
+        }
+      );
+      console.log('✅ [Glossary] 검색 기록 조회 성공:', response);
+      return response.data;
+    } catch (error) {
+      console.error('❌ [Glossary] 검색 기록 조회 실패:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * 검색 기록 삭제
+   * @param historyId 삭제할 검색 기록 ID
+   */
+  deleteGlossaryHistory: async (historyId: number) => {
+    console.log('🗑️ [Glossary] 검색 기록 삭제 요청:', { historyId });
+    try {
+      const response = await apiClient.delete<void>(
+        `/glossary/history/${historyId}`
+      );
+      console.log('✅ [Glossary] 검색 기록 삭제 성공:', response);
+      return response.data;
+    } catch (error) {
+      console.error('❌ [Glossary] 검색 기록 삭제 실패:', error);
       throw error;
     }
   },

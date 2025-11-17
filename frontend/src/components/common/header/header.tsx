@@ -26,7 +26,7 @@ export default function Header() {
           }}
         />
         <NavButton
-          text="호환성 체크"
+          text="견적 짜기"
           onClick={() => {
             navigate("/compatibility-check");
           }}
