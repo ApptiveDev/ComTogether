@@ -28,7 +28,7 @@ public enum ErrorCode {
 
     // 네이버 상품 API
     NAVER_API_ERROR(502, "NAVER-999", "네이버 서버와 통신 중 오류가 발생했습니다."),
-    
+
     // 가이드
     GUIDE_NOT_FOUND(404, "GUIDE-001", "가이드를 찾을 수 없습니다"),
 
@@ -43,8 +43,14 @@ public enum ErrorCode {
 
     // 검색 기록
     HISTORY_NOT_FOUND(404, "HISTORY-001", "검색 기록을 찾을 수 없습니다."),
-    HISTORY_ACCESS_DENIED(403, "HISTORY-002", "검색 기록에 대한 접근 권한이 없습니다.");
-    
+    HISTORY_ACCESS_DENIED(403, "HISTORY-002", "검색 기록에 대한 접근 권한이 없습니다."),
+
+    // 전문가 인증
+    CERTIFICATION_NOT_FOUND(404, "CERTIFICATION-001" , "해당 인증을 찾을 수 없습니다." ),
+    CERTIFICATION_ALREADY_APPROVED(400, "CERTIFICATION-002", "이미 승인된 인증입니다."),
+    CERTIFICATION_ALREADY_REJECTED(400, "CERTIFICATION-003", "이미 거절된 인증입니다.");
+
+
 
     private final int status;
     private final String code;
