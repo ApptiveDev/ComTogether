@@ -13,3 +13,13 @@ export interface GlossaryDetailResponse {
   name: string;
   description: string;
 }
+
+// 검색 기록 타입
+export interface SearchHistoryDto {
+  historyId: number;
+  keyword: string;
+}
+
+export interface SearchHistoryResponseDto {
+  histories: SearchHistoryDto[];
+}

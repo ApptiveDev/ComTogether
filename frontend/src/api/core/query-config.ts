@@ -61,6 +61,8 @@ export const queryKeys = {
     AUTO_COMPLETE: (query: string) =>
       ['glossary', 'autocomplete', query] as const,
     DETAIL: (query: string) => ['glossary', 'detail', query] as const,
+    HISTORY: (size?: number) => 
+      size ? ['glossary', 'history', size] : ['glossary', 'history'] as const,
   },
   
   PRODUCTS: {
