@@ -15,7 +15,7 @@ export default function HomeProtectedRoute({
 
   // 사용자 정보가 없을 때 자동으로 조회하고 스토어에 저장
   const { isLoading, isError } = useUserProfile({
-    enabled: isAuthenticated && !user,
+    enabled: isAuthenticated,
   });
 
   useEffect(() => {

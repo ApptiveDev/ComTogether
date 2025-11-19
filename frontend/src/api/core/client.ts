@@ -5,10 +5,9 @@ import type {
   AxiosRequestConfig,
   InternalAxiosRequestConfig,
 } from 'axios';
-// 1. 경로 수정: 별칭(alias) 사용
 import { useTokenStore } from '@/stores/useTokenStore';
+import { useAuthStore } from '@/stores/useAuthStore'; 
 import type { ApiResponse, RefreshTokenResponse } from '@/types/api';
-// 2. 경로 수정: ApiError, HTTP_STATUS는 core/types.ts (같은 폴더)에 있습니다.
 import { ApiError, HTTP_STATUS } from './types';
 import { API_CONFIG, API_ENDPOINTS } from '@/config/api';
 
@@ -27,13 +26,11 @@ class ApiClient {
   }
 
   private setupInterceptors(): void {
-    // 요청 인터셉터
     this.client.interceptors.request.use(
       this.handleRequest.bind(this),
       this.handleRequestError.bind(this),
     );
 
-    // 응답 인터셉터
     this.client.interceptors.response.use(
       this.handleResponse.bind(this),
       this.handleResponseError.bind(this),
@@ -77,12 +74,11 @@ class ApiClient {
     const originalRequest = axiosError.config;
     const status = axiosError.response?.status;
 
-    // 401 에러이고 아직 재시도하지 않은 경우
     if (
       status === HTTP_STATUS.UNAUTHORIZED &&
       originalRequest &&
       !originalRequest._retry &&
-      !originalRequest.url?.includes(API_ENDPOINTS.AUTH.REFRESH) // 백엔드 엔드포인트 참조 [cite: apptivedev/comtogether/ComTogether-4e5a77a7da27008233d42805cbb172110355e89e/backend/src/main/java/com/cmg/comtogether/jwt/controller/JwtController.java]
+      !originalRequest.url?.includes(API_ENDPOINTS.AUTH.REFRESH)
     ) {
       originalRequest._retry = true;
 
@@ -94,12 +90,11 @@ class ApiClient {
           return this.client(originalRequest);
         }
       } catch (refreshError) {
-        this.redirectToLogin();
+        this.clearTokensAndRedirect(); 
         return Promise.reject(ApiError.fromAxiosError(refreshError));
       }
     }
 
-    // 401 에러이고 토큰 갱신이 불가능한 경우
     if (status === HTTP_STATUS.UNAUTHORIZED) {
       this.clearTokensAndRedirect();
     }
@@ -115,7 +110,6 @@ class ApiClient {
       throw new Error('No refresh token available');
     }
 
-    // 이미 토큰 갱신 중인 경우 대기
     if (this.isRefreshing) {
       return new Promise((resolve) => {
         this.refreshSubscribers.push((token: string) => {
@@ -143,11 +137,9 @@ class ApiClient {
       const { access_token, refresh_token: newRefreshToken } =
         response.data.data;
 
-      // 새로운 토큰 저장
       const { setTokens } = useTokenStore.getState();
       setTokens(access_token, newRefreshToken || refreshToken);
 
-      // 대기 중인 요청들에게 새 토큰 전달
       this.refreshSubscribers.forEach((callback) => callback(access_token));
       this.refreshSubscribers = [];
 
@@ -162,7 +154,13 @@ class ApiClient {
 
   private clearTokensAndRedirect(): void {
     const { clearTokens } = useTokenStore.getState();
+    const { clearAuthState } = useAuthStore.getState();
+    
+    console.log("🚨 [API] 인증 만료: 토큰 및 사용자 정보 초기화");
+    
     clearTokens();
+    clearAuthState();
+    
     this.redirectToLogin();
   }
 
@@ -172,7 +170,6 @@ class ApiClient {
     }
   }
 
-  // 공통 요청 메서드들
   async get<T = unknown>(
     url: string,
     config?: AxiosRequestConfig,
@@ -216,7 +213,6 @@ class ApiClient {
     return response.data;
   }
 
-  // 파일 업로드 전용 메서드
   async uploadFile<T = unknown>(
     url: string,
     formData: FormData,
@@ -232,12 +228,10 @@ class ApiClient {
     return response.data;
   }
 
-  // raw axios 인스턴스 접근 (필요한 경우)
   get axios(): AxiosInstance {
     return this.client;
   }
 }
 
-// 싱글톤 인스턴스 생성
 export const client = new ApiClient();
 export default client;
