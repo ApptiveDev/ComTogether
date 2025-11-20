@@ -14,8 +14,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class QuoteItemResponseDto {
-    @JsonProperty("quote_item_id")
-    private Long quoteItemId;
     @JsonProperty("product_id")
     private Long productId;
     private String title;
@@ -33,18 +31,14 @@ public class QuoteItemResponseDto {
     @JsonProperty("category2")
     private String category2;
     @JsonProperty("category3")
-    private String category3; // 견적 슬롯으로 활용 (예: CPU, 메모리 등)
+    private String category3; // 견적 카테고리로 활용 (예: CPU, 메모리 등)
     @JsonProperty("category4")
     private String category4;
-
-    private Integer quantity;
-
 
     private LocalDateTime createdAt;
 
     public static QuoteItemResponseDto from(QuoteItem quoteItem) {
         return QuoteItemResponseDto.builder()
-                .quoteItemId(quoteItem.getQuoteItemId())
                 .productId(quoteItem.getProductId())
                 .title(quoteItem.getTitle())
                 .lprice(quoteItem.getLprice())
@@ -58,7 +52,6 @@ public class QuoteItemResponseDto {
                 .category2(quoteItem.getCategory2())
                 .category3(quoteItem.getCategory3())
                 .category4(quoteItem.getCategory4())
-                .quantity(quoteItem.getQuantity())
                 .createdAt(quoteItem.getCreatedAt())
                 .build();
     }
