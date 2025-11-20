@@ -53,17 +53,13 @@ public class QuoteItem {
     private String category4;
 
     @Builder.Default
-    @Column(nullable = false)
-    private Integer quantity = 1;
-
-    @Builder.Default
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
     public QuoteItem(Quote quote, Long productId, String title, Integer lprice, Integer hprice,
                      String image, String link, String mallName, String productType,
                      String maker, String brand, String category1, String category2,
-                     String category3, String category4, Integer quantity) {
+                     String category3, String category4) {
         this.quote = quote;
         this.productId = productId;
         this.title = title;
@@ -79,18 +75,7 @@ public class QuoteItem {
         this.category2 = category2;
         this.category3 = category3;
         this.category4 = category4;
-        this.quantity = quantity == null ? 1 : quantity;
         this.createdAt = LocalDateTime.now();
-    }
-
-    public void increaseQuantity(int amount) {
-        if (amount <= 0) {
-            return;
-        }
-        this.quantity = (this.quantity == null ? 0 : this.quantity) + amount;
-        if (this.quote != null) {
-            this.quote.touch();
-        }
     }
 
     public void updateDetails(Long productId, String title, Integer lprice, Integer hprice,
@@ -111,17 +96,6 @@ public class QuoteItem {
         this.category2 = category2;
         this.category3 = category3;
         this.category4 = category4;
-        if (this.quote != null) {
-            this.quote.touch();
-        }
-    }
-
-    public Integer getQuantity() {
-        return quantity == null ? 1 : quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity == null ? 1 : quantity;
         if (this.quote != null) {
             this.quote.touch();
         }

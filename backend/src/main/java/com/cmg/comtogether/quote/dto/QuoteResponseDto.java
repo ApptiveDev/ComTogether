@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 public class QuoteResponseDto {
     private Long quoteId;
     private String name;
-    private boolean saved;
     private List<QuoteItemResponseDto> items;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -31,17 +30,14 @@ public class QuoteResponseDto {
 
         Integer totalPrice = quote.getItems().stream()
                 .filter(item -> item.getLprice() != null)
-                .map(item -> item.getLprice() * (item.getQuantity() == null ? 1 : item.getQuantity()))
+                .map(item -> item.getLprice())
                 .reduce(0, Integer::sum);
 
-        Integer totalQuantity = quote.getItems().stream()
-                .map(item -> item.getQuantity() == null ? 1 : item.getQuantity())
-                .reduce(0, Integer::sum);
+        Integer totalQuantity = quote.getItems().size();
 
         return QuoteResponseDto.builder()
                 .quoteId(quote.getQuoteId())
                 .name(quote.getName())
-                .saved(quote.isSaved())
                 .items(items)
                 .createdAt(quote.getCreatedAt())
                 .updatedAt(quote.getUpdatedAt())

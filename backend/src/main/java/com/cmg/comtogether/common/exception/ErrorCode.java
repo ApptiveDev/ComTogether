@@ -40,6 +40,7 @@ public enum ErrorCode {
     QUOTE_ITEM_NOT_FOUND(404, "QUOTE-002", "견적 항목을 찾을 수 없습니다."),
     QUOTE_ACCESS_DENIED(403, "QUOTE-003", "견적에 대한 접근 권한이 없습니다."),
     QUOTE_NAME_REQUIRED(400, "QUOTE-004", "견적 이름이 필요합니다."),
+    QUOTE_DUPLICATE_CATEGORY(400, "QUOTE-005", "동일한 카테고리의 아이템이 중복되었습니다."),
 
     // 검색 기록
     HISTORY_NOT_FOUND(404, "HISTORY-001", "검색 기록을 찾을 수 없습니다."),

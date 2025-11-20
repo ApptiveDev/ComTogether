@@ -12,20 +12,12 @@ import java.util.List;
 @Repository
 public interface QuoteRepository extends JpaRepository<Quote, Long> {
     
-    @Query("select distinct q from Quote q " +
-            "left join fetch q.items " +
-            "where q.user.userId = :userId " +
-            "order by q.updatedAt desc")
-    List<Quote> findByUserUserIdOrderByUpdatedAtDesc(@Param("userId") Long userId);
-
     @EntityGraph(attributePaths = "items")
-    List<Quote> findAllByUserUserIdAndSavedTrueOrderByCreatedAtDesc(Long userId);
+    List<Quote> findAllByUserUserIdOrderByCreatedAtDesc(Long userId);
 
     @Query("select q from Quote q " +
             "left join fetch q.items " +
             "where q.quoteId = :quoteId and q.user.userId = :userId")
     java.util.Optional<Quote> findByQuoteIdAndUserUserIdWithItems(@Param("quoteId") Long quoteId, @Param("userId") Long userId);
-
-    void deleteByUserUserIdAndSavedFalse(Long userId);
 }
 
