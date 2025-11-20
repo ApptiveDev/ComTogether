@@ -1,6 +1,6 @@
 import style from "./closingSection.module.css";
 import logo from "@/assets/image/logo.svg";
-import CtaButton from "../../ctaButton/ctaButton";
+import CtaButton from "../../ctaButton/CtaButton";
 import { useState } from "react";
 import useObserverRef from "../../../../../hooks/useObserverRef";
 import { useNavigate } from "react-router-dom";

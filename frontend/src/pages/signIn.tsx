@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import SignInLayout from "../components/layout/signInLayout";
+import SignInLayout from "../components/layout/SignInLayout";
 import { useAuthStore } from "../stores/useAuthStore";
 import { useTokenStore } from "../stores/useTokenStore";
 

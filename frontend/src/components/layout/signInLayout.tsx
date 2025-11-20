@@ -1,12 +1,12 @@
-import style from './signIntLayout.module.css'
-import BrandSection from '../common/signIn/brandSection/brandSection'
-import AuthSection from '../common/signIn/authSection/authSection'
+import style from "./signInLayout.module.css";
+import BrandSection from "../common/signIn/brandSection/BrandSection";
+import AuthSection from "../common/signIn/authSection/AuthSection";
 
-export default function SignInLayout(){
-    return(
-        <div className={style.container}>
-            <BrandSection/>
-            <AuthSection/>
-        </div>
-    )
+export default function SignInLayout() {
+  return (
+    <div className={style.container}>
+      <BrandSection />
+      <AuthSection />
+    </div>
+  );
 }

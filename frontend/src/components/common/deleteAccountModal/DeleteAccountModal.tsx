@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { useDeleteUser } from "../../api/services/useDeleteUser";
-import Modal from "../ui/Modal/Modal";
-import Input from "../ui/Input/Input";
-import Button from "../common/Button/button";
+import { useDeleteUser } from "../../../api/services/useDeleteUser";
+import Modal from "../../ui/Modal/Modal";
+import Input from "../../ui/Input/Input";
+import Button from "../button/Button";
 import styles from "./DeleteAccountModal.module.css";
 
 interface DeleteAccountModalProps {

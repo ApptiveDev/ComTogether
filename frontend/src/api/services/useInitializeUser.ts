@@ -3,8 +3,8 @@ import { useAuthStore } from '../../stores/useAuthStore';
 import client from '../core';
 import { 
   invalidateQueries 
-} from '../core/query-config';
-import type { CommonMutationOptions } from '../core/query-config';
+} from '../core/queryConfig';
+import type { CommonMutationOptions } from '../core/queryConfig';
 import { API_ENDPOINTS } from '../core/types';
 import type { UserData } from '../../types/user';
 
