@@ -29,6 +29,9 @@ public enum ErrorCode {
     // 네이버 상품 API
     NAVER_API_ERROR(502, "NAVER-999", "네이버 서버와 통신 중 오류가 발생했습니다."),
     
+    // Gemini API
+    GEMINI_API_ERROR(502, "GEMINI-999", "Gemini API와 통신 중 오류가 발생했습니다."),
+    
     // 가이드
     GUIDE_NOT_FOUND(404, "GUIDE-001", "가이드를 찾을 수 없습니다"),
 

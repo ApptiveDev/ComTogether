@@ -46,6 +46,8 @@ dependencies {
 	implementation 'com.github.ben-manes.caffeine:caffeine'
 
 	implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
+
+	implementation 'com.google.genai:google-genai:1.8.0'
 }
 
 tasks.named('test') {
