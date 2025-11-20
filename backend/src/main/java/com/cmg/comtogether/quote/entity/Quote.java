@@ -28,10 +28,6 @@ public class Quote {
     private String name;
 
     @Builder.Default
-    @Column(nullable = false)
-    private boolean saved = false;
-
-    @Builder.Default
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
@@ -59,12 +55,6 @@ public class Quote {
 
     public void updateName(String name) {
         this.name = name;
-        this.updatedAt = LocalDateTime.now();
-    }
-
-    public void markSaved(String name) {
-        this.name = name;
-        this.saved = true;
         this.updatedAt = LocalDateTime.now();
     }
 

@@ -2,12 +2,10 @@ package com.cmg.comtogether.quote.controller;
 
 import com.cmg.comtogether.common.response.ApiResponse;
 import com.cmg.comtogether.common.security.CustomUserDetails;
-import com.cmg.comtogether.quote.dto.AddQuoteItemRequestDto;
-import com.cmg.comtogether.quote.dto.QuoteItemResponseDto;
+import com.cmg.comtogether.quote.dto.CreateQuoteRequestDto;
 import com.cmg.comtogether.quote.dto.QuoteResponseDto;
 import com.cmg.comtogether.quote.dto.QuoteSummaryDto;
-import com.cmg.comtogether.quote.dto.SaveQuoteRequestDto;
-import com.cmg.comtogether.quote.dto.UpdateQuoteItemQuantityRequestDto;
+import com.cmg.comtogether.quote.dto.UpdateQuoteRequestDto;
 import com.cmg.comtogether.quote.service.QuoteService;
 import com.cmg.comtogether.user.entity.User;
 import jakarta.validation.Valid;
@@ -16,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -34,31 +31,32 @@ public class QuoteController {
     private final QuoteService quoteService;
 
     /**
-     * 새 견적 생성 (초안 상태)
+     * 새 견적 생성 (최종 저장)
      */
     @PostMapping
     public ResponseEntity<ApiResponse<QuoteResponseDto>> createQuote(
-            @AuthenticationPrincipal CustomUserDetails userDetails
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @Valid @RequestBody CreateQuoteRequestDto requestDto
     ) {
         User user = userDetails.getUser();
-        QuoteResponseDto responseDto = quoteService.createQuote(user.getUserId());
+        QuoteResponseDto responseDto = quoteService.createQuote(user.getUserId(), requestDto);
         return ResponseEntity.ok(ApiResponse.success(responseDto));
     }
 
     /**
-     * 저장된 견적 목록 조회
+     * 견적 목록 조회
      */
     @GetMapping
     public ResponseEntity<ApiResponse<List<QuoteSummaryDto>>> getQuotes(
             @AuthenticationPrincipal CustomUserDetails userDetails
     ) {
         User user = userDetails.getUser();
-        List<QuoteSummaryDto> response = quoteService.getSavedQuotes(user.getUserId());
+        List<QuoteSummaryDto> response = quoteService.getAllQuotes(user.getUserId());
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     /**
-     * 저장된 견적 단건 조회
+     * 견적 단건 조회
      */
     @GetMapping("/{quoteId:\\d+}")
     public ResponseEntity<ApiResponse<QuoteResponseDto>> getQuote(
@@ -71,72 +69,16 @@ public class QuoteController {
     }
 
     /**
-     * 견적에 상품 추가
-     */
-    @PostMapping("/{quoteId:\\d+}/items")
-    public ResponseEntity<ApiResponse<QuoteItemResponseDto>> addItem(
-            @AuthenticationPrincipal CustomUserDetails userDetails,
-            @PathVariable Long quoteId,
-            @Valid @RequestBody AddQuoteItemRequestDto requestDto
-    ) {
-        User user = userDetails.getUser();
-        QuoteItemResponseDto responseDto = quoteService.addItem(user.getUserId(), quoteId, requestDto);
-        return ResponseEntity.ok(ApiResponse.success(responseDto));
-    }
-
-    /**
-     * 견적 상품 수량 수정
-     */
-    @PatchMapping("/{quoteId:\\d+}/items/{quoteItemId}")
-    public ResponseEntity<ApiResponse<QuoteItemResponseDto>> updateItemQuantity(
-            @AuthenticationPrincipal CustomUserDetails userDetails,
-            @PathVariable Long quoteId,
-            @PathVariable Long quoteItemId,
-            @Valid @RequestBody UpdateQuoteItemQuantityRequestDto requestDto
-    ) {
-        User user = userDetails.getUser();
-        QuoteItemResponseDto responseDto = quoteService.updateItemQuantity(user.getUserId(), quoteId, quoteItemId, requestDto.getQuantity());
-        return ResponseEntity.ok(ApiResponse.success(responseDto));
-    }
-
-    /**
-     * 견적 저장 (이름 지정 필수)
+     * 견적 수정 (전체 수정)
      */
     @PutMapping("/{quoteId:\\d+}")
-    public ResponseEntity<ApiResponse<QuoteResponseDto>> saveQuote(
+    public ResponseEntity<ApiResponse<QuoteResponseDto>> updateQuote(
             @AuthenticationPrincipal CustomUserDetails userDetails,
             @PathVariable Long quoteId,
-            @Valid @RequestBody SaveQuoteRequestDto requestDto
+            @Valid @RequestBody UpdateQuoteRequestDto requestDto
     ) {
         User user = userDetails.getUser();
-        QuoteResponseDto responseDto = quoteService.saveQuote(user.getUserId(), quoteId, requestDto.getName());
-        return ResponseEntity.ok(ApiResponse.success(responseDto));
-    }
-
-    /**
-     * 견적에서 특정 상품 삭제
-     */
-    @DeleteMapping("/{quoteId:\\d+}/items/{quoteItemId}")
-    public ResponseEntity<ApiResponse<QuoteResponseDto>> removeItem(
-            @AuthenticationPrincipal CustomUserDetails userDetails,
-            @PathVariable Long quoteId,
-            @PathVariable Long quoteItemId
-    ) {
-        User user = userDetails.getUser();
-        QuoteResponseDto responseDto = quoteService.removeItem(user.getUserId(), quoteId, quoteItemId);
-        return ResponseEntity.ok(ApiResponse.success(responseDto));
-    }
-
-    /**
-     * 견적의 모든 상품 삭제
-     */
-    @DeleteMapping("/{quoteId:\\d+}/items")
-    public ResponseEntity<ApiResponse<QuoteResponseDto>> clearQuote(
-            @AuthenticationPrincipal CustomUserDetails userDetails,
-            @PathVariable Long quoteId
-    ) {
-        User user = userDetails.getUser();
-        QuoteResponseDto responseDto = quoteService.clearQuote(user.getUserId(), quoteId);
+        QuoteResponseDto responseDto = quoteService.updateQuote(user.getUserId(), quoteId, requestDto);
         return ResponseEntity.ok(ApiResponse.success(responseDto));
     }
 

@@ -1,7 +1,6 @@
 package com.cmg.comtogether.quote.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -50,8 +49,5 @@ public class AddQuoteItemRequestDto {
     private String category3;
     @JsonProperty("category4")
     private String category4;
-
-    @Min(value = 1, message = "수량은 1 이상이어야 합니다.")
-    private Integer quantity = 1;
 }
 
