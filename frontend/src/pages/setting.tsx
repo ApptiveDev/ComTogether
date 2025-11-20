@@ -1,4 +1,4 @@
-import SettingLayout from "../components/layout/settingLayout";
+import SettingLayout from "../components/layout/SettingLayout";
 import SettingProtectedRoute from "../routes/SettingProtectedRoute";
 
 export default function Setting() {

@@ -1,5 +1,5 @@
 import style from "./footer.module.css";
-import MenuList from "./menuList";
+import MenuList from "./MenuList";
 import youtubeAndInstagram from "@/assets/image/youtubeAndInstagram.svg";
 
 export default function Footer() {

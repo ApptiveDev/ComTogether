@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { useKakaoLogin } from "../../../api/services/useKakaoLogin";
-import RedirectPageLayout from "../../../components/layout/redirectPageLayout";
+import RedirectPageLayout from "../../../components/layout/RedirectPageLayout";
 import { useAuthStore } from "../../../stores/useAuthStore";
 import { getRedirectUri } from "../../../config/api";
 

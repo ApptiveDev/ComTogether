@@ -2,8 +2,8 @@ import { useMutation } from '@tanstack/react-query';
 import client from '../core';
 import { 
   invalidateQueries 
-} from '../core/query-config';
-import type { CommonMutationOptions } from '../core/query-config';
+} from '../core/queryConfig';
+import type { CommonMutationOptions } from '../core/queryConfig';
 import { API_ENDPOINTS } from '../core/types';
 
 // 전문가 인증

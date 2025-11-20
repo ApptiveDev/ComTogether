@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "../../common/header/header";
+import Header from "../../common/header/Header";
 import styles from "./BaseLayout.module.css";
 
 interface BaseLayoutProps {

@@ -1,5 +1,5 @@
 // UI Components
-export { default as Button } from '../common/Button/button';
+export { default as Button } from '../common/button/Button';
 export { default as Input } from './Input/Input';
 export { default as Modal } from './Modal/Modal';
 export { default as LoadingSpinner } from '../common/LoadingSpinner/LoadingSpinner';

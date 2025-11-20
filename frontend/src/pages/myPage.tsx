@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLogout } from "../api/services/useLogout";
 import { useAuthStore } from "../stores/useAuthStore";
-import DeleteAccountModal from "../components/common/DeleteAccountModal";
+import DeleteAccountModal from "../components/common/deleteAccountModal/DeleteAccountModal";
 
 export default function MyPage() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);

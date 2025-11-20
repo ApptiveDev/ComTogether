@@ -1,7 +1,7 @@
 import { useState } from "react";
 import style from "./glossaryLayout.module.css";
-import GlossaryModal from "../common/glossary/glossaryModal/glossaryModal";
-import ChatBotIcon from "../../assets/image/icon/chatBotIcon";
+import GlossaryModal from "../common/glossary/glossaryModal/GlossaryModal";
+import ChatBotIcon from "../../assets/image/icon/ChatBotIcon";
 
 export default function GlossaryLayout() {
   const [modalOpen, setModalOpen] = useState(false);

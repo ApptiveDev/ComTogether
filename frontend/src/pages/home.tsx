@@ -1,5 +1,5 @@
-import GlossaryLayout from "../components/layout/glossaryLayout";
-import HomeLayout from "../components/layout/homeLayout";
+import GlossaryLayout from "../components/layout/GlossaryLayout";
+import HomeLayout from "../components/layout/HomeLayout";
 import HomeProtectedRoute from "../routes/HomeProtectedRoute";
 
 export default function Home() {
