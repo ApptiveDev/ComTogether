@@ -4,8 +4,8 @@ import client from '../core';
 import { 
   queryKeys,
   extractData,
-} from '../core/query-config';
-import type { CommonQueryOptions } from '../core/query-config';
+} from '../core/queryConfig';
+import type { CommonQueryOptions } from '../core/queryConfig';
 import { API_ENDPOINTS } from '../core/types';
 import type { UserData } from '../../types/user';
 

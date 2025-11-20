@@ -36,6 +36,6 @@ export const clearAuthData = () => {
 
 // 전역에 함수 노출 (개발 환경에서만)
 if (import.meta.env.DEV) {
-  (window as Window & { clearAuthData: typeof clearAuthData }).clearAuthData = clearAuthData;
+  (window as unknown as Window & { clearAuthData: typeof clearAuthData }).clearAuthData = clearAuthData;
   console.log("💡 브라우저 콘솔에서 clearAuthData() 함수를 사용할 수 있습니다.");
 }

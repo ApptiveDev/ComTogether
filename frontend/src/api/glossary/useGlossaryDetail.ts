@@ -1,6 +1,6 @@
 import { glossaryService } from '@/api/services/glossaryService';
 import { useQuery } from '@tanstack/react-query';
-import { queryKeys } from '../core/query-config';
+import { queryKeys } from '../core/queryConfig';
 
 /**
  * 용어 상세 정보를 가져오는 React Query 훅

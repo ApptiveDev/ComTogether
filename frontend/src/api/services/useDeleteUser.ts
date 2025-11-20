@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { useAuthStore } from '../../stores/useAuthStore';
 import client from '../core';
-import type { CommonMutationOptions } from '../core/query-config';
+import type { CommonMutationOptions } from '../core/queryConfig';
 import { API_ENDPOINTS } from '../core/types';
 
 // 계정 삭제

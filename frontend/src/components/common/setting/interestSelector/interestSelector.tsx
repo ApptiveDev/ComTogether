@@ -1,14 +1,12 @@
 import style from "./interestSelector.module.css";
-import InterestButton from "../interestButton/interestButton";
-import CustomInterest from "../customInterest/customInterest";
-import AddInterestButton from "../addInterestButton/addInterestButton";
+import InterestButton from "../interestButton/InterestButton";
+import CustomInterest from "../customInterest/CustomInterest";
+import AddInterestButton from "../addInterestButton/AddInterestButton";
 import { useState, useEffect } from "react";
 import { useProfileSetupStore } from "../../../../stores/useProfileSetupStore";
 
 // 임시 데이터 (dummy_interest.json이 없으므로)
-const data: InterestItem[
-  
-] = [];
+const data: InterestItem[] = [];
 
 type InterestItem = {
   id: number;

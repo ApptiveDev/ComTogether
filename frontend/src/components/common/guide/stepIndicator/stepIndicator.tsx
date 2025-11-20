@@ -1,4 +1,4 @@
-import StepIndicatorItem from "./stepIndicatorItem";
+import StepIndicatorItem from "./StepIndicatorItem";
 import style from "./stepIndicator.module.css";
 import { useGuidePart } from "../../../../stores/useGuidePart";
 import { useGuideData } from "../../../../api/guide";

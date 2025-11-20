@@ -2,17 +2,17 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import "./App.css";
-import Home from "./pages/home";
-import CompatibilityCheck from "./pages/compatibilityCheck";
-import ExpertConsultation from "./pages/expertConsultation";
-import Guide from "./pages/guide";
-import Community from "./pages/community";
-import MyPage from "./pages/myPage";
-import SignIn from "./pages/signIn";
-import Setting from "./pages/setting";
-import SecondSetting from "./pages/secondSetting";
+import Home from "./pages/Home";
+import CompatibilityCheck from "./pages/CompatibilityCheck";
+import ExpertConsultation from "./pages/ExpertConsultation";
+import Guide from "./pages/Guide";
+import Community from "./pages/Community";
+import MyPage from "./pages/MyPage";
+import SignIn from "./pages/SignIn";
+import Setting from "./pages/Setting";
+import SecondSetting from "./pages/SecondSetting";
 import RedirectPage from "./pages/oauth/kakao/RedirectPage";
-import ExpertVerifyLayout from "./components/layout/expertVerifyLayout";
+import ExpertVerifyLayout from "./components/layout/ExpertVerifyLayout";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
 import RootRedirect from "./routes/RootRedirect";
 import {
@@ -20,7 +20,7 @@ import {
   GlobalLoader,
   ToastProvider,
 } from "./components/providers";
-import { queryClient } from "./api/core/query-config";
+import { queryClient } from "./api/core/queryConfig";
 
 const Router = () => {
   return (

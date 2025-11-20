@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAuthStore } from "../stores/useAuthStore";
 import { useTokenStore } from "../stores/useTokenStore";
-import { apiClient } from "../api/core/client";
+import { client as apiClient } from "../api/core/client";
 import { ApiError } from "../types/api";
 import type { KakaoLoginResponse } from "../types/api";
 import { createKakaoAuthUrl } from "../config/api";

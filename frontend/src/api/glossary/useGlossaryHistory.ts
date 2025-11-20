@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { queryKeys } from '../core/query-config';
+import { queryKeys } from '../core/queryConfig';
 import { glossaryService } from '@/api/services/glossaryService';
 
 /**

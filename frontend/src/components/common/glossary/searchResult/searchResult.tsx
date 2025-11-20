@@ -1,4 +1,4 @@
-import NoSearchResult from "../noSearchResult/noSearchResult";
+import NoSearchResult from "../noSearchResult/NoSearchResult";
 import { useSearchGlossaryStore } from "../../../../stores/useSearchGlossaryStore";
 import { useGlossaryDetail } from "@/api/glossary/useGlossaryDetail";
 import style from "./searchResult.module.css";

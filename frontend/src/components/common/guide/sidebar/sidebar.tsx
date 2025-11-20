@@ -1,6 +1,6 @@
 import style from "./sidebar.module.css";
 import { useGuidePart } from "../../../../stores/useGuidePart";
-import SidebarItem from "./sidebarItem";
+import SidebarItem from "./SidebarItem";
 import { useGuideData } from "../../../../api/guide";
 import type { GuideData } from "../../../../types/guide";
 import category from "@/assets/image/guideNav/category.svg";

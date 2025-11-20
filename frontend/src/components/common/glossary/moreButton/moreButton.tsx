@@ -1,4 +1,4 @@
-import ArrowDown from "../../../../assets/image/icon/arrowDown";
+import ArrowDown from "../../../../assets/image/icon/ArrowDown";
 import styles from "./moreButton.module.css";
 
 interface MoreButtonProps {

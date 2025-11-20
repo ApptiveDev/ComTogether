@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from "react";
-import RecentSearchItem from "../glossary/recentSearchItem";
+import RecentSearchItem from "../glossary/RecentSearchItem";
 import { useSearchGlossaryStore } from "../../../stores/useSearchGlossaryStore";
 import { useGlossaryAutoComplete } from "@/api/glossary/useGlossaryAutoComplete";
-import Button from "../Button/button";
+import Button from "../button/Button";
 import style from "./searchBar.module.css";
 import clock_icon from "../../../assets/image/icon/clock_icon.svg";
 import { useShallow } from "zustand/shallow";
@@ -111,7 +111,7 @@ export default function SearchBar() {
     setSelectedIndex(-1);
   };
 
-  const handleSuggestionClick = (id: number, term: string) => {
+  const handleSuggestionClick = (_id: number, term: string) => {
     setSelectedGlossaryId(term); // term(용어명)을 저장
     addRecentSearch(term);
     setInputValue("");

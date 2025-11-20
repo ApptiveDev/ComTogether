@@ -22,7 +22,7 @@ export default function useObserverRef({handleObserver}:useObserverProp){
         }
 
         return ()=> observer.disconnect();
-    }, []);
+    }, [handleObserver]);
 
     return ref;
 }

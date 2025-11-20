@@ -1,7 +1,7 @@
 // src/hooks/useUpdateProfile.ts
 import { useMutation } from '@tanstack/react-query';
 import { useAuthStore } from '../stores/useAuthStore';
-import { apiClient } from '../api/core/client';
+import { client as apiClient } from '../api/core/client';
 import type { UserData } from '../types/user';
 import type { UserRoleType } from '../types/user';
 
