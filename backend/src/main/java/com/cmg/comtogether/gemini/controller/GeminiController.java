@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/gemini")
+@RequestMapping("/gemini")
 @RequiredArgsConstructor
 public class GeminiController {
 
