@@ -14,8 +14,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class QuoteItemResponseDto {
-    @JsonProperty("quote_item_id")
-    private Long quoteItemId;
     @JsonProperty("product_id")
     private Long productId;
     private String title;
@@ -41,7 +39,6 @@ public class QuoteItemResponseDto {
 
     public static QuoteItemResponseDto from(QuoteItem quoteItem) {
         return QuoteItemResponseDto.builder()
-                .quoteItemId(quoteItem.getQuoteItemId())
                 .productId(quoteItem.getProductId())
                 .title(quoteItem.getTitle())
                 .lprice(quoteItem.getLprice())
