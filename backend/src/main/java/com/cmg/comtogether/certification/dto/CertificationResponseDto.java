@@ -11,18 +11,18 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 public class CertificationResponseDto {
-    private Long id;
+    private Long certId;
     private Long userId;
     private String fileUrl;
     private String status;
     private LocalDateTime requestedAt;
     private String reason;
 
-    public static CertificationResponseDto fromEntity(Certification cert) {
+    public static CertificationResponseDto fromEntity(Certification cert, String publicUrl) {
         return CertificationResponseDto.builder()
-                .id(cert.getId())
+                .certId(cert.getCertId())
                 .userId(cert.getUserId())
-                .fileUrl(cert.getFileUrl())
+                .fileUrl(publicUrl)
                 .status(cert.getStatus().name())
                 .requestedAt(cert.getRequestedAt())
                 .build();

@@ -48,8 +48,11 @@ public enum ErrorCode {
     // 전문가 인증
     CERTIFICATION_NOT_FOUND(404, "CERTIFICATION-001" , "해당 인증을 찾을 수 없습니다." ),
     CERTIFICATION_ALREADY_APPROVED(400, "CERTIFICATION-002", "이미 승인된 인증입니다."),
-    CERTIFICATION_ALREADY_REJECTED(400, "CERTIFICATION-003", "이미 거절된 인증입니다.");
+    CERTIFICATION_ALREADY_REJECTED(400, "CERTIFICATION-003", "이미 거절된 인증입니다."),
+    CERTIFICATION_ACCESS_DENIED(403, "CERTIFICATION-004", "해당 인증서에 대한 접근 권한이 없습니다."),
 
+    // 업로드
+    INVALID_UPLOAD_TYPE(400,"UPLOAD-001", "올바르지 않은 업로드 타입입니다.");
 
 
     private final int status;

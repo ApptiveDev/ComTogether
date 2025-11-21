@@ -1,18 +1,17 @@
 package com.cmg.comtogether.certification.controller;
 
+import com.cmg.comtogether.certification.dto.CertificationCreateRequestDto;
 import com.cmg.comtogether.certification.dto.CertificationResponseDto;
-import com.cmg.comtogether.certification.dto.PresignedURLRequestDto;
 import com.cmg.comtogether.certification.service.CertificationService;
 import com.cmg.comtogether.common.response.ApiResponse;
 import com.cmg.comtogether.common.security.CustomUserDetails;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/certification")
@@ -21,18 +20,13 @@ public class CertificationController {
 
     private final CertificationService certificationService;
 
-    @PostMapping("/presigned-url")
-    public ResponseEntity<ApiResponse<?>> generateUploadUrl(
-            @AuthenticationPrincipal CustomUserDetails userDetails,
-            @RequestBody PresignedURLRequestDto requestDto
+    @PostMapping
+    public ResponseEntity<ApiResponse<CertificationResponseDto>> createCertification(
+        @AuthenticationPrincipal CustomUserDetails userDetails,
+        @Valid @RequestBody CertificationCreateRequestDto requestDto
     ) {
-        Long userId = userDetails.getUser().getUserId();
-        String presignedUrl = certificationService.generateCertificationUploadUrl(userId, requestDto.getFileName(), requestDto.getContentType());
-
-        return ResponseEntity.ok(ApiResponse.success(
-                "전문가 인증 업로드 URL이 발급되었습니다 (10분 유효)",
-                Map.of("presigned_url", presignedUrl)
-        ));
+        CertificationResponseDto responseDto = certificationService.createCertification(userDetails.getUser().getUserId(), requestDto.getFileKey());
+        return ResponseEntity.ok(ApiResponse.success(responseDto));
     }
 
     @GetMapping("/me")

@@ -18,12 +18,11 @@ import java.time.LocalDateTime;
 public class Certification {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long certId;
 
     private Long userId;
 
     private String fileKey;
-    private String fileUrl;
 
     @Enumerated(EnumType.STRING)
     private Status status;

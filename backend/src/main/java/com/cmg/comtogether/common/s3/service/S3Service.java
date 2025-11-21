@@ -1,5 +1,8 @@
 package com.cmg.comtogether.common.s3.service;
 
+import com.cmg.comtogether.common.exception.BusinessException;
+import com.cmg.comtogether.common.exception.ErrorCode;
+import com.cmg.comtogether.common.s3.dto.PresignedURLRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -12,6 +15,7 @@ import software.amazon.awssdk.services.s3.presigner.model.PutObjectPresignReques
 
 import java.net.URL;
 import java.time.Duration;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -24,8 +28,20 @@ public class S3Service {
     @Value("${aws.s3.bucket}")
     private String bucket;
 
-    public URL generatePresignedUrl(String key, String contentType) {
+    @Value("${aws.s3.region:ap-southeast-2}")
+    private String region;
 
+    public String generateKey(Long userId, PresignedURLRequestDto requestDto) {
+        String prefix = switch (requestDto.getType()) {
+            case "CERTIFICATION" -> "certifications/";
+            default -> throw new BusinessException(ErrorCode.INVALID_UPLOAD_TYPE);
+        };
+        String uuid = UUID.randomUUID().toString();
+
+        return prefix + userId + "/" + uuid + "." + requestDto.getExtension();
+    }
+
+    public URL generatePresignedUrl(String key, String contentType) {
         PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                 .bucket(bucket)
                 .key(key)
@@ -38,8 +54,16 @@ public class S3Service {
                 .build();
 
         PresignedPutObjectRequest presigned = presigner.presignPutObject(presignRequest);
-
         return presigned.url();
+    }
+
+    public URL generateCertificationUploadUrl(Long userId, String fileName, String contentType) {
+        String key = "certifications/" + userId + "/" + System.currentTimeMillis() + "_" + fileName;
+        return generatePresignedUrl(key, contentType);
+    }
+
+    public String getPublicUrl(String key) {
+        return String.format("https://%s.s3.%s.amazonaws.com/%s", bucket, region, key);
     }
 
     public void deleteObject(String key) {

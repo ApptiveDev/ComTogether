@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,38 +18,42 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CertificationService {
 
-    private final S3Service s3Service;
     private final CertificationRepository certificationRepository;
     private final UserService userService;
+    private final S3Service s3Service;
 
-    public String generateCertificationUploadUrl(Long userId, String fileName, String contentType) {
-        String key = "certifications/" + userId + "/" + System.currentTimeMillis() + "_" + fileName;
-        URL presignedUrl = s3Service.generatePresignedUrl(key, contentType);
+    public CertificationResponseDto createCertification(Long userId, String fileKey) {
+        String publicUrl = s3Service.getPublicUrl(fileKey);
 
-        Certification certification = Certification.builder()
+        Certification cert = Certification.builder()
                 .userId(userId)
-                .fileKey(key)
-                .fileUrl(presignedUrl.toString().split("\\?")[0])
+                .fileKey(fileKey)
                 .status(Certification.Status.PENDING)
                 .requestedAt(LocalDateTime.now())
                 .build();
 
-        certificationRepository.save(certification);
+        certificationRepository.save(cert);
 
-        return presignedUrl.toString();
+        return CertificationResponseDto.fromEntity(cert, publicUrl);
     }
 
     public List<CertificationResponseDto> getCertifications(Long userId) {
         return certificationRepository.findAllByUserIdOrderByRequestedAtDesc(userId)
                 .stream()
-                .map(CertificationResponseDto::fromEntity)
+                .map(c -> CertificationResponseDto.fromEntity(
+                        c,
+                        s3Service.getPublicUrl(c.getFileKey())
+                ))
                 .toList();
     }
 
     public List<CertificationResponseDto> getAllCertifications() {
         return certificationRepository.findAllByOrderByRequestedAtDesc()
                 .stream()
-                .map(CertificationResponseDto::fromEntity)
+                .map(c -> CertificationResponseDto.fromEntity(
+                c,
+                s3Service.getPublicUrl(c.getFileKey())
+        ))
                 .toList();
     }
 
@@ -60,8 +63,9 @@ public class CertificationService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.CERTIFICATION_NOT_FOUND));
         cert.approve();
         userService.updateRoleToExpert(cert.getUserId());
+        String publicUrl = s3Service.getPublicUrl(cert.getFileKey());
 
-        return CertificationResponseDto.fromEntity(cert);
+        return CertificationResponseDto.fromEntity(cert, publicUrl);
     }
 
     @Transactional
@@ -69,7 +73,9 @@ public class CertificationService {
         Certification cert = certificationRepository.findById(certId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.CERTIFICATION_NOT_FOUND));
         cert.reject(reason);
-        return CertificationResponseDto.fromEntity(cert);
+        String publicUrl = s3Service.getPublicUrl(cert.getFileKey());
+
+        return CertificationResponseDto.fromEntity(cert, publicUrl);
     }
 
     @Transactional
@@ -78,11 +84,12 @@ public class CertificationService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.CERTIFICATION_NOT_FOUND));
 
         if (!c.getUserId().equals(userId)) {
-            throw new BusinessException(ErrorCode.FORBIDDEN);
+            throw new BusinessException(ErrorCode.CERTIFICATION_ACCESS_DENIED);
         }
 
-        String key = c.getFileUrl().replace("https://comtogether.s3.ap-southeast-2.amazonaws.com/", "");
-        s3Service.deleteObject(key);
+        if (c.getFileKey() != null) {
+            s3Service.deleteObject(c.getFileKey());
+        }
 
         certificationRepository.delete(c);
     }
