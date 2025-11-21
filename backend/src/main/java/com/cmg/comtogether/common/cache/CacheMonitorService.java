@@ -1,4 +1,4 @@
-package com.cmg.comtogether.cache;
+package com.cmg.comtogether.common.cache;
 
 import com.github.benmanes.caffeine.cache.stats.CacheStats;
 import lombok.RequiredArgsConstructor;
