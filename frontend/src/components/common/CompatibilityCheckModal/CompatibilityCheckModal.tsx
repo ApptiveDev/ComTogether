@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import Modal from "../../ui/Modal/Modal";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
-import styles from "./CompatibiliityCheckModal.module.css";
+import complete from "../../../assets/image/icon/complete.svg";
+import styles from "./CompatibilityCheckModal.module.css";
 
 interface CompatibilityCheckModalProps {
   isOpen: boolean;
@@ -87,7 +88,12 @@ export default function CompatibilityCheckModal({
     if (item.status === "loading") {
       return (
         <div className={styles.checkItem}>
-          <LoadingSpinner size="small" color="#FF5525" variant="spinner" />
+          <LoadingSpinner
+            thickness={8}
+            size="extraLarge"
+            color="#FF5525"
+            variant="spinner"
+          />
         </div>
       );
     }
@@ -95,22 +101,7 @@ export default function CompatibilityCheckModal({
       return (
         <div className={`${styles.checkItem} ${styles.complete}`}>
           <div className={styles.completeCircle}>
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle cx="10" cy="10" r="9" stroke="#4CAF50" strokeWidth="2" />
-              <path
-                d="M6 10L9 13L14 7"
-                stroke="#4CAF50"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            <img src={complete} />
           </div>
         </div>
       );
@@ -125,13 +116,13 @@ export default function CompatibilityCheckModal({
   const allComplete = items.every((item) => item.status === "complete");
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="호환성 체크" size="lg">
+    <Modal isOpen={isOpen} onClose={onClose} title="호환성 체크" size="xl">
       <div className={styles.container}>
         <div className={styles.grid}>
           {items.map((item) => (
             <div key={item.id} className={styles.gridItem}>
+              <div className={styles.label}>{item.label}</div>{" "}
               {renderCheckStatus(item)}
-              <div className={styles.label}>{item.label}</div>
             </div>
           ))}
         </div>
@@ -140,7 +131,7 @@ export default function CompatibilityCheckModal({
           {isChecking && !allComplete && <p>호환성 체크 중입니다...</p>}
           {allComplete && (
             <p className={styles.completeMessage}>
-              모든 호환성 체크가 완료되었습니다!
+              ✔ 모든 호환성 체크가 완료되었습니다!
             </p>
           )}
         </div>

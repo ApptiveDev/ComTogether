@@ -2,9 +2,9 @@ import { useRef } from "react";
 import styles from "./glossaryModal.module.css";
 import close_icon from "@/assets/image/icon/close_icon.svg";
 
-import SearchBar from "../../searchBar/SearchBar";
-import SearchResult from "../searchResult/SearchResult";
-import NoSearchResult from "../noSearchResult/NoSearchResult";
+import SearchBar from "../../SearchBar/SearchBar";
+import SearchResult from "../SearchResult/SearchResult";
+import NoSearchResult from "../NoSearchResult/NoSearchResult";
 import { useSearchGlossaryStore } from "../../../../stores/useSearchGlossaryStore";
 import { useShallow } from "zustand/shallow";
 

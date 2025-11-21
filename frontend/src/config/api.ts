@@ -93,6 +93,12 @@ export const API_ENDPOINTS = {
     SEND_MESSAGE: (conversationId: string) => 
       `/chatbot/conversations/${conversationId}/messages`,
   },
+
+  // 견적서 관련
+  QUOTES: {
+    BASE: '/quotes',
+    DETAIL: (quoteId: number) => `/quotes/${quoteId}`,
+  },
   
   // 파일 업로드
   FILES: {

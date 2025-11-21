@@ -1,11 +1,11 @@
 import style from "./settingLayout.module.css";
-import StepHeader from "../common/setting/stepHeader/StepHeader";
-import SkillLevelCard from "../common/setting/skillLevelCard/SkillLevelCard";
-import NextButton from "../common/setting/nextButton/NextButton";
+import StepHeader from "../common/setting/StepHeader/StepHeader";
+import SkillLevelCard from "../common/setting/SkillLevelCard/SkillLevelCard";
+import NextButton from "../common/setting/NextButton/NextButton";
 import beginner from "@/assets/image/beginner.svg";
 import expert from "@/assets/image/expert.svg";
 import stepImg from "@/assets/image/step-status.svg";
-import ExpertPopup from "../common/setting/expertPopup/ExpertPopup";
+import ExpertPopup from "../common/setting/ExpertPopup/ExpertPopup";
 import { useNavigate } from "react-router";
 import { useState, useEffect } from "react";
 import { useProfileSetupStore } from "../../stores/useProfileSetupStore";

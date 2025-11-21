@@ -1,10 +1,11 @@
 import styles from "./LoadingSpinner.module.css";
 
 interface LoadingSpinnerProps {
-  size?: "small" | "medium" | "large";
+  size?: "small" | "medium" | "large" | "extraLarge";
   color?: string;
   text?: string;
   variant?: "spinner" | "pulse" | "dots";
+  thickness?: number;
 }
 
 export default function LoadingSpinner({
@@ -12,6 +13,7 @@ export default function LoadingSpinner({
   color = "#ff5525",
   text,
   variant = "spinner",
+  thickness,
 }: LoadingSpinnerProps) {
   const renderSpinner = () => {
     switch (variant) {
@@ -34,7 +36,13 @@ export default function LoadingSpinner({
         return (
           <div
             className={`${styles.spinner} ${styles[size]}`}
-            style={{ borderTopColor: color }}
+            style={{
+              borderTopColor: color,
+              ...(thickness && {
+                borderWidth: `${thickness}px`,
+                borderTopWidth: `${thickness}px`,
+              }),
+            }}
           />
         );
     }

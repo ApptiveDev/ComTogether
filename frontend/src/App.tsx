@@ -11,7 +11,7 @@ import MyPage from "./pages/MyPage";
 import SignIn from "./pages/SignIn";
 import Setting from "./pages/Setting";
 import SecondSetting from "./pages/SecondSetting";
-import RedirectPage from "./pages/oauth/kakao/RedirectPage";
+import RedirectPage from "./pages/RedirectPage";
 import ExpertVerifyLayout from "./components/layout/ExpertVerifyLayout";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
 import RootRedirect from "./routes/RootRedirect";

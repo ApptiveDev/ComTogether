@@ -1,6 +1,6 @@
 import CenteredLayout from "./base/CenteredLayout";
-import InstructionBox from "../common/expertVerify/instructionBox/InstructionBox";
-import FileUploadBox from "../common/expertVerify/fileUploadBox/FileUploadBox";
+import InstructionBox from "../common/ExpertVerify/instructionBox/InstructionBox";
+import FileUploadBox from "../common/ExpertVerify/FileUploadBox/FileUploadBox";
 import styles from "./expertVerifyLayout.module.css";
 
 export default function ExpertVerifyLayout() {

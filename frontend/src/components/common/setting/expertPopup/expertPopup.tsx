@@ -1,6 +1,6 @@
 import style from "./expertPopup.module.css";
 import verifyIcon from "@/assets/image/verify.svg";
-import Button from "../../button/Button";
+import Button from "../../Button/Button";
 import { useNavigate } from "react-router";
 
 interface expertPopupProp {

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import style from "./glossaryLayout.module.css";
-import GlossaryModal from "../common/glossary/glossaryModal/GlossaryModal";
+import GlossaryModal from "../common/Glossary/GlossaryModal/GlossaryModal";
 import ChatBotIcon from "../../assets/image/icon/ChatBotIcon";
 
 export default function GlossaryLayout() {

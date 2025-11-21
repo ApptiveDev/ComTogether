@@ -1,6 +1,6 @@
 import style from "./header.module.css";
-import NavButton from "../home/navButton/NavButton";
-import SettingButton from "../home/settingButton/SettingButton";
+import NavButton from "../home/NavButton/NavButton";
+import SettingButton from "../home/SettingButton/SettingButton";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 

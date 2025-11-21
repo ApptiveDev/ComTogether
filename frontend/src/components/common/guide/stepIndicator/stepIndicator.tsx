@@ -1,7 +1,7 @@
 import StepIndicatorItem from "./StepIndicatorItem";
 import style from "./stepIndicator.module.css";
 import { useGuidePart } from "../../../../stores/useGuidePart";
-import { useGuideData } from "../../../../api/guide";
+import { useGuideData } from "../../../../api/Guide";
 import type { GuideData } from "../../../../types/guide";
 
 // API 카테고리 이름 (소문자) -> 한글 표시명 매핑
