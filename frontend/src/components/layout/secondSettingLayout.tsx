@@ -1,8 +1,8 @@
 import style from "./secondSettingLayout.module.css";
-import StepHeader from "../common/setting/stepHeader/StepHeader";
+import StepHeader from "../common/setting/StepHeader/StepHeader";
 import stepImg from "@/assets/image/second-step-status.svg";
-import InterestSelector from "../common/setting/interestSelector/InterestSelector";
-import NextButton from "../common/setting/nextButton/NextButton";
+import InterestSelector from "../common/setting/InterestSelector/InterestSelector";
+import NextButton from "../common/setting/NextButton/NextButton";
 import { useState } from "react";
 import { useInitializeUser } from "../../api/services/useInitializeUser";
 import { useProfileSetupStore } from "../../stores/useProfileSetupStore";

@@ -1,6 +1,6 @@
 import style from "./signInLayout.module.css";
-import BrandSection from "../common/signIn/brandSection/BrandSection";
-import AuthSection from "../common/signIn/authSection/AuthSection";
+import BrandSection from "../common/SignIn/BrandSection/BrandSection";
+import AuthSection from "../common/SignIn/AuthSection/AuthSection";
 
 export default function SignInLayout() {
   return (

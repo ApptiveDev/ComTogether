@@ -1,6 +1,6 @@
-import NoSearchResult from "../noSearchResult/NoSearchResult";
+import NoSearchResult from "../NoSearchResult/NoSearchResult";
 import { useSearchGlossaryStore } from "../../../../stores/useSearchGlossaryStore";
-import { useGlossaryDetail } from "@/api/glossary/useGlossaryDetail";
+import { useGlossaryDetail } from "@/api/Glossary/useGlossaryDetail";
 import style from "./searchResult.module.css";
 import ReactMarkdown from "react-markdown";
 

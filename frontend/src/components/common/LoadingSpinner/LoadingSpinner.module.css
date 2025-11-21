@@ -37,6 +37,13 @@
     border-width: 3px;
 }
 
+.spinner.extraLarge {
+    width: 5rem;
+    /* 80px */
+    height: 5rem;
+    border-width: 4px;
+}
+
 /* Pulse Variant */
 .pulse {
     border-radius: var(--border-radius-full);

@@ -1,5 +1,5 @@
 import style from "./authSection.module.css";
-import SignInButton from "../signInButton/SignInButton";
+import SignInButton from "../SignInButton/SignInButton";
 
 export default function AuthSection() {
   return (

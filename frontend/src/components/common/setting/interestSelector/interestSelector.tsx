@@ -1,7 +1,7 @@
 import style from "./interestSelector.module.css";
-import InterestButton from "../interestButton/InterestButton";
-import CustomInterest from "../customInterest/CustomInterest";
-import AddInterestButton from "../addInterestButton/AddInterestButton";
+import InterestButton from "../InterestButton/InterestButton";
+import CustomInterest from "../CustomInterest/CustomInterest";
+import AddInterestButton from "../AddInterestButton/AddInterestButton";
 import { useState, useEffect } from "react";
 import { useProfileSetupStore } from "../../../../stores/useProfileSetupStore";
 

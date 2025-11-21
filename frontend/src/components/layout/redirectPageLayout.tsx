@@ -60,7 +60,8 @@ export default function RedirectPageLayout({
 
         <div className={styles.progress}>
           <LoadingSpinner
-            size="large"
+            size="extraLarge"
+            thickness={8}
             color="#ff5525"
             text={getLoadingText(currentStep)}
           />

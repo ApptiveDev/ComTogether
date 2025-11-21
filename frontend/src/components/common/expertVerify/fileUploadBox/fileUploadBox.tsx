@@ -1,6 +1,6 @@
 import style from "./fileUploadBox.module.css";
 import uploadIcon from "@/assets/image/upload.svg";
-import Button from "../../button/Button";
+import Button from "../../Button/Button";
 // import { expertVerify } from "../../../../api/expertVerify"; // API 완성 후 사용
 import { useState, useRef, type DragEvent, type ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";

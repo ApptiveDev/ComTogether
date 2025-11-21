@@ -1,12 +1,12 @@
 import style from "./contentArea.module.css";
 import categoryImg from "@/assets/image/guideImg.png";
 import { useGuidePart } from "../../../../stores/useGuidePart";
-import { useGuideData } from "../../../../api/guide";
+import { useGuideData } from "../../../../api/Guide";
 import type { GuideData } from "../../../../types/guide";
 import category from "@/assets/image/guideNav/category.svg";
 import mainboard from "@/assets/image/guideNav/mainboard.svg";
-import GuidePartButton from "../guidePartButton/GuidePartButton";
-import ShowMoreButton from "../showMoreButton/ShowMoreButton";
+import GuidePartButton from "../GuidePartButton/GuidePartButton";
+import ShowMoreButton from "../ShowMoreButton/ShowMoreButton";
 import info from "@/assets/image/info.svg";
 import check from "@/assets/image/check.svg";
 import warning from "@/assets/image/warning.svg";
