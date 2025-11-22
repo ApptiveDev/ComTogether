@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Modal from "../../ui/Modal/Modal";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import complete from "../../../assets/image/icon/complete.svg";
-import styles from "./CompatibilityCheckModal.module.css";
+import styles from "./compatibilityCheckModal.module.css";
 
 interface CompatibilityCheckModalProps {
   isOpen: boolean;

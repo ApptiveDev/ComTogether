@@ -1,7 +1,7 @@
 // src/components/providers/ToastProvider.tsx
 import React from "react";
 import { useGlobalState } from "../../stores/useGlobalState";
-import styles from "./ToastProvider.module.css";
+import styles from "./toastProvider.module.css";
 
 interface ToastItemProps {
   toast: {

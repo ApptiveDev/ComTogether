@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../../common/Header/Header";
-import styles from "./BaseLayout.module.css";
+import styles from "./baseLayout.module.css";
 
 interface BaseLayoutProps {
   children: React.ReactNode;

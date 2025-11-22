@@ -1,4 +1,4 @@
-import style from "./StepHeader.module.css";
+import style from "./stepHeader.module.css";
 
 interface headerProp {
   step: string;

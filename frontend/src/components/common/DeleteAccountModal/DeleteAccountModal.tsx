@@ -3,7 +3,7 @@ import { useDeleteUser } from "../../../api/services/useDeleteUser";
 import Modal from "../../ui/Modal/Modal";
 import Input from "../../ui/Input/Input";
 import Button from "../Button/Button";
-import styles from "./DeleteAccountModal.module.css";
+import styles from "./deleteAccountModal.module.css";
 
 interface DeleteAccountModalProps {
   isOpen: boolean;
