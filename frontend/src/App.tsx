@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import "./App.css";
+import "./app.css";
 import Home from "./pages/Home";
 import CompatibilityCheck from "./pages/CompatibilityCheck";
 import ExpertConsultation from "./pages/ExpertConsultation";
