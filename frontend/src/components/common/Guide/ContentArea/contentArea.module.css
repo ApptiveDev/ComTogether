@@ -82,3 +82,55 @@
     font-size: 15px;
     font-weight: 500;
 }
+
+.scrollGuide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 40px 0;
+    margin: 10px 0;
+}
+
+.scrollText {
+    font-weight: 600;
+    color: #000;
+    letter-spacing: 2px;
+}
+
+.scrollArrows {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    align-items: center;
+}
+
+.scrollArrow {
+    width: 48px;
+    height: 48px;
+    animation: scrollBounce 1.2s infinite;
+}
+
+.scrollArrow:nth-child(2) {
+    animation-delay: 0.2s;
+    opacity: 0.7;
+}
+
+.scrollArrow:nth-child(3) {
+    animation-delay: 0.4s;
+    opacity: 0.4;
+}
+
+@keyframes scrollBounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    50% {
+        transform: translateY(10px);
+        opacity: 0.3;
+    }
+}
