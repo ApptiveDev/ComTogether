@@ -6,7 +6,6 @@ import type { GuideData } from "../../../../types/guide";
 import category from "@/assets/image/guideNav/category.svg";
 import mainboard from "@/assets/image/guideNav/mainboard.svg";
 import GuidePartButton from "../GuidePartButton/GuidePartButton";
-import ShowMoreButton from "../ShowMoreButton/ShowMoreButton";
 import info from "@/assets/image/info.svg";
 import check from "@/assets/image/check.svg";
 import warning from "@/assets/image/warning.svg";
@@ -16,6 +15,7 @@ import { useLayoutEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
+import scroll from "@/assets/image/icon/scroll.png";
 import "highlight.js/styles/github.css";
 import "../../../../styles/globals/markdown.css";
 
@@ -64,8 +64,7 @@ const partIconMap: Record<string, string> = {
 };
 
 export default function ContentArea() {
-  const { selectCategory, contentPart, setContentPart, showMore, setShowMore } =
-    useGuidePart();
+  const { selectCategory, contentPart, setContentPart } = useGuidePart();
 
   // useGuideData 훅으로 데이터 가져오기
   const { data: allGuides, isLoading, error } = useGuideData();
@@ -93,35 +92,30 @@ export default function ContentArea() {
     // 이전 ScrollTrigger 인스턴스 정리
     ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
 
-    // showMore가 true일 때만 애니메이션 생성
-    if (showMore) {
-      const imageHeight = image.clientHeight;
+    // 항상 애니메이션 적용
+    const imageHeight = image.clientHeight;
 
-      gsap.fromTo(
-        image,
-        { opacity: 1 }, //애니메이션 시작 상태
-        {
-          opacity: 0,
-          ease: "none",
-          scrollTrigger: {
-            trigger: content,
-            scroller: container,
-            start: `top ${imageHeight}px`, //trigger 요소의 top이 scroll 대상의 imageHeight 위치에 도달했을 때 애니메이션 시작
-            end: `+=${imageHeight}px`,
-            scrub: true, //스크롤 위치에 따라 애니메이션 진행
-          },
-        }
-      );
-    } else {
-      // showMore가 false일 때는 opacity를 1로 리셋
-      gsap.set(image, { opacity: 1 });
-    }
+    gsap.fromTo(
+      image,
+      { opacity: 1 }, //애니메이션 시작 상태
+      {
+        opacity: 0,
+        ease: "none",
+        scrollTrigger: {
+          trigger: content,
+          scroller: container,
+          start: `top ${imageHeight}px`, //trigger 요소의 top이 scroll 대상의 imageHeight 위치에 도달했을 때 애니메이션 시작
+          end: `+=${imageHeight}px`,
+          scrub: true, //스크롤 위치에 따라 애니메이션 진행
+        },
+      }
+    );
 
     // cleanup 함수
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
-  }, [showMore, currentData]);
+  }, [currentData]);
 
   // 로딩 상태 처리
   if (isLoading) {
@@ -173,7 +167,7 @@ export default function ContentArea() {
       </div>
 
       <div className={style.contentWrapper} ref={contentRef}>
-        <div className={`${style.content} ${showMore ? style.showMore : ""}`}>
+        <div className={`${style.content} ${style.showMore}`}>
           <div className={style.title}>
             <img src={iconMap[displayName]} alt="category icon" />
             <div className={style.category}>{displayName}</div>
@@ -188,12 +182,23 @@ export default function ContentArea() {
                 isActive={item.title === contentPart}
                 onClick={() => {
                   setContentPart(item.title);
-                  setShowMore(false);
                 }}
               />
             ))}
           </div>
           <div className={style.textContent}>
+            {contentPart === "주요 특징" && (
+              <div className={style.scrollGuide}>
+                <div className={style.scrollText}>아래로 스크롤</div>
+                <div className={style.scrollArrows}>
+                  <img
+                    className={style.scrollArrow}
+                    src={scroll}
+                    alt="scroll arrow"
+                  />
+                </div>
+              </div>
+            )}
             <div className={`${style.description} markdown-content`}>
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
@@ -202,27 +207,22 @@ export default function ContentArea() {
                 {cleanMarkdown(currentPart?.description || "")}
               </ReactMarkdown>
             </div>
-            {showMore && (
-              <div className={style.detail}>
-                {currentPart?.details.map((detail) => (
-                  <div key={detail.title} className={style.detailItem}>
-                    <div className={style.detailItemTitle}>{detail.title}</div>
-                    <div className={`${style.detailItemDesc} markdown-content`}>
-                      <ReactMarkdown
-                        remarkPlugins={[remarkGfm]}
-                        rehypePlugins={[rehypeHighlight]}
-                      >
-                        {cleanMarkdown(detail.description)}
-                      </ReactMarkdown>
-                    </div>
+
+            <div className={style.detail}>
+              {currentPart?.details.map((detail) => (
+                <div key={detail.title} className={style.detailItem}>
+                  <div className={style.detailItemTitle}>{detail.title}</div>
+                  <div className={`${style.detailItemDesc} markdown-content`}>
+                    <ReactMarkdown
+                      remarkPlugins={[remarkGfm]}
+                      rehypePlugins={[rehypeHighlight]}
+                    >
+                      {cleanMarkdown(detail.description)}
+                    </ReactMarkdown>
                   </div>
-                ))}
-              </div>
-            )}
-            <ShowMoreButton
-              isExpanded={showMore}
-              onClick={() => setShowMore(!showMore)}
-            />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
