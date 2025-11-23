@@ -155,4 +155,19 @@ export const API_ENDPOINTS = {
   COMMUNITY: {
     BASE: '/community',
   },
+  
+  // 전문가 인증 관련
+  CERTIFICATION: {
+    ME: '/certification/me',
+    BASE: '/certification',
+    ALL: '/certification/all',
+    APPROVE: (certId: number) => `/certification/${certId}/approve`,
+    REJECT: (certId: number) => `/certification/${certId}/reject`,
+    DELETE: (certId: number) => `/certification/${certId}`,
+  },
+  
+  // 파일 업로드 관련
+  UPLOAD: {
+    PRESIGNED_URL: '/upload/presigned',
+  },
 } as const;

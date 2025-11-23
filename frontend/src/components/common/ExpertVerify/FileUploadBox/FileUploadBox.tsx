@@ -1,86 +1,71 @@
 import style from "./fileUploadBox.module.css";
 import uploadIcon from "@/assets/image/upload.svg";
 import Button from "../../Button/Button";
-// import { expertVerify } from "../../../../api/expertVerify"; // API 완성 후 사용
-import { useState, useRef, type DragEvent, type ChangeEvent } from "react";
+import { useFileUpload } from "@/hooks/useFileUpload";
+import {
+  useCertificationGenerate,
+  useCertificationGet,
+} from "@/api/Certification";
+import { useGetPresignedUrl, uploadToS3 } from "@/api/services/uploadService";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 interface FileUploadBoxProps {
   onFileSelect?: (file: File) => void;
 }
 
 export default function FileUploadBox({ onFileSelect }: FileUploadBoxProps) {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [isDragOver, setIsDragOver] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
+  const [isUploading, setIsUploading] = useState(false);
 
-  const handleFileSelect = (file: File) => {
-    // 이미지 파일 타입 검증
-    if (!file.type.startsWith("image/")) {
-      alert("이미지 파일만 업로드 가능합니다.");
-      return;
+  // 인증 목록 조회
+  const { data: certifications, isLoading: isCertificationsLoading } =
+    useCertificationGet();
+
+  // 승인 대기 중인 인증이 있는지 확인
+  const hasPendingCertification = certifications?.some(
+    (cert) => cert.status === "PENDING"
+  );
+
+  const {
+    selectedFile,
+    previewUrl,
+    isDragOver,
+    error,
+    fileInputRef,
+    handleDragOver,
+    handleDragLeave,
+    handleDrop,
+    handleFileInputChange,
+    handleButtonClick,
+    handleRemoveFile,
+    clearError,
+  } = useFileUpload({
+    maxSizeInMB: 10,
+    acceptedTypes: ["image/"],
+    onFileSelect,
+  });
+
+  const { mutateAsync: getPresignedUrl } = useGetPresignedUrl();
+
+  const { mutateAsync, isPending } = useCertificationGenerate({
+    onSuccess: () => {
+      alert("전문가 인증이 성공적으로 제출되었습니다!");
+      navigate("/second-setting");
+    },
+    onError: (error) => {
+      console.error("인증 제출 실패:", error);
+      alert("제출에 실패했습니다. 다시 시도해주세요.");
+    },
+  });
+
+  // 에러 메시지 표시
+  useEffect(() => {
+    if (error) {
+      alert(error);
+      clearError();
     }
-
-    // 파일 크기 검증 (10MB)
-    if (file.size > 10 * 1024 * 1024) {
-      alert("파일 크기는 10MB 이하만 가능합니다.");
-      return;
-    }
-
-    setSelectedFile(file);
-
-    // 미리보기 생성
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      setPreviewUrl(e.target?.result as string);
-    };
-    reader.readAsDataURL(file);
-
-    // 부모 컴포넌트에 파일 전달
-    onFileSelect?.(file);
-  };
-
-  const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setIsDragOver(true);
-  };
-
-  const handleDragLeave = (e: DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setIsDragOver(false);
-  };
-
-  const handleDrop = (e: DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setIsDragOver(false);
-
-    const files = e.dataTransfer.files;
-    if (files.length > 0) {
-      handleFileSelect(files[0]);
-    }
-  };
-
-  const handleFileInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files && files.length > 0) {
-      handleFileSelect(files[0]);
-    }
-  };
-
-  const handleButtonClick = () => {
-    fileInputRef.current?.click();
-  };
-
-  const handleRemoveFile = () => {
-    setSelectedFile(null);
-    setPreviewUrl(null);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
-  };
+  }, [error, clearError]);
 
   const handleSubmit = async () => {
     if (!selectedFile) {
@@ -88,27 +73,70 @@ export default function FileUploadBox({ onFileSelect }: FileUploadBoxProps) {
       return;
     }
 
-    setIsSubmitting(true);
+    setIsUploading(true);
 
     try {
-      // 임시로 2초 대기 (API 호출 시뮬레이션)
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // 1. Presigned URL 발급
+      const fileExtension = selectedFile.name.split(".").pop() || "png";
+      const presignedData = await getPresignedUrl({
+        type: "CERTIFICATION",
+        extension: fileExtension,
+        content_type: selectedFile.type,
+      });
 
-      // TODO: API 완성 후 아래 코드 활성화
-      // await expertVerify({
-      //   certification_file: selectedFile,
-      //   certification: '전문가 인증서',
-      // });
+      // 2. S3에 파일 업로드
+      await uploadToS3(presignedData.upload_url, selectedFile);
 
-      alert("전문가 인증이 성공적으로 제출되었습니다!");
-
-      // 성공 시 다음 페이지로 이동
-      navigate("/second-setting"); // 또는 적절한 다음 페이지 경로
+      // 3. 인증서 생성
+      await mutateAsync({ file_key: presignedData.file_key });
     } catch (error) {
       console.error("제출 실패:", error);
-      alert("제출에 실패했습니다. 다시 시도해주세요.");
+
+      let errorMessage = "제출에 실패했습니다. 다시 시도해주세요.";
+
+      if (error instanceof Error) {
+        // 네트워크 에러
+        if (
+          error.message.includes("Network Error") ||
+          error.message.includes("ECONNREFUSED")
+        ) {
+          errorMessage =
+            "서버에 연결할 수 없습니다. 네트워크 연결을 확인해주세요.";
+        }
+        // 파일 업로드 에러
+        else if (error.message.includes("파일 업로드")) {
+          errorMessage = "파일 업로드에 실패했습니다. 다시 시도해주세요.";
+        }
+        // 파일 크기 에러
+        else if (
+          error.message.includes("size") ||
+          error.message.includes("크기")
+        ) {
+          errorMessage =
+            "파일 크기가 너무 큽니다. 10MB 이하의 파일을 업로드해주세요.";
+        }
+      }
+
+      // Axios 에러 처리
+      if (typeof error === "object" && error !== null && "response" in error) {
+        const axiosError = error as {
+          response?: { status?: number; data?: { message?: string } };
+        };
+
+        if (axiosError.response?.status === 401) {
+          errorMessage = "로그인이 필요합니다. 다시 로그인해주세요.";
+        } else if (axiosError.response?.status === 403) {
+          errorMessage = "권한이 없습니다.";
+        } else if (axiosError.response?.status === 500) {
+          errorMessage = "서버 오류가 발생했습니다. 잠시 후 다시 시도해주세요.";
+        } else if (axiosError.response?.data?.message) {
+          errorMessage = axiosError.response.data.message;
+        }
+      }
+
+      alert(errorMessage);
     } finally {
-      setIsSubmitting(false);
+      setIsUploading(false);
     }
   };
 
@@ -127,7 +155,17 @@ export default function FileUploadBox({ onFileSelect }: FileUploadBoxProps) {
         style={{ display: "none" }}
       />
 
-      {previewUrl ? (
+      {hasPendingCertification ? (
+        <div className={style.pendingContainer}>
+          <div className={style.pendingContent}>
+            <h3>🕐 승인 대기 중</h3>
+            <p>전문가 인증 요청이 검토 중입니다.</p>
+            <p className={style.pendingSubtext}>
+              관리자 승인 후 전문가 권한이 부여됩니다.
+            </p>
+          </div>
+        </div>
+      ) : previewUrl ? (
         <div className={style.previewContainer}>
           <img src={previewUrl} alt="Preview" className={style.previewImage} />
           <div className={style.fileInfo}>
@@ -145,9 +183,11 @@ export default function FileUploadBox({ onFileSelect }: FileUploadBoxProps) {
               <Button
                 color="white"
                 backgroundColor="#28a745"
-                content={isSubmitting ? "제출 중..." : "인증서 제출"}
+                content={
+                  isUploading || isPending ? "제출 중..." : "인증서 제출"
+                }
                 onClick={handleSubmit}
-                disabled={isSubmitting}
+                disabled={isUploading || isPending}
               />
             </div>
             <button className={style.removeButton} onClick={handleRemoveFile}>
