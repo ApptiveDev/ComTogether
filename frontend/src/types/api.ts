@@ -152,7 +152,7 @@ export const API_ENDPOINTS = {
 
 // 전문가 인증 관련 타입
 export interface Certification {
-  id: number;
+  cert_id: number;
   user_id: number;
   file_url: string;
   status: 'PENDING' | 'APPROVED' | 'REJECTED';

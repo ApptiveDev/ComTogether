@@ -11,7 +11,7 @@ interface CenteredLayoutProps {
 
 export default function CenteredLayout({
   children,
-  showHeader = true,
+  showHeader = false,
   title,
   description,
 }: CenteredLayoutProps) {

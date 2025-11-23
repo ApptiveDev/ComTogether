@@ -12,8 +12,10 @@ import SignIn from "./pages/SignIn";
 import Setting from "./pages/Setting";
 import SecondSetting from "./pages/SecondSetting";
 import RedirectPage from "./pages/RedirectPage";
+import Admin from "./pages/Admin";
 import ExpertVerifyLayout from "./components/layout/ExpertVerifyLayout";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
+import { AdminProtectedRoute } from "./routes/AdminProtectedRoute";
 import RootRedirect from "./routes/RootRedirect";
 import {
   ErrorBoundary,
@@ -87,6 +89,14 @@ const Router = () => {
         <Route path="/setting" element={<Setting />} />
         <Route path="/second-setting" element={<SecondSetting />} />
         <Route path={"/oauth/kakao/redirect"} element={<RedirectPage />} />
+        <Route
+          path={"/admin"}
+          element={
+            <AdminProtectedRoute>
+              <Admin />
+            </AdminProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

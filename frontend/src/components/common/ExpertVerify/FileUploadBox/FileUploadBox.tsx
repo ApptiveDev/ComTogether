@@ -7,7 +7,6 @@ import {
   useCertificationGet,
 } from "@/api/Certification";
 import { useGetPresignedUrl, uploadToS3 } from "@/api/services/uploadService";
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 interface FileUploadBoxProps {
@@ -15,12 +14,10 @@ interface FileUploadBoxProps {
 }
 
 export default function FileUploadBox({ onFileSelect }: FileUploadBoxProps) {
-  const navigate = useNavigate();
   const [isUploading, setIsUploading] = useState(false);
 
   // 인증 목록 조회
-  const { data: certifications, isLoading: isCertificationsLoading } =
-    useCertificationGet();
+  const { data: certifications } = useCertificationGet();
 
   // 승인 대기 중인 인증이 있는지 확인
   const hasPendingCertification = certifications?.some(
@@ -51,7 +48,9 @@ export default function FileUploadBox({ onFileSelect }: FileUploadBoxProps) {
   const { mutateAsync, isPending } = useCertificationGenerate({
     onSuccess: () => {
       alert("전문가 인증이 성공적으로 제출되었습니다!");
-      navigate("/second-setting");
+      handleRemoveFile();
+      // 페이지 새로고침하여 승인 대기 중 UI 표시
+      window.location.reload();
     },
     onError: (error) => {
       console.error("인증 제출 실패:", error);

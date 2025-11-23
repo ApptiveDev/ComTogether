@@ -12,7 +12,9 @@ export function useCertificationReject(
 
   return useMutation({
     mutationFn: async ({ certId, reason }: CertificationRejectRequest) => {
-      const response = await client.patch<void>(`${API_ENDPOINTS.CERTIFICATION.REJECT(certId)}?reason=${reason}`);
+      const response = await client.patch<void>(
+        `${API_ENDPOINTS.CERTIFICATION.REJECT(certId)}?reason=${encodeURIComponent(reason)}`
+      );
       return response;
     },
     onSuccess: () => {

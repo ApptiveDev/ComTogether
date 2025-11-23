@@ -26,3 +26,27 @@
 .copyright {
     color: #828282;
 }
+
+.adminButton {
+    background-color: #ff5525;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(255, 85, 37, 0.2);
+}
+
+.adminButton:hover {
+    background-color: #e64a1e;
+    box-shadow: 0 4px 12px rgba(255, 85, 37, 0.3);
+    transform: translateY(-2px);
+}
+
+.adminButton:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(255, 85, 37, 0.2);
+}
