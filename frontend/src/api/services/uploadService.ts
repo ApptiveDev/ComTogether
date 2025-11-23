@@ -29,7 +29,7 @@ export function useGetPresignedUrl(
         API_ENDPOINTS.UPLOAD.PRESIGNED_URL,
         data
       );
-      return response.data;
+      return response;
     },
     ...options,
   });

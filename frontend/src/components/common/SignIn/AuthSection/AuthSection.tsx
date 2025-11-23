@@ -1,6 +1,6 @@
 import style from "./authSection.module.css";
 import SignInButton from "../SignInButton/SignInButton";
-import AdminLoginModal from "../AdminLoginModal/adminLoginModal";
+import AdminLoginModal from "../AdminLoginModal/AdminLoginModal";
 import { useState } from "react";
 
 export default function AuthSection() {

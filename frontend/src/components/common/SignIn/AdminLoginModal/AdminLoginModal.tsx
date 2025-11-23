@@ -20,7 +20,7 @@ export default function AdminLoginModal({
 
   const { mutate: login, isPending } = useAdminLogin({
     onSuccess: (data) => {
-      setTokens(data.access_token, data.refresh_token);
+      setTokens(data.data.access_token, data.data.refresh_token);
       alert("관리자 로그인 성공!");
       onClose();
       navigate("/admin"); // 관리자 페이지로 이동

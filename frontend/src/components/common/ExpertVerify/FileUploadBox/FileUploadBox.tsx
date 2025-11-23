@@ -73,10 +73,10 @@ export default function FileUploadBox({ onFileSelect }: FileUploadBoxProps) {
       });
 
       // 2. S3에 파일 업로드
-      await uploadToS3(presignedData.upload_url, selectedFile);
+      await uploadToS3(presignedData.data.upload_url, selectedFile);
 
       // 3. 인증서 생성
-      await mutateAsync({ file_key: presignedData.file_key });
+      await mutateAsync({ file_key: presignedData.data.file_key });
     } catch (error) {
       console.error("제출 실패:", error);
 

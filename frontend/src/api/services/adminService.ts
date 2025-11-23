@@ -23,7 +23,7 @@ export function useAdminLogin(
   return useMutation({
     mutationFn: async (data: AdminLoginRequest) => {
       const response = await client.post<AdminLoginResponse>('/users/login', data);
-      return response.data;
+      return response;
     },
     ...options,
   });
