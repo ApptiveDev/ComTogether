@@ -98,6 +98,12 @@ export default function ExpertVerifyLayout() {
             <p className={styles.statusSubtext}>
               관리자 승인 후 전문가 권한이 부여됩니다.
             </p>
+            <Button
+              color="white"
+              backgroundColor="#ff9500"
+              content="취소하고 다시 제출하기"
+              onClick={handleRetry}
+            />
           </div>
         </div>
       ) : latestCertification?.status === "REJECTED" ? (

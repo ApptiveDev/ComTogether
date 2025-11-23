@@ -2,6 +2,7 @@ import {
   useCertificationGetAll,
   useCertificationApprove,
   useCertificationReject,
+  useCertificationDelete,
 } from "@/api/Certification";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
