@@ -102,3 +102,38 @@
     gap: 10px;
     flex-wrap: wrap;
 }
+
+/* 승인 대기 중 UI */
+.pendingContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+}
+
+.pendingContent {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.pendingContent h3 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #ff8c42;
+    margin: 0;
+}
+
+.pendingContent p {
+    font-size: 18px;
+    color: #333;
+    margin: 0;
+}
+
+.pendingSubtext {
+    font-size: 14px !important;
+    color: #666 !important;
+}

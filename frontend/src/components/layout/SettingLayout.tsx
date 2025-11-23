@@ -9,6 +9,8 @@ import ExpertPopup from "../common/setting/ExpertPopup/ExpertPopup";
 import { useNavigate } from "react-router";
 import { useState, useEffect } from "react";
 import { useProfileSetupStore } from "../../stores/useProfileSetupStore";
+import { useLogout } from "@/api/services/useLogout";
+import Button from "../common/Button/Button";
 
 export default function SettingLayout() {
   const [abled, setAbled] = useState(false);
@@ -18,7 +20,13 @@ export default function SettingLayout() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const navigate = useNavigate();
-  const { setTempRole } = useProfileSetupStore();
+  const { setTempRole, setCurrentStep } = useProfileSetupStore();
+  const { mutate: logout } = useLogout();
+
+  useEffect(() => {
+    // 페이지 진입 시 현재 단계 저장
+    setCurrentStep("role-selection");
+  }, [setCurrentStep]);
 
   useEffect(() => {
     setAbled(selectedLevel !== null);
@@ -33,10 +41,16 @@ export default function SettingLayout() {
     setTempRole(selectedLevel);
 
     if (selectedLevel === "EXPERT") {
+      setCurrentStep("expert-verify");
       setIsPopupOpen(true);
     } else if (selectedLevel === "BEGINNER") {
+      setCurrentStep("interest-selection");
       navigate("/second-setting");
     }
+  };
+
+  const handleLogout = () => {
+    logout();
   };
 
   return (
@@ -68,6 +82,15 @@ export default function SettingLayout() {
           />
         </div>
         <div className={style.btnContainer}>
+          <div className={style.logoutBtnWrapper}>
+            <Button
+              color="white"
+              backgroundColor="#f5f5f5"
+              content="로그아웃"
+              onClick={handleLogout}
+              size="md"
+            />
+          </div>
           <NextButton btnAbled={abled} onClick={handleNext} text="다음" />
         </div>
       </div>
