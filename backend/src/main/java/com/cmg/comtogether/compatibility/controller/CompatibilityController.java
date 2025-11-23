@@ -34,6 +34,8 @@ public class CompatibilityController {
     public ResponseEntity<SseEmitter> checkCompatibility(
             @Valid @RequestBody CompatibilityCheckRequestDto requestDto
     ) {
+        log.info("[CompatibilityController] /compatibility/check 요청 수신, thread={}", Thread.currentThread().getName());
+
         SseEmitter emitter = new SseEmitter(300000L); // 5분 타임아웃
 
         // 초기 연결 확인
@@ -48,44 +50,57 @@ public class CompatibilityController {
         }
 
         // 비동기로 호환성 체크 실행
-        CompletableFuture.runAsync(() -> {
-            try {
-                compatibilityCheckService.checkCompatibility(
-                        requestDto.getItems(),
-                        result -> {
-                            try {
-                                // JSON을 포맷팅하여 가독성 향상
-                                String formattedJson = objectMapper.writerWithDefaultPrettyPrinter()
-                                        .writeValueAsString(result);
-                                
-                                // 각 검사 항목 완료 시 SSE로 전송 (포맷팅된 JSON 사용)
-                                emitter.send(SseEmitter.event()
-                                        .name("result")
-                                        .data(formattedJson));
-                            } catch (IOException e) {
-                                log.error("SSE 전송 실패", e);
-                                emitter.completeWithError(e);
-                            }
-                        }
-                ).join();
+        CompletableFuture<Void> future = compatibilityCheckService.checkCompatibility(
+                requestDto.getItems(),
+                result -> {
+                    try {
+                        log.info(
+                                "[CompatibilityController] SSE result 이벤트 전송 준비: id={}, name={}, result={}, status={}, thread={}",
+                                result.getCheckId(),
+                                result.getCheckName(),
+                                result.getResult(),
+                                result.getStatus(),
+                                Thread.currentThread().getName()
+                        );
 
-                // 모든 검사 완료
+                        // JSON을 포맷팅하여 가독성 향상
+                        String formattedJson = objectMapper.writerWithDefaultPrettyPrinter()
+                                .writeValueAsString(result);
+
+                        // 각 검사 항목 완료 시 SSE로 전송 (포맷팅된 JSON 사용)
+                        emitter.send(SseEmitter.event()
+                                .name("result")
+                                .data(formattedJson));
+                    } catch (IOException e) {
+                        log.error("SSE 전송 실패", e);
+                        emitter.completeWithError(e);
+                    }
+                }
+        );
+
+        future.thenRun(() -> {
+            try {
+                log.info("[CompatibilityController] SSE completed 이벤트 전송, thread={}", Thread.currentThread().getName());
                 emitter.send(SseEmitter.event()
                         .name("completed")
                         .data("모든 호환성 검사가 완료되었습니다."));
                 emitter.complete();
-
-            } catch (Exception e) {
-                log.error("호환성 체크 중 오류 발생", e);
-                try {
-                    emitter.send(SseEmitter.event()
-                            .name("error")
-                            .data("호환성 체크 중 오류가 발생했습니다: " + e.getMessage()));
-                } catch (IOException ioException) {
-                    log.error("에러 메시지 전송 실패", ioException);
-                }
+            } catch (IOException e) {
+                log.error("SSE 완료 이벤트 전송 실패", e);
                 emitter.completeWithError(e);
             }
+        }).exceptionally(ex -> {
+            log.error("호환성 체크 중 오류 발생", ex);
+            try {
+                log.info("[CompatibilityController] SSE error 이벤트 전송, thread={}", Thread.currentThread().getName());
+                emitter.send(SseEmitter.event()
+                        .name("error")
+                        .data("호환성 체크 중 오류가 발생했습니다: " + ex.getMessage()));
+            } catch (IOException ioException) {
+                log.error("에러 메시지 전송 실패", ioException);
+            }
+            emitter.completeWithError(ex);
+            return null;
         });
 
         // 연결 종료 시 처리

@@ -5,12 +5,14 @@ import com.cmg.comtogether.compatibility.dto.CompatibilityItemDto;
 import com.cmg.comtogether.gemini.service.GeminiService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -23,6 +25,12 @@ public class CompatibilityCheckService {
     private final CompatibilityPromptService promptService;
 
     /**
+     * 호환성 체크용 스레드 풀
+     */
+    @Qualifier("compatibilityCheckExecutor")
+    private final Executor compatibilityCheckExecutor;
+
+    /**
      * 호환성 체크 실행 (비동기)
      * @param items 견적 아이템 목록
      * @param resultCallback 각 검사 항목 완료 시 호출되는 콜백
@@ -32,42 +40,82 @@ public class CompatibilityCheckService {
             List<CompatibilityItemDto> items,
             Consumer<CompatibilityCheckResultDto> resultCallback
     ) {
+        log.info("[CompatibilityCheckService] checkCompatibility 시작, thread={}", Thread.currentThread().getName());
+
+        // 결과 콜백에 공통 로깅 래핑
+        Consumer<CompatibilityCheckResultDto> loggingCallback = result -> {
+            if (result != null) {
+                log.info(
+                        "[CompatibilityCheckService] 검사 결과 콜백: id={}, name={}, result={}, status={}, thread={}",
+                        result.getCheckId(),
+                        result.getCheckName(),
+                        result.getResult(),
+                        result.getStatus(),
+                        Thread.currentThread().getName()
+                );
+            } else {
+                log.warn("[CompatibilityCheckService] 검사 결과 콜백: result=null, thread={}", Thread.currentThread().getName());
+            }
+            resultCallback.accept(result);
+        };
         // 카테고리별로 아이템 분류
         Map<String, List<CompatibilityItemDto>> itemsByCategory = items.stream()
                 .collect(Collectors.groupingBy(
                         item -> item.getCategory3() != null ? item.getCategory3() : "UNKNOWN"
                 ));
 
-        // 각 검사 완료 시 콜백 호출
-        Consumer<CompatibilityCheckResultDto> wrappedCallback = result -> {
-            resultCallback.accept(result);
-        };
-
-        // 10개 검사 항목을 병렬로 실행
+        // 10개 검사 항목을 병렬로 실행 (스레드 풀 직접 사용)
         List<CompletableFuture<Void>> futures = List.of(
-                checkCpuMotherboardCompatibility(itemsByCategory, wrappedCallback),
-                checkMemoryTypeCompatibility(itemsByCategory, wrappedCallback),
-                checkMemorySpeedCompatibility(itemsByCategory, wrappedCallback),
-                checkMotherboardCaseFormFactor(itemsByCategory, wrappedCallback),
-                checkGpuCaseCompatibility(itemsByCategory, wrappedCallback),
-                checkPowerStability(itemsByCategory, wrappedCallback),
-                checkPowerConnector(itemsByCategory, wrappedCallback),
-                checkStorageCompatibility(itemsByCategory, wrappedCallback),
-                checkCoolerCompatibility(itemsByCategory, wrappedCallback),
-                checkOsCompatibility(itemsByCategory, wrappedCallback)
+                CompletableFuture.runAsync(
+                        () -> checkCpuMotherboardCompatibility(itemsByCategory, loggingCallback),
+                        compatibilityCheckExecutor
+                ),
+                CompletableFuture.runAsync(
+                        () -> checkMemoryTypeCompatibility(itemsByCategory, loggingCallback),
+                        compatibilityCheckExecutor
+                ),
+                CompletableFuture.runAsync(
+                        () -> checkMemorySpeedCompatibility(itemsByCategory, loggingCallback),
+                        compatibilityCheckExecutor
+                ),
+                CompletableFuture.runAsync(
+                        () -> checkMotherboardCaseFormFactor(itemsByCategory, loggingCallback),
+                        compatibilityCheckExecutor
+                ),
+                CompletableFuture.runAsync(
+                        () -> checkGpuCaseCompatibility(itemsByCategory, loggingCallback),
+                        compatibilityCheckExecutor
+                ),
+                CompletableFuture.runAsync(
+                        () -> checkPowerStability(itemsByCategory, loggingCallback),
+                        compatibilityCheckExecutor
+                ),
+                CompletableFuture.runAsync(
+                        () -> checkPowerConnector(itemsByCategory, loggingCallback),
+                        compatibilityCheckExecutor
+                ),
+                CompletableFuture.runAsync(
+                        () -> checkStorageCompatibility(itemsByCategory, loggingCallback),
+                        compatibilityCheckExecutor
+                ),
+                CompletableFuture.runAsync(
+                        () -> checkCoolerCompatibility(itemsByCategory, loggingCallback),
+                        compatibilityCheckExecutor
+                ),
+                CompletableFuture.runAsync(
+                        () -> checkOsCompatibility(itemsByCategory, loggingCallback),
+                        compatibilityCheckExecutor
+                )
         );
 
-        // 모든 검사 완료 대기
-        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
-
-        return CompletableFuture.completedFuture(null);
+        // 모든 검사 완료를 비동기적으로 기다림
+        return CompletableFuture.allOf(futures.toArray(new CompletableFuture[0]));
     }
 
     /**
      * 1번 검사: CPU ↔ 메인보드 호환성
      */
-    @Async("compatibilityCheckExecutor")
-    public CompletableFuture<Void> checkCpuMotherboardCompatibility(
+    private void checkCpuMotherboardCompatibility(
             Map<String, List<CompatibilityItemDto>> itemsByCategory,
             Consumer<CompatibilityCheckResultDto> resultCallback
     ) {
@@ -86,7 +134,7 @@ public class CompatibilityCheckService {
                         .details("")
                         .build();
                 resultCallback.accept(result);
-                return CompletableFuture.completedFuture(null);
+                return;
             }
 
             // 첫 번째 CPU와 메인보드 사용 (여러 개인 경우 첫 번째 것 사용)
@@ -119,15 +167,12 @@ public class CompatibilityCheckService {
                     .build();
             resultCallback.accept(errorResult);
         }
-
-        return CompletableFuture.completedFuture(null);
     }
 
     /**
      * 2번 검사: 메모리 타입 호환성 (메인보드 ↔ RAM)
      */
-    @Async("compatibilityCheckExecutor")
-    public CompletableFuture<Void> checkMemoryTypeCompatibility(
+    private void checkMemoryTypeCompatibility(
             Map<String, List<CompatibilityItemDto>> itemsByCategory,
             Consumer<CompatibilityCheckResultDto> resultCallback
     ) {
@@ -146,7 +191,7 @@ public class CompatibilityCheckService {
                         .details("")
                         .build();
                 resultCallback.accept(result);
-                return CompletableFuture.completedFuture(null);
+                return;
             }
 
             CompatibilityItemDto mb = motherboards.get(0);
@@ -172,15 +217,12 @@ public class CompatibilityCheckService {
                     .build();
             resultCallback.accept(errorResult);
         }
-
-        return CompletableFuture.completedFuture(null);
     }
 
     /**
      * 3번 검사: 메모리 속도 호환성 (메인보드 ↔ RAM)
      */
-    @Async("compatibilityCheckExecutor")
-    public CompletableFuture<Void> checkMemorySpeedCompatibility(
+    private void checkMemorySpeedCompatibility(
             Map<String, List<CompatibilityItemDto>> itemsByCategory,
             Consumer<CompatibilityCheckResultDto> resultCallback
     ) {
@@ -199,7 +241,7 @@ public class CompatibilityCheckService {
                         .details("")
                         .build();
                 resultCallback.accept(result);
-                return CompletableFuture.completedFuture(null);
+                return;
             }
 
             CompatibilityItemDto mb = motherboards.get(0);
@@ -225,15 +267,12 @@ public class CompatibilityCheckService {
                     .build();
             resultCallback.accept(errorResult);
         }
-
-        return CompletableFuture.completedFuture(null);
     }
 
     /**
      * 4번 검사: 메인보드 ↔ 케이스 폼팩 호환성
      */
-    @Async("compatibilityCheckExecutor")
-    public CompletableFuture<Void> checkMotherboardCaseFormFactor(
+    private void checkMotherboardCaseFormFactor(
             Map<String, List<CompatibilityItemDto>> itemsByCategory,
             Consumer<CompatibilityCheckResultDto> resultCallback
     ) {
@@ -252,7 +291,7 @@ public class CompatibilityCheckService {
                         .details("")
                         .build();
                 resultCallback.accept(result);
-                return CompletableFuture.completedFuture(null);
+                return;
             }
 
             CompatibilityItemDto mb = motherboards.get(0);
@@ -278,15 +317,12 @@ public class CompatibilityCheckService {
                     .build();
             resultCallback.accept(errorResult);
         }
-
-        return CompletableFuture.completedFuture(null);
     }
 
     /**
      * 5번 검사: GPU ↔ 케이스 호환성
      */
-    @Async("compatibilityCheckExecutor")
-    public CompletableFuture<Void> checkGpuCaseCompatibility(
+    private void checkGpuCaseCompatibility(
             Map<String, List<CompatibilityItemDto>> itemsByCategory,
             Consumer<CompatibilityCheckResultDto> resultCallback
     ) {
@@ -305,7 +341,7 @@ public class CompatibilityCheckService {
                         .details("")
                         .build();
                 resultCallback.accept(result);
-                return CompletableFuture.completedFuture(null);
+                return;
             }
 
             CompatibilityItemDto gpu = gpus.get(0);
@@ -331,15 +367,12 @@ public class CompatibilityCheckService {
                     .build();
             resultCallback.accept(errorResult);
         }
-
-        return CompletableFuture.completedFuture(null);
     }
 
     /**
      * 6번 검사: 전력 안정성 (CPU + GPU ↔ PSU)
      */
-    @Async("compatibilityCheckExecutor")
-    public CompletableFuture<Void> checkPowerStability(
+    private void checkPowerStability(
             Map<String, List<CompatibilityItemDto>> itemsByCategory,
             Consumer<CompatibilityCheckResultDto> resultCallback
     ) {
@@ -359,7 +392,7 @@ public class CompatibilityCheckService {
                         .details("")
                         .build();
                 resultCallback.accept(result);
-                return CompletableFuture.completedFuture(null);
+                return;
             }
 
             CompatibilityItemDto cpu = cpus.get(0);
@@ -386,15 +419,12 @@ public class CompatibilityCheckService {
                     .build();
             resultCallback.accept(errorResult);
         }
-
-        return CompletableFuture.completedFuture(null);
     }
 
     /**
      * 7번 검사: 파워 커넥터 호환성 (GPU ↔ PSU)
      */
-    @Async("compatibilityCheckExecutor")
-    public CompletableFuture<Void> checkPowerConnector(
+    private void checkPowerConnector(
             Map<String, List<CompatibilityItemDto>> itemsByCategory,
             Consumer<CompatibilityCheckResultDto> resultCallback
     ) {
@@ -413,7 +443,7 @@ public class CompatibilityCheckService {
                         .details("")
                         .build();
                 resultCallback.accept(result);
-                return CompletableFuture.completedFuture(null);
+                return;
             }
 
             CompatibilityItemDto gpu = gpus.get(0);
@@ -439,15 +469,12 @@ public class CompatibilityCheckService {
                     .build();
             resultCallback.accept(errorResult);
         }
-
-        return CompletableFuture.completedFuture(null);
     }
 
     /**
      * 8번 검사: 스토리지 호환성 (메인보드 ↔ 스토리지)
      */
-    @Async("compatibilityCheckExecutor")
-    public CompletableFuture<Void> checkStorageCompatibility(
+    private void checkStorageCompatibility(
             Map<String, List<CompatibilityItemDto>> itemsByCategory,
             Consumer<CompatibilityCheckResultDto> resultCallback
     ) {
@@ -466,7 +493,7 @@ public class CompatibilityCheckService {
                         .details("")
                         .build();
                 resultCallback.accept(result);
-                return CompletableFuture.completedFuture(null);
+                return;
             }
 
             CompatibilityItemDto mb = motherboards.get(0);
@@ -492,15 +519,12 @@ public class CompatibilityCheckService {
                     .build();
             resultCallback.accept(errorResult);
         }
-
-        return CompletableFuture.completedFuture(null);
     }
 
     /**
      * 9번 검사: CPU 쿨러 ↔ 케이스/램 호환성
      */
-    @Async("compatibilityCheckExecutor")
-    public CompletableFuture<Void> checkCoolerCompatibility(
+    private void checkCoolerCompatibility(
             Map<String, List<CompatibilityItemDto>> itemsByCategory,
             Consumer<CompatibilityCheckResultDto> resultCallback
     ) {
@@ -520,7 +544,7 @@ public class CompatibilityCheckService {
                         .details("")
                         .build();
                 resultCallback.accept(result);
-                return CompletableFuture.completedFuture(null);
+                return;
             }
 
             CompatibilityItemDto cooler = coolers.get(0);
@@ -547,15 +571,12 @@ public class CompatibilityCheckService {
                     .build();
             resultCallback.accept(errorResult);
         }
-
-        return CompletableFuture.completedFuture(null);
     }
 
     /**
      * 10번 검사: OS/드라이버 호환성 (CPU ↔ OS)
      */
-    @Async("compatibilityCheckExecutor")
-    public CompletableFuture<Void> checkOsCompatibility(
+    private void checkOsCompatibility(
             Map<String, List<CompatibilityItemDto>> itemsByCategory,
             Consumer<CompatibilityCheckResultDto> resultCallback
     ) {
@@ -574,7 +595,7 @@ public class CompatibilityCheckService {
                         .details("")
                         .build();
                 resultCallback.accept(result);
-                return CompletableFuture.completedFuture(null);
+                return;
             }
 
             CompatibilityItemDto cpu = cpus.get(0);
@@ -600,8 +621,6 @@ public class CompatibilityCheckService {
                     .build();
             resultCallback.accept(errorResult);
         }
-
-        return CompletableFuture.completedFuture(null);
     }
 
     /**
