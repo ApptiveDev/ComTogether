@@ -63,14 +63,14 @@ public class CompatibilityController {
                                 Thread.currentThread().getName()
                         );
 
-                        // JSON을 포맷팅하여 가독성 향상
-                        String formattedJson = objectMapper.writerWithDefaultPrettyPrinter()
-                                .writeValueAsString(result);
+                        // SSE 특성상 줄바꿈이 있으면 data: 라인이 여러 줄로 쪼개지므로
+                        // 한 줄짜리 JSON 문자열로 전송하고, 프론트에서 필요하면 pretty print 처리
+                        String json = objectMapper.writeValueAsString(result);
 
-                        // 각 검사 항목 완료 시 SSE로 전송 (포맷팅된 JSON 사용)
+                        // 각 검사 항목 완료 시 SSE로 전송 (단일 라인 JSON)
                         emitter.send(SseEmitter.event()
                                 .name("result")
-                                .data(formattedJson));
+                                .data(json));
                     } catch (IOException e) {
                         log.error("SSE 전송 실패", e);
                         emitter.completeWithError(e);
