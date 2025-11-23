@@ -4,3 +4,4 @@ export type * from './user';
 export type * from './api';
 export type * from './guide';
 export type * from './glossary';
+export type * from './quote';

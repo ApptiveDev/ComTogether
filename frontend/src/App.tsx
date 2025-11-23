@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import "./App.css";
+import "./app.css";
 import Home from "./pages/Home";
 import CompatibilityCheck from "./pages/CompatibilityCheck";
 import ExpertConsultation from "./pages/ExpertConsultation";
@@ -11,9 +11,11 @@ import MyPage from "./pages/MyPage";
 import SignIn from "./pages/SignIn";
 import Setting from "./pages/Setting";
 import SecondSetting from "./pages/SecondSetting";
-import RedirectPage from "./pages/oauth/kakao/RedirectPage";
+import RedirectPage from "./pages/RedirectPage";
+import Admin from "./pages/Admin";
 import ExpertVerifyLayout from "./components/layout/ExpertVerifyLayout";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
+import { AdminProtectedRoute } from "./routes/AdminProtectedRoute";
 import RootRedirect from "./routes/RootRedirect";
 import {
   ErrorBoundary,
@@ -87,6 +89,14 @@ const Router = () => {
         <Route path="/setting" element={<Setting />} />
         <Route path="/second-setting" element={<SecondSetting />} />
         <Route path={"/oauth/kakao/redirect"} element={<RedirectPage />} />
+        <Route
+          path={"/admin"}
+          element={
+            <AdminProtectedRoute>
+              <Admin />
+            </AdminProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

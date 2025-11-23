@@ -1,7 +1,7 @@
 // src/components/optimized/VirtualList.tsx
 import React, { useMemo, useState } from "react";
 import { useWindowSize } from "../../utils/performance";
-import styles from "./VirtualList.module.css";
+import styles from "./virtualList.module.css";
 
 interface VirtualListProps<T> {
   items: T[];

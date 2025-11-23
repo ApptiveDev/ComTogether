@@ -72,6 +72,7 @@ export interface LegacyButtonProps extends ButtonProps {
 // 로딩 스피너 타입
 export interface LoadingSpinnerProps {
   size?: SpinnerSize;
+  thickness?: number;
   color?: string;
   text?: string;
   variant?: SpinnerVariant;

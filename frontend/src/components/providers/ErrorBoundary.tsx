@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import type { ReactNode } from "react";
 import { ApiError } from "../../api/core/types";
 import Modal from "../ui/Modal/Modal";
-import Button from "../common/button/Button";
-import styles from "./ErrorBoundary.module.css";
+import Button from "../common/Button/Button";
+import styles from "./errorBoundary.module.css";
 
 interface ErrorBoundaryState {
   hasError: boolean;

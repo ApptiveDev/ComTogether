@@ -20,8 +20,8 @@
 }
 
 .checkItem {
-    width: 60px;
-    height: 60px;
+    width: 85px;
+    height: 85px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -41,7 +41,7 @@
 }
 
 .label {
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-md);
     color: var(--text-secondary);
     text-align: center;
     line-height: 1.4;
@@ -52,13 +52,14 @@
 }
 
 .statusMessage {
-    min-height: 60px;
+    max-height: 40px;
     padding: var(--spacing-6);
     background-color: var(--bg-secondary);
     border-radius: var(--border-radius-lg);
+    border: var(--border-width-2) solid var(--border-strong);
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     text-align: center;
 }
 
@@ -75,7 +76,7 @@
 
 .pdfButton {
     width: 200px;
-    margin: 0 auto;
+    margin: 20px auto;
     padding: var(--spacing-3) var(--spacing-6);
     background-color: #ff5525;
     color: white;

@@ -1,6 +1,6 @@
 package com.cmg.comtogether.product.service;
 
-import com.cmg.comtogether.cache.CacheMonitorService;
+import com.cmg.comtogether.common.cache.CacheMonitorService;
 import com.cmg.comtogether.common.exception.BusinessException;
 import com.cmg.comtogether.common.exception.ErrorCode;
 import com.cmg.comtogether.interest.entity.Interest;

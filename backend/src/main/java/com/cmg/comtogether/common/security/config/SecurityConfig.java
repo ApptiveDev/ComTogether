@@ -44,7 +44,10 @@ public class SecurityConfig {
                                 "/gemini/**"
                         ).permitAll()
                         .requestMatchers(
-                                "/users/all"
+                                "/users/all",
+                                "/certification/{certId}/approve",
+                                "/certification/{certId}/reject",
+                                "/certification/all"
                         ).hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
