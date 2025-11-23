@@ -1,7 +1,7 @@
 // src/components/optimized/LazyImage.tsx
 import React, { useState, useRef } from "react";
 import { useIntersectionObserver } from "../../utils/performance";
-import styles from "./LazyImage.module.css";
+import styles from "./lazyImage.module.css";
 
 interface LazyImageProps {
   src: string;

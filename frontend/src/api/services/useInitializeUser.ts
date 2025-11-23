@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { useAuthStore } from '../../stores/useAuthStore';
+import { useProfileSetupStore } from '@/stores/useProfileSetupStore';
 import client from '../core';
 import { 
   invalidateQueries 
@@ -19,7 +20,8 @@ export function useInitializeUser(
   options?: CommonMutationOptions<UserData, InitializeUserRequest>
 ) {
   const { setUser } = useAuthStore();
-
+  const { clearProfileSetup } = useProfileSetupStore();
+  
   return useMutation({
     mutationFn: async (data: InitializeUserRequest) => {
       const response = await client.put<UserData>(
@@ -32,6 +34,7 @@ export function useInitializeUser(
       if (response.success && response.data) {
         setUser(response.data);
         invalidateQueries.user();
+        clearProfileSetup();
         
         // 홈으로 이동
         window.location.href = '/home';

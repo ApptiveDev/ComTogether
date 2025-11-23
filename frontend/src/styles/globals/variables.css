@@ -1,5 +1,9 @@
 :root {
     /* ===== 색상 팔레트 ===== */
+    /* brand colors */
+    --color-brand-light: #f0f9ff;
+    --color-brand: #ff5525;
+
     /* Primary Colors */
     --color-primary-50: #eff6ff;
     --color-primary-100: #dbeafe;

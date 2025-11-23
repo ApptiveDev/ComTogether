@@ -16,7 +16,8 @@ public class CorsConfig {
         configuration.setAllowedOrigins(Arrays.asList(
                 "http://localhost:3000",
                 "https://com-together.vercel.app",
-                "https://com-together.org"
+                "https://com-together.org",
+                "https://comtogetherofficial.vercel.app"
         )); // 프론트 도메인
         configuration.addAllowedMethod("*"); // 모든 HTTP 메서드 허용
         configuration.addAllowedHeader("*"); // 모든 헤더 허용
