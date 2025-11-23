@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../stores/useAuthStore";
-import { useUserProfile } from "../api/services/useUserProfile";
+import { useUserProfile } from "../api/Auth/useUserProfile";
 
 interface HomeProtectedRouteProps {
   children: React.ReactNode;
@@ -19,28 +19,32 @@ export default function HomeProtectedRoute({
   });
 
   useEffect(() => {
+    // 인증되지 않은 경우 로그인 페이지로
     if (!isAuthenticated) {
       navigate("/signIn");
       return;
     }
 
-    if (!user && isLoading) {
+    // 로딩 중이면 대기
+    if (isLoading) {
       return;
     }
 
-    if (!user && isError) {
+    // 사용자 정보 조회 실패 시 로그인 페이지로
+    if (isError || !user) {
       navigate("/signIn");
       return;
     }
 
-    if (user && !user.initialized) {
+    // 초기화되지 않은 사용자는 설정 페이지로
+    if (!user.initialized) {
       navigate("/setting");
       return;
     }
   }, [user, isAuthenticated, isLoading, isError, navigate]);
 
   // 로딩 중이거나 리다이렉트 중일 때는 아무것도 렌더링하지 않음
-  if (!isAuthenticated || isLoading || !user || (user && !user.initialized)) {
+  if (!isAuthenticated || isLoading || !user || !user.initialized) {
     return null;
   }
 

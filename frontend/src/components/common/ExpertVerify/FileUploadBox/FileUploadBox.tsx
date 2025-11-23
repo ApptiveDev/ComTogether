@@ -2,10 +2,7 @@ import style from "./fileUploadBox.module.css";
 import uploadIcon from "@/assets/image/upload.svg";
 import Button from "../../Button/Button";
 import { useFileUpload } from "@/hooks/useFileUpload";
-import {
-  useCertificationGenerate,
-  useCertificationGet,
-} from "@/api/Certification";
+import { useCertificationGenerate } from "@/api/Certification";
 import { useGetPresignedUrl, uploadToS3 } from "@/api/services/uploadService";
 import { useEffect, useState } from "react";
 
@@ -15,14 +12,6 @@ interface FileUploadBoxProps {
 
 export default function FileUploadBox({ onFileSelect }: FileUploadBoxProps) {
   const [isUploading, setIsUploading] = useState(false);
-
-  // 인증 목록 조회
-  const { data: certifications } = useCertificationGet();
-
-  // 승인 대기 중인 인증이 있는지 확인
-  const hasPendingCertification = certifications?.some(
-    (cert) => cert.status === "PENDING"
-  );
 
   const {
     selectedFile,
@@ -154,17 +143,7 @@ export default function FileUploadBox({ onFileSelect }: FileUploadBoxProps) {
         style={{ display: "none" }}
       />
 
-      {hasPendingCertification ? (
-        <div className={style.pendingContainer}>
-          <div className={style.pendingContent}>
-            <h3>🕐 승인 대기 중</h3>
-            <p>전문가 인증 요청이 검토 중입니다.</p>
-            <p className={style.pendingSubtext}>
-              관리자 승인 후 전문가 권한이 부여됩니다.
-            </p>
-          </div>
-        </div>
-      ) : previewUrl ? (
+      {previewUrl ? (
         <div className={style.previewContainer}>
           <img src={previewUrl} alt="Preview" className={style.previewImage} />
           <div className={style.fileInfo}>

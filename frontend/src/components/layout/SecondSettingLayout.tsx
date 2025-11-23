@@ -3,14 +3,22 @@ import StepHeader from "../common/setting/StepHeader/StepHeader";
 import stepImg from "@/assets/image/second-step-status.svg";
 import InterestSelector from "../common/setting/interestSelector/InterestSelector";
 import NextButton from "../common/setting/NextButton/NextButton";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useInitializeUser } from "../../api/services/useInitializeUser";
 import { useProfileSetupStore } from "../../stores/useProfileSetupStore";
+import { useLogout } from "@/api/services/useLogout";
+import Button from "../common/Button/Button";
 
 export default function SecondSettingLayout() {
   const [count, setCount] = useState(0);
   const initializeMutation = useInitializeUser();
-  const { tempRole, tempInterestIds } = useProfileSetupStore();
+  const { tempRole, tempInterestIds, setCurrentStep } = useProfileSetupStore();
+  const { mutate: logout } = useLogout();
+
+  useEffect(() => {
+    // 페이지 진입 시 현재 단계 저장
+    setCurrentStep("interest-selection");
+  }, [setCurrentStep]);
 
   const handleNext = () => {
     if (count > 0 && tempRole) {
@@ -20,6 +28,10 @@ export default function SecondSettingLayout() {
         interest_ids: tempInterestIds,
       });
     }
+  };
+
+  const handleLogout = () => {
+    logout();
   };
 
   return (
@@ -33,7 +45,18 @@ export default function SecondSettingLayout() {
         <InterestSelector count={count} setCount={setCount} />
       </div>
       <div className={style.interestFooter}>
-        <div className={style.interestCount}>선택된 관심사: {count}개</div>
+        <div className={style.leftSection}>
+          <div className={style.logoutBtnWrapper}>
+            <Button
+              color="white"
+              backgroundColor="#f5f5f5"
+              content="로그아웃"
+              onClick={handleLogout}
+              size="md"
+            />
+          </div>
+          <div className={style.interestCount}>선택된 관심사: {count}개</div>
+        </div>
         <NextButton
           btnAbled={count > 0 && !initializeMutation.isPending}
           onClick={handleNext}
