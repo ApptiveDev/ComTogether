@@ -64,6 +64,9 @@ export const queryKeys = {
     HISTORY: (size?: number) => 
       size ? ['glossary', 'history', size] : ['glossary', 'history'] as const,
   },
+
+  QUOTES: ['quotes'] as const,
+  QUOTE_DETAIL: 'quote-detail' as const,
   
   PRODUCTS: {
     ALL: ['products'] as const,

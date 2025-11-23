@@ -52,21 +52,17 @@ public class UserService {
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
 
         user.updateRole(requestDto.getRole());
-
         List<Interest> interests = new ArrayList<>();
 
         if (requestDto.getInterestIds() != null) {
             interests.addAll(interestService.findAllById(requestDto.getInterestIds()));
         }
-
         if (requestDto.getCustomInterests() != null) {
             interests.addAll(interestService.saveCustomInterests(requestDto.getCustomInterests()));
         }
 
         user.updateInterests(interests);
-
         user.completeInitialization();
-
         return userMapper.toResponse(user);
     }
 
@@ -92,5 +88,12 @@ public class UserService {
         }
 
         return jwtService.generateToken(user);
+    }
+
+    public void updateRoleToExpert(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+
+        user.changeRole(Role.EXPERT);
     }
 }

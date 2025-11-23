@@ -1,0 +1,118 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--bg-overlay);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: var(--z-index-modal);
+    animation: fadeIn var(--transition-fast) ease-out;
+}
+
+.modal {
+    background-color: var(--bg-primary);
+    border-radius: var(--border-radius-xl);
+    box-shadow: var(--shadow-xl);
+    max-height: 90vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    animation: slideIn var(--transition-normal) ease-out;
+}
+
+/* Modal Sizes */
+.sm {
+    width: 90%;
+    max-width: 400px;
+}
+
+.md {
+    width: 90%;
+    max-width: 500px;
+}
+
+.lg {
+    width: 90%;
+    max-width: 700px;
+}
+
+.xl {
+    width: 90%;
+    max-width: 1100px;
+    height: 700px;
+}
+
+.xxl {
+    width: 90%;
+    max-width: 1400px;
+    height: 800px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--spacing-6);
+    border-bottom: var(--border-width-1) solid var(--border-default);
+}
+
+.title {
+    margin: 0;
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+}
+
+.closeButton {
+    background: none;
+    border: none;
+    font-size: var(--font-size-2xl);
+    color: var(--text-tertiary);
+    cursor: pointer;
+    padding: var(--spacing-2);
+    margin: calc(var(--spacing-2) * -1);
+    border-radius: var(--border-radius-default);
+    transition: all var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+}
+
+.closeButton:hover {
+    color: var(--text-primary);
+    background-color: var(--bg-tertiary);
+}
+
+.content {
+    padding: var(--spacing-6);
+    overflow-y: auto;
+    flex: 1;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}

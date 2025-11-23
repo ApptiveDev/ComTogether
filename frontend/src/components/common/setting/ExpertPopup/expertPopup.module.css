@@ -1,0 +1,40 @@
+.expert-popup{
+    width: 400px;
+    height: 370px;
+    border-radius: 12px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 25px;
+}
+
+.expert-popup img{
+    width: 50px;
+    height: 50px;
+}
+
+.title{
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.description{
+    font-size: 19px;
+    font-weight: 500;
+    color: #828282;
+    text-align: center;
+    margin-top: 25px;
+}
+
+.buttons{
+    display: flex;
+    gap: 10px;
+    margin-top: 40px;
+}

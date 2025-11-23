@@ -10,6 +10,7 @@ public enum ErrorCode {
     // 공통
     INVALID_INPUT(400, "COMMON-001", "잘못된 입력 값입니다."),
     INVALID_FORMAT(400, "COMMON-002", "요청 본문의 형식이 올바르지 않습니다."),
+    METHOD_NOT_ALLOWED(405, "COMMON-003", "지원하지 않는 메서드입니다."),
     INTERNAL_SERVER_ERROR(500, "COMMON-999", "서버 에러가 발생했습니다."),
 
     // 유저
@@ -47,8 +48,17 @@ public enum ErrorCode {
 
     // 검색 기록
     HISTORY_NOT_FOUND(404, "HISTORY-001", "검색 기록을 찾을 수 없습니다."),
-    HISTORY_ACCESS_DENIED(403, "HISTORY-002", "검색 기록에 대한 접근 권한이 없습니다.");
-    
+    HISTORY_ACCESS_DENIED(403, "HISTORY-002", "검색 기록에 대한 접근 권한이 없습니다."),
+
+    // 전문가 인증
+    CERTIFICATION_NOT_FOUND(404, "CERTIFICATION-001" , "해당 인증을 찾을 수 없습니다." ),
+    CERTIFICATION_ALREADY_APPROVED(400, "CERTIFICATION-002", "이미 승인된 인증입니다."),
+    CERTIFICATION_ALREADY_REJECTED(400, "CERTIFICATION-003", "이미 거절된 인증입니다."),
+    CERTIFICATION_ACCESS_DENIED(403, "CERTIFICATION-004", "해당 인증서에 대한 접근 권한이 없습니다."),
+
+    // 업로드
+    INVALID_UPLOAD_TYPE(400,"UPLOAD-001", "올바르지 않은 업로드 타입입니다.");
+
 
     private final int status;
     private final String code;
