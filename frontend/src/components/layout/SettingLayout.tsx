@@ -84,6 +84,7 @@ export default function SettingLayout() {
         </div>
         <div className={style.btnContainer}>
 <<<<<<< HEAD
+<<<<<<< HEAD
           <div className={style.logoutBtnWrapper}>
             <Button
               color="white"
@@ -93,6 +94,8 @@ export default function SettingLayout() {
               size="md"
             />
 =======
+=======
+>>>>>>> 271e9e0a8dd8afaeed0bf9925da906861226c919
           <div className={style.userInfo}>
             <div className={style.logoutBtnWrapper}>
               <Button
@@ -106,7 +109,10 @@ export default function SettingLayout() {
             {user?.email && (
               <span className={style.userEmail}>{user.email}</span>
             )}
+<<<<<<< HEAD
 >>>>>>> yuhoyeong/frontend/setting-page-renual
+=======
+>>>>>>> 271e9e0a8dd8afaeed0bf9925da906861226c919
           </div>
           <NextButton btnAbled={abled} onClick={handleNext} text="다음" />
         </div>
