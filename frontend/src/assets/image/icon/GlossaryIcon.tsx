@@ -1,4 +1,4 @@
-export default function ChatBotIcon({ text }: { text: string }) {
+export default function GlossaryIcon({ text }: { text: string }) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

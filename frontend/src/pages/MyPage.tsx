@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLogout } from "../api/services/useLogout";
+import { useLogout } from "../api/Auth/useLogout";
 import { useAuthStore } from "../stores/useAuthStore";
 import DeleteAccountModal from "../components/common/DeleteAccountModal/DeleteAccountModal";
 
@@ -18,6 +18,32 @@ export default function MyPage() {
           <p>이름: {user.name || "미설정"}</p>
           <p>역할: {user.role || "미설정"}</p>
           <p>이메일: {user.email || "미설정"}</p>
+
+          <div style={{ marginTop: "15px" }}>
+            <p style={{ fontWeight: "bold", marginBottom: "8px" }}>관심사:</p>
+            {user.interests && user.interests.length > 0 ? (
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+                {user.interests.map((interest) => (
+                  <span
+                    key={interest.interestId}
+                    style={{
+                      padding: "6px 12px",
+                      backgroundColor: "#e9ecef",
+                      borderRadius: "16px",
+                      fontSize: "14px",
+                      color: "#495057",
+                    }}
+                  >
+                    {interest.name}
+                  </span>
+                ))}
+              </div>
+            ) : (
+              <p style={{ color: "#999", fontSize: "14px" }}>
+                설정된 관심사가 없습니다.
+              </p>
+            )}
+          </div>
         </div>
       )}
 

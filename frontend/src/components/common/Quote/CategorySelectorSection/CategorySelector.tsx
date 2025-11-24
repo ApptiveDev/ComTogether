@@ -1,16 +1,16 @@
 import CategoryItem from "./CategoryItem";
 import styles from "./categorySelector.module.css";
-import { usePartListStore } from "@/stores/usePartListStore";
 import { productData } from "@/components/providers/productData";
 
-export default function CategorySelector() {
-  const {
-    currentCategory,
-    setCurrentCategory,
-    setCurrentPage,
-    setSearchResult,
-    setInputValue,
-  } = usePartListStore();
+interface CategorySelectorProps {
+  currentCategory: string;
+  onCategoryChange: (category: string) => void;
+}
+
+export default function CategorySelector({
+  currentCategory,
+  onCategoryChange,
+}: CategorySelectorProps) {
   return (
     <div className={styles.container}>
       <div className={styles.content}>
@@ -20,12 +20,7 @@ export default function CategorySelector() {
               key={item.id}
               category={item.name}
               active={currentCategory === item.name}
-              onClick={() => {
-                setCurrentCategory(item.name);
-                setCurrentPage(1);
-                setSearchResult([]);
-                setInputValue("");
-              }}
+              onClick={() => onCategoryChange(item.name)}
             />
           );
         })}

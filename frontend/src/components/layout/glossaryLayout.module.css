@@ -4,19 +4,3 @@
     right: 30px;
     z-index: 50;
 }
-
-.chatBotBtn {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background-color: #FF5525;
-    color: white;
-    border: none;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 30px;
-    transition: background-color 0.3s, transform 0.2s;
-}

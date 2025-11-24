@@ -3,14 +3,20 @@ import Header from "../common/Header/Header";
 import CategorySelector from "../common/Quote/CategorySelectorSection/CategorySelector";
 import PartList from "../common/Quote/ProductsSection/ProductContainer";
 import QuotePart from "../common/Quote/QuoteSection/QuotePart";
+import { useState } from "react";
 
 export default function CompatibilityCheckLayout() {
+  const [currentCategory, setCurrentCategory] = useState("CPU");
+
   return (
     <div className={styles.container}>
       <Header />
-      <CategorySelector />
+      <CategorySelector
+        currentCategory={currentCategory}
+        onCategoryChange={setCurrentCategory}
+      />
       <div className={styles.content}>
-        <PartList />
+        <PartList currentCategory={currentCategory} />
         <QuotePart />
       </div>
     </div>

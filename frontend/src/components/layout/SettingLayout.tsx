@@ -9,7 +9,7 @@ import ExpertPopup from "../common/setting/ExpertPopup/ExpertPopup";
 import { useNavigate } from "react-router";
 import { useState, useEffect } from "react";
 import { useProfileSetupStore } from "../../stores/useProfileSetupStore";
-import { useLogout } from "@/api/services/useLogout";
+import { useLogout } from "@/api/Auth/useLogout";
 import Button from "../common/Button/Button";
 import { useAuthStore } from "@/stores/useAuthStore";
 
@@ -83,15 +83,6 @@ export default function SettingLayout() {
           />
         </div>
         <div className={style.btnContainer}>
-          <div className={style.logoutBtnWrapper}>
-            <Button
-              color="white"
-              backgroundColor="#f5f5f5"
-              content="로그아웃"
-              onClick={handleLogout}
-              size="md"
-            />
-          </div>
           <div className={style.userInfo}>
             <div className={style.logoutBtnWrapper}>
               <Button

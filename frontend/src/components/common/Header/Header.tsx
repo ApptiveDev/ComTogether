@@ -28,7 +28,7 @@ export default function Header() {
         <NavButton
           text="견적 짜기"
           onClick={() => {
-            navigate("/compatibility-check");
+            navigate("/quote");
           }}
         />
         <NavButton

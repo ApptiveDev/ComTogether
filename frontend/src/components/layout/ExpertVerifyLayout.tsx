@@ -2,7 +2,7 @@ import CenteredLayout from "./base/CenteredLayout";
 import InstructionBox from "../common/ExpertVerify/InstructionBox/InstructionBox";
 import FileUploadBox from "../common/ExpertVerify/FileUploadBox/FileUploadBox";
 import styles from "./expertVerifyLayout.module.css";
-import { useLogout } from "@/api/services/useLogout";
+import { useLogout } from "@/api/Auth/useLogout";
 import {
   useCertificationGet,
   useCertificationDelete,

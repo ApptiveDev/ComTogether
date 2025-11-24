@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDeleteUser } from "../../../api/services/useDeleteUser";
+import { useDeleteUser } from "../../../api/Auth/useDeleteUser";
 import Modal from "../../ui/Modal/Modal";
 import Input from "../../ui/Input/Input";
 import Button from "../Button/Button";

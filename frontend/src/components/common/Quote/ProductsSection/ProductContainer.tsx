@@ -22,14 +22,24 @@ const convertProductToItem = (product: Product): item => ({
   image: product.image,
 });
 
-export default function PartList() {
-  const [currentCategory] = useState("CPU");
+interface PartListProps {
+  currentCategory: string;
+}
+
+export default function ProductContainer({ currentCategory }: PartListProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
-  const [showRecommended, setShowRecommended] = useState(false);
+  const [useRecommendedFilter, setUseRecommendedFilter] = useState(false); // 관심사 기반 필터 토글
   const itemsPerPage = 5;
 
-  // 일반 제품 데이터 가져오기
+  // 카테고리 변경 시 검색어 초기화 및 페이지 리셋
+  useEffect(() => {
+    setSearchQuery("");
+    setCurrentPage(1);
+  }, [currentCategory]);
+
+  const shouldUseRecommended = !searchQuery || useRecommendedFilter;
+
   const {
     data: normalData,
     isLoading: isNormalLoading,
@@ -43,11 +53,11 @@ export default function PartList() {
       sort: "sim",
     },
     {
-      enabled: !showRecommended, // 추천 모드가 아닐 때만 실행
+      enabled: !!searchQuery && !useRecommendedFilter, // 검색어 있고 토글 OFF일 때만
     }
   );
 
-  // 추천 제품 데이터 가져오기
+  // 추천 제품 데이터 가져오기 (검색어 없거나, 검색어 있고 토글 ON)
   const {
     data: recommendedData,
     isLoading: isRecommendedLoading,
@@ -55,25 +65,22 @@ export default function PartList() {
   } = useGetRecommendedProducts(
     {
       category: currentCategory,
-      query: searchQuery,
+      query: searchQuery || currentCategory, // 검색어 없으면 카테고리명으로 추천
       display: 50,
       start: 1,
       sort: "sim",
     },
     {
-      enabled: showRecommended, // 추천 모드일 때만 실행
+      enabled: shouldUseRecommended, // 검색어 없거나 토글 ON
     }
   );
 
-  // 리렌더링 시 추천 제품 자동 로드
-  useEffect(() => {
-    setShowRecommended(true);
-  }, []);
-
   // 현재 모드에 따라 데이터 선택
-  const data = showRecommended ? recommendedData : normalData;
-  const isLoading = showRecommended ? isRecommendedLoading : isNormalLoading;
-  const isError = showRecommended ? isRecommendedError : isNormalError;
+  const data = shouldUseRecommended ? recommendedData : normalData;
+  const isLoading = shouldUseRecommended
+    ? isRecommendedLoading
+    : isNormalLoading;
+  const isError = shouldUseRecommended ? isRecommendedError : isNormalError;
 
   // Product[] -> item[] 변환
   const allItems = useMemo(() => {
@@ -81,23 +88,15 @@ export default function PartList() {
     return data.items.map(convertProductToItem);
   }, [data]);
 
-  // 검색 결과 필터링
-  const filteredItems = useMemo(() => {
-    if (!searchQuery) return allItems;
-    return allItems.filter((item) =>
-      item.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  }, [allItems, searchQuery]);
-
-  // 페이지네이션
-  const totalSearchItems = filteredItems.length;
+  // 페이지네이션 (API에서 이미 필터링된 데이터이므로 추가 필터링 불필요)
+  const totalSearchItems = allItems.length;
   const totalSearchPages = Math.ceil(totalSearchItems / itemsPerPage);
 
   const pageItems = useMemo(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    return filteredItems.slice(startIndex, endIndex);
-  }, [filteredItems, currentPage, itemsPerPage]);
+    return allItems.slice(startIndex, endIndex);
+  }, [allItems, currentPage, itemsPerPage]);
 
   // 검색 핸들러
   const handleSearch = (query: string) => {
@@ -109,7 +108,7 @@ export default function PartList() {
     return (
       <div className={styles.container}>
         <div className={styles.loading}>
-          {showRecommended ? "추천 제품을" : "제품을"} 불러오는 중...
+          {shouldUseRecommended ? "추천 제품을" : "제품을"} 불러오는 중...
         </div>
       </div>
     );
@@ -126,15 +125,35 @@ export default function PartList() {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <div className={styles.category}>
-          {currentCategory}
-          {showRecommended && <span className={styles.badge}> (추천)</span>}
-        </div>
+        <div className={styles.category}>{currentCategory}</div>
         <div className={styles.metabox}>
           <div className={styles.totalItem}>총 {totalSearchItems}건</div>
           <SearchBar setSearchResult={handleSearch} />
         </div>
       </div>
+
+      {/* 토글 항상 표시 */}
+      <div className={styles.filterToggle}>
+        <label className={styles.toggleLabel}>
+          <input
+            type="checkbox"
+            checked={useRecommendedFilter}
+            onChange={(e) => {
+              setUseRecommendedFilter(e.target.checked);
+              setCurrentPage(1);
+            }}
+            className={styles.toggleInput}
+          />
+          <span className={styles.toggleSwitch}></span>
+          <span className={styles.toggleText}>
+            관심사 기반 추천 필터
+            {!searchQuery && (
+              <span className={styles.disabledNote}> (검색 시 사용 가능)</span>
+            )}
+          </span>
+        </label>
+      </div>
+
       <div className={styles.table}>
         <div className={styles.tableHeader}>
           <div className={styles.colImage}></div>
