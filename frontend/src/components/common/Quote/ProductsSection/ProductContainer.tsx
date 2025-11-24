@@ -4,8 +4,15 @@ import SearchBar from "./SearchBar/SearchBar";
 import Pagination from "./Pagination/Pagination";
 import { useGetProducts, useGetRecommendedProducts } from "@/api/Product";
 import { useState, useMemo, useEffect } from "react";
-import type { item } from "@/types/compatibility";
 import type { Product } from "@/types/product";
+
+// item 타입 정의 (기존 compatibility에서 사용하던 타입)
+export interface item {
+  id: number;
+  name: string;
+  price: number;
+  image?: string;
+}
 
 // Product 타입을 item 타입으로 변환
 const convertProductToItem = (product: Product): item => ({
@@ -125,7 +132,7 @@ export default function PartList() {
         </div>
         <div className={styles.metabox}>
           <div className={styles.totalItem}>총 {totalSearchItems}건</div>
-          <SearchBar setSearchResult={handleSearch} categoryItem={allItems} />
+          <SearchBar setSearchResult={handleSearch} />
         </div>
       </div>
       <div className={styles.table}>

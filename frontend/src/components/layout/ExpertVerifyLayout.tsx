@@ -73,25 +73,12 @@ export default function ExpertVerifyLayout() {
       title="전문가 인증"
       description="전문가임을 인증할 수 있는 다음 중 하나의 문서를 첨부해주세요."
     >
-<<<<<<< HEAD
-<<<<<<< HEAD
-      <button onClick={handleLogout} className={styles.logoutBtn}>
-        로그아웃
-      </button>
-
-=======
-=======
->>>>>>> 271e9e0a8dd8afaeed0bf9925da906861226c919
       <div className={styles.userInfo}>
         <button onClick={handleLogout} className={styles.logoutBtn}>
           로그아웃
         </button>
         {user?.email && <span className={styles.userEmail}>{user.email}</span>}
       </div>
-<<<<<<< HEAD
->>>>>>> yuhoyeong/frontend/setting-page-renual
-=======
->>>>>>> 271e9e0a8dd8afaeed0bf9925da906861226c919
       {isLoading ? (
         <div className={styles.loadingContainer}>
           <p>인증 상태를 확인하는 중...</p>

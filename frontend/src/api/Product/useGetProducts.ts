@@ -18,8 +18,7 @@ export function useGetProducts(
     queryKey: queryKeys.PRODUCTS.SEARCH(params),
     queryFn: async () => {
       const response = await productService.getProducts(params);
-      // ApiResponse인 경우 data 추출, 아니면 그대로 반환
-      return response.data || response;
+      return response;
     },
     enabled: !!params.category, // category가 있을 때만 실행
     ...options,

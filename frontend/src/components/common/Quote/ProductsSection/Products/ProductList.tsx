@@ -1,6 +1,6 @@
 import styles from "./productList.module.css";
 import PartItem from "./ProductItem";
-import type { item } from "@/types/compatibility";
+import type { item } from "../ProductContainer";
 
 interface partPageProps {
   pageItems: item[];

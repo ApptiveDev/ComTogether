@@ -1,31 +1,23 @@
-import type { item } from "@/types/compatibility";
 import { useRef } from "react";
 import styles from "./searchBar.module.css";
 import { usePartListStore } from "@/stores/usePartListStore";
 import SearchIcon from "@/assets/image/searchIcon.svg";
+import type { item } from "../ProductContainer";
 
 interface SearchBarProps {
-  setSearchResult: (result: item[]) => void;
-  categoryItem: item[];
+  setSearchResult: (query: string) => void;
+  categoryItem?: item[]; // optional로 변경
 }
 
-export default function SearchBar({
-  setSearchResult,
-  categoryItem,
-}: SearchBarProps) {
+export default function SearchBar({ setSearchResult }: SearchBarProps) {
   const { inputValue, setInputValue, setCurrentPage } = usePartListStore();
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleSearch = () => {
     const trimInput = inputValue.trim();
     if (!trimInput) return;
-    const lowerInput = trimInput.toLowerCase();
 
-    const result = categoryItem.filter((item) =>
-      item.name.toLowerCase().includes(lowerInput)
-    );
-
-    setSearchResult(result);
+    setSearchResult(trimInput);
     inputRef.current?.blur(); // 입력창 포커스 해제
   };
   return (

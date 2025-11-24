@@ -3,19 +3,14 @@ import Modal from "@/components/ui/Modal/Modal";
 import check from "@/assets/image/quoteCheck.svg";
 import styles from "./quoteHistoryModal.module.css";
 import QuoteButton from "../QuoteButton/QuoteButton";
-
-interface HistoryItem {
-  id: number;
-  title: string;
-  date: string;
-}
+import type { QuoteListResponse } from "@/types/quote";
 
 interface QuoteHistoryModalProps {
   isOpen: boolean;
   onClose: () => void;
-  histories: HistoryItem[];
+  histories: QuoteListResponse[];
   onSelect: (id: number) => void;
-  container: React.RefObject<HTMLDivElement | null>;
+  container?: HTMLElement;
 }
 
 export default function EstimateHistoryModal({
@@ -24,7 +19,7 @@ export default function EstimateHistoryModal({
   histories,
   onSelect,
   container,
-}: EstimateHistoryModalProps) {
+}: QuoteHistoryModalProps) {
   const [selectedId, setSelectedId] = useState<number | null>(null);
 
   const handleSelect = (id: number) => {
@@ -56,7 +51,7 @@ export default function EstimateHistoryModal({
         </div>
 
         <div className={styles.list}>
-          {histories.map((item) => (
+          {histories.map((item: QuoteListResponse) => (
             <div
               key={item.id}
               className={`${styles.row} ${

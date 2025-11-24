@@ -53,15 +53,7 @@ export default function SecondSettingLayout() {
         <InterestSelector count={count} setCount={setCount} />
       </div>
       <div className={style.interestFooter}>
-<<<<<<< HEAD
-<<<<<<< HEAD
-        <div className={style.leftSection}>
-=======
         <div className={style.userInfo}>
->>>>>>> yuhoyeong/frontend/setting-page-renual
-=======
-        <div className={style.userInfo}>
->>>>>>> 271e9e0a8dd8afaeed0bf9925da906861226c919
           <div className={style.logoutBtnWrapper}>
             <Button
               color="white"
@@ -71,14 +63,7 @@ export default function SecondSettingLayout() {
               size="md"
             />
           </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
           {user?.email && <span className={style.userEmail}>{user.email}</span>}
->>>>>>> yuhoyeong/frontend/setting-page-renual
-=======
-          {user?.email && <span className={style.userEmail}>{user.email}</span>}
->>>>>>> 271e9e0a8dd8afaeed0bf9925da906861226c919
           <div className={style.interestCount}>선택된 관심사: {count}개</div>
         </div>
         <NextButton

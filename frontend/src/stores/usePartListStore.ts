@@ -1,5 +1,11 @@
 import { create } from 'zustand';
-import type { item } from '@/types/compatibility';
+
+export interface item {
+  id: number;
+  name: string;
+  price: number;
+  image?: string;
+}
 
 interface PartState{
     currentCategory: string;

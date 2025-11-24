@@ -1,5 +1,5 @@
 import styles from "./quoteLayout.module.css";
-import Header from "../common/header/Header";
+import Header from "../common/Header/Header";
 import CategorySelector from "../common/Quote/CategorySelectorSection/CategorySelector";
 import PartList from "../common/Quote/ProductsSection/ProductContainer";
 import QuotePart from "../common/Quote/QuoteSection/QuotePart";

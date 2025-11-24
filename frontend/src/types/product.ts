@@ -31,6 +31,7 @@ export interface GetProductsParams {
   start?: number;
   sort?: 'sim' | 'date' | 'asc' | 'dsc';
   exclude?: string;
+  [key: string]: unknown;
 }
 
 export interface GetRecommendedProductsParams {
@@ -40,4 +41,5 @@ export interface GetRecommendedProductsParams {
   start?: number;
   sort?: 'sim' | 'date' | 'asc' | 'dsc';
   exclude?: string;
+  [key: string]: unknown;
 }
