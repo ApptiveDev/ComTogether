@@ -132,12 +132,6 @@ export const API_ENDPOINTS = {
     POST: (id: string) => `/community/posts/${id}`,
   },
   
-  // 챗봇 관련
-  CHATBOT: {
-    BASE: '/chatbot',
-    CONVERSATIONS: '/chatbot/conversations',
-    CONVERSATION: (id: string) => `/chatbot/conversations/${id}`,
-  },
   
   // 전문가 인증 관련
   CERTIFICATION: {

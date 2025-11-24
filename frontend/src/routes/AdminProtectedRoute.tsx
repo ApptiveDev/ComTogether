@@ -1,11 +1,7 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { useTokenStore } from "../stores/useTokenStore";
 
-interface AdminProtectedRouteProps {
-  children: React.ReactNode;
-}
-
-export const AdminProtectedRoute = ({ children }: AdminProtectedRouteProps) => {
+export const AdminProtectedRoute = () => {
   const { getAccessToken, isTokenExpired } = useTokenStore();
 
   const accessToken = getAccessToken();
@@ -17,5 +13,5 @@ export const AdminProtectedRoute = ({ children }: AdminProtectedRouteProps) => {
 
   // TODO: 실제로는 토큰의 role을 확인하여 admin인지 체크해야 함
   // 현재는 토큰이 있으면 접근 허용
-  return <>{children}</>;
+  return <Outlet />;
 };

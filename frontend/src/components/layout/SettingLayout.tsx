@@ -9,7 +9,7 @@ import ExpertPopup from "../common/setting/ExpertPopup/ExpertPopup";
 import { useNavigate } from "react-router";
 import { useState, useEffect } from "react";
 import { useProfileSetupStore } from "../../stores/useProfileSetupStore";
-import { useLogout } from "@/api/services/useLogout";
+import { useLogout } from "@/api/Auth/useLogout";
 import Button from "../common/Button/Button";
 import { useAuthStore } from "@/stores/useAuthStore";
 
