@@ -1,0 +1,138 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-4);
+    /* 16px */
+}
+
+/* Spinner Variant */
+.spinner {
+    border: var(--border-width-2) solid var(--bg-tertiary);
+    border-top: var(--border-width-2) solid #ff5525;
+    /* 브랜드 색상 유지 */
+    border-radius: var(--border-radius-full);
+    animation: spin 1s linear infinite;
+}
+
+.spinner.small {
+    width: 1.5rem;
+    /* 24px */
+    height: 1.5rem;
+    border-width: var(--border-width-1);
+}
+
+.spinner.medium {
+    width: 2.5rem;
+    /* 40px */
+    height: 2.5rem;
+    border-width: var(--border-width-2);
+}
+
+.spinner.large {
+    width: 3.75rem;
+    /* 60px */
+    height: 3.75rem;
+    border-width: 3px;
+}
+
+.spinner.extraLarge {
+    width: 5rem;
+    /* 80px */
+    height: 5rem;
+    border-width: 4px;
+}
+
+/* Pulse Variant */
+.pulse {
+    border-radius: var(--border-radius-full);
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+.pulse.small {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.pulse.medium {
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.pulse.large {
+    width: 3.75rem;
+    height: 3.75rem;
+}
+
+/* Dots Variant */
+.dots {
+    display: flex;
+    gap: var(--spacing-2);
+}
+
+.dots>div {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: var(--border-radius-full);
+    animation: bounce 1.4s ease-in-out infinite both;
+}
+
+.dots>div:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.dots>div:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+.dots>div:nth-child(3) {
+    animation-delay: 0s;
+}
+
+.text {
+    font-size: var(--font-size-base);
+    color: var(--text-secondary);
+    font-weight: var(--font-weight-medium);
+    text-align: center;
+    line-height: var(--line-height-relaxed);
+}
+
+/* Animations */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes pulse {
+
+    0%,
+    80%,
+    100% {
+        transform: scale(0);
+        opacity: 1;
+    }
+
+    40% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+}
+
+@keyframes bounce {
+
+    0%,
+    80%,
+    100% {
+        transform: scale(0);
+    }
+
+    40% {
+        transform: scale(1);
+    }
+}

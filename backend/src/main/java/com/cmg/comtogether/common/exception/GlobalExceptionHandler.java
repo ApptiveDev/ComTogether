@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -53,6 +54,25 @@ public class GlobalExceptionHandler {
                 .status(ErrorCode.INVALID_FORMAT.getStatus())
                 .body(ErrorResponse.of(ErrorCode.INVALID_FORMAT, ErrorCode.INVALID_FORMAT.getMessage()));
     }
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<ErrorResponse> handleMethodNotSupported(HttpRequestMethodNotSupportedException e) {
+
+        String method = e.getMethod();
+        String supported = (e.getSupportedMethods() != null)
+                ? String.join(", ", e.getSupportedMethods())
+                : "N/A";
+
+        String message = String.format(
+                "요청 메서드 '%s' 는 지원되지 않습니다. 가능한 메서드: [%s]",
+                method, supported
+        );
+
+        return ResponseEntity
+                .status(ErrorCode.METHOD_NOT_ALLOWED.getStatus())
+                .body(ErrorResponse.of(ErrorCode.METHOD_NOT_ALLOWED, message));
+    }
+
 
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<ErrorResponse> handleBusinessException(BusinessException e) {
