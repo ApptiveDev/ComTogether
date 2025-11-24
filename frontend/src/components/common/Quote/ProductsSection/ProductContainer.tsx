@@ -6,22 +6,6 @@ import { useGetProducts, useGetRecommendedProducts } from "@/api/Product";
 import { useState, useMemo, useEffect } from "react";
 import type { Product } from "@/types/product";
 
-// item 타입 정의 (기존 compatibility에서 사용하던 타입)
-export interface item {
-  id: number;
-  name: string;
-  price: number;
-  image?: string;
-}
-
-// Product 타입을 item 타입으로 변환
-const convertProductToItem = (product: Product): item => ({
-  id: parseInt(product.product_id) || 0,
-  name: product.title,
-  price: parseInt(product.lprice) || 0,
-  image: product.image,
-});
-
 interface PartListProps {
   currentCategory: string;
 }
@@ -82,10 +66,10 @@ export default function ProductContainer({ currentCategory }: PartListProps) {
     : isNormalLoading;
   const isError = shouldUseRecommended ? isRecommendedError : isNormalError;
 
-  // Product[] -> item[] 변환
+  // Product[] 배열로 사용
   const allItems = useMemo(() => {
     if (!data?.items) return [];
-    return data.items.map(convertProductToItem);
+    return data.items;
   }, [data]);
 
   // 페이지네이션 (API에서 이미 필터링된 데이터이므로 추가 필터링 불필요)
@@ -160,7 +144,7 @@ export default function ProductContainer({ currentCategory }: PartListProps) {
           <div className={styles.colName}>제품명</div>
           <div className={styles.colPrice}>판매가격</div>
         </div>
-        <PartPage pageItems={pageItems} />
+        <PartPage pageItems={pageItems} category={currentCategory} />
       </div>
       <Pagination
         totalPages={totalSearchPages}

@@ -17,6 +17,7 @@ export const clearAuthData = () => {
   // 인증 관련 키만 삭제
   localStorage.removeItem('token-store');
   localStorage.removeItem('auth-store');
+  localStorage.removeItem('quote-store');
   
   // sessionStorage도 정리
   sessionStorage.clear();

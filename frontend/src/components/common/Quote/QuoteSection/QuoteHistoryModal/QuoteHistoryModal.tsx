@@ -34,6 +34,11 @@ export default function EstimateHistoryModal({
     }
   };
 
+  // 날짜 포맷팅 함수 (YYYY-MM-DD)
+  const formatDate = (dateString: string) => {
+    return dateString.split("T")[0];
+  };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -53,21 +58,21 @@ export default function EstimateHistoryModal({
         <div className={styles.list}>
           {histories.map((item: QuoteListResponse) => (
             <div
-              key={item.id}
+              key={item.quote_id}
               className={`${styles.row} ${
-                selectedId === item.id ? styles.selected : ""
+                selectedId === item.quote_id ? styles.selected : ""
               }`}
             >
               <div
                 className={`${styles.checkIcon} ${
-                  selectedId === item.id ? styles.selected : ""
+                  selectedId === item.quote_id ? styles.selected : ""
                 }`}
-                onClick={() => handleSelect(item.id)}
+                onClick={() => handleSelect(item.quote_id)}
               >
                 <img src={check} alt="check" />
               </div>
-              <div className={styles.title}>{item.title}</div>
-              <div className={styles.date}>{item.date}</div>
+              <div className={styles.title}>{item.name}</div>
+              <div className={styles.date}>{formatDate(item.created_at)}</div>
             </div>
           ))}
         </div>

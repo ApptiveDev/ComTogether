@@ -1,6 +1,6 @@
 // Quote 관련 타입 정의
 
-export interface QuoteItem {
+export interface ProductItem {
   product_id: string;
   title: string;
   lprice: number;
@@ -25,17 +25,17 @@ export interface Quote {
   updated_at: string;
   total_quantity: number;
   total_price: number;
-  items: QuoteItem[];
+  items: ProductItem[];
 }
 
 export interface CreateQuoteRequest {
   name: string;
-  items: QuoteItem[];
+  items: ProductItem[];
 }
 
 export interface UpdateQuoteRequest {
   name: string;
-  items: QuoteItem[];
+  items: ProductItem[];
 }
 
 export interface QuoteListResponse {

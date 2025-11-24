@@ -11,7 +11,7 @@ const categoryNameMap: Record<string, string> = {
   ram: "RAM",
   gpu: "그래픽 카드",
   storage: "저장 장치",
-  power: "파워 서플라이",
+  power: "파워서플라이",
   case: "케이스",
   cooler: "쿨러/팬",
   etc: "기타 입출력 장치",

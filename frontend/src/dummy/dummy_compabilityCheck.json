@@ -196,7 +196,7 @@
 
   {
     "id": 6,
-    "name": "파워 서플라이",
+    "name": "파워서플라이",
     "products": [
       { "id": 601, "name": "Corsair RM750x", "price": 130000, "image": "psu1.jpg" },
       { "id": 602, "name": "EVGA 750 G5", "price": 110000, "image": "psu2.jpg" },

@@ -1,20 +1,23 @@
 import styles from "./productList.module.css";
 import PartItem from "./ProductItem";
-import type { item } from "../ProductContainer";
+import type { Product } from "@/types/product";
 
 interface partPageProps {
-  pageItems: item[];
+  pageItems: Product[];
+  category: string;
 }
 
-export default function PartPage({ pageItems }: partPageProps) {
+export default function PartPage({ pageItems, category }: partPageProps) {
   return (
     <div className={styles.container}>
-      {pageItems?.map((item) => (
+      {pageItems?.map((product) => (
         <PartItem
-          key={item.id}
-          image={item.image || ""}
-          title={item.name}
-          lprice={item.price}
+          key={product.product_id}
+          image={product.image}
+          title={product.title}
+          lprice={product.lprice}
+          category={category}
+          product={product}
         />
       ))}
     </div>
