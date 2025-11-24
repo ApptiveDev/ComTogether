@@ -1,0 +1,264 @@
+[
+  {
+    "id": 1,
+    "name": "CPU",
+    "products": [
+      { "id": 1001, "name": "CPU 테스트 제품 1", "price": 148392, "image": "cpu_1.jpg" },
+      { "id": 1002, "name": "CPU 테스트 제품 2", "price": 89444, "image": "cpu_2.jpg" },
+      { "id": 1003, "name": "CPU 테스트 제품 3", "price": 271993, "image": "cpu_3.jpg" },
+      { "id": 1004, "name": "CPU 테스트 제품 4", "price": 91822, "image": "cpu_4.jpg" },
+      { "id": 1005, "name": "CPU 테스트 제품 5", "price": 155002, "image": "cpu_5.jpg" },
+      { "id": 1006, "name": "CPU 테스트 제품 6", "price": 54449, "image": "cpu_6.jpg" },
+      { "id": 1007, "name": "CPU 테스트 제품 7", "price": 112840, "image": "cpu_7.jpg" },
+      { "id": 1008, "name": "CPU 테스트 제품 8", "price": 168320, "image": "cpu_8.jpg" },
+      { "id": 1009, "name": "CPU 테스트 제품 9", "price": 194220, "image": "cpu_9.jpg" },
+      { "id": 1010, "name": "CPU 테스트 제품 10", "price": 248355, "image": "cpu_10.jpg" },
+
+      { "id": 1011, "name": "CPU 테스트 제품 11", "price": 139494, "image": "cpu_11.jpg" },
+      { "id": 1012, "name": "CPU 테스트 제품 12", "price": 173000, "image": "cpu_12.jpg" },
+      { "id": 1013, "name": "CPU 테스트 제품 13", "price": 90992, "image": "cpu_13.jpg" },
+      { "id": 1014, "name": "CPU 테스트 제품 14", "price": 313221, "image": "cpu_14.jpg" },
+      { "id": 1015, "name": "CPU 테스트 제품 15", "price": 232003, "image": "cpu_15.jpg" },
+      { "id": 1016, "name": "CPU 테스트 제품 16", "price": 158442, "image": "cpu_16.jpg" },
+      { "id": 1017, "name": "CPU 테스트 제품 17", "price": 103443, "image": "cpu_17.jpg" },
+      { "id": 1018, "name": "CPU 테스트 제품 18", "price": 219394, "image": "cpu_18.jpg" },
+      { "id": 1019, "name": "CPU 테스트 제품 19", "price": 308221, "image": "cpu_19.jpg" },
+      { "id": 1020, "name": "CPU 테스트 제품 20", "price": 147233, "image": "cpu_20.jpg" },
+
+      { "id": 1021, "name": "CPU 테스트 제품 21", "price": 170393, "image": "cpu_21.jpg" },
+      { "id": 1022, "name": "CPU 테스트 제품 22", "price": 96221, "image": "cpu_22.jpg" },
+      { "id": 1023, "name": "CPU 테스트 제품 23", "price": 184230, "image": "cpu_23.jpg" },
+      { "id": 1024, "name": "CPU 테스트 제품 24", "price": 304932, "image": "cpu_24.jpg" },
+      { "id": 1025, "name": "CPU 테스트 제품 25", "price": 134992, "image": "cpu_25.jpg" },
+      { "id": 1026, "name": "CPU 테스트 제품 26", "price": 179299, "image": "cpu_26.jpg" },
+      { "id": 1027, "name": "CPU 테스트 제품 27", "price": 92210, "image": "cpu_27.jpg" },
+      { "id": 1028, "name": "CPU 테스트 제품 28", "price": 215040, "image": "cpu_28.jpg" },
+      { "id": 1029, "name": "CPU 테스트 제품 29", "price": 69042, "image": "cpu_29.jpg" },
+      { "id": 1030, "name": "CPU 테스트 제품 30", "price": 300330, "image": "cpu_30.jpg" },
+
+      { "id": 1031, "name": "CPU 테스트 제품 31", "price": 130220, "image": "cpu_31.jpg" },
+      { "id": 1032, "name": "CPU 테스트 제품 32", "price": 192400, "image": "cpu_32.jpg" },
+      { "id": 1033, "name": "CPU 테스트 제품 33", "price": 284399, "image": "cpu_33.jpg" },
+      { "id": 1034, "name": "CPU 테스트 제품 34", "price": 334223, "image": "cpu_34.jpg" },
+      { "id": 1035, "name": "CPU 테스트 제품 35", "price": 102993, "image": "cpu_35.jpg" },
+      { "id": 1036, "name": "CPU 테스트 제품 36", "price": 183990, "image": "cpu_36.jpg" },
+      { "id": 1037, "name": "CPU 테스트 제품 37", "price": 154330, "image": "cpu_37.jpg" },
+      { "id": 1038, "name": "CPU 테스트 제품 38", "price": 212331, "image": "cpu_38.jpg" },
+      { "id": 1039, "name": "CPU 테스트 제품 39", "price": 290200, "image": "cpu_39.jpg" },
+      { "id": 1040, "name": "CPU 테스트 제품 40", "price": 58333, "image": "cpu_40.jpg" },
+
+      { "id": 1041, "name": "CPU 테스트 제품 41", "price": 330000, "image": "cpu_41.jpg" },
+      { "id": 1042, "name": "CPU 테스트 제품 42", "price": 102990, "image": "cpu_42.jpg" },
+      { "id": 1043, "name": "CPU 테스트 제품 43", "price": 292155, "image": "cpu_43.jpg" },
+      { "id": 1044, "name": "CPU 테스트 제품 44", "price": 120394, "image": "cpu_44.jpg" },
+      { "id": 1045, "name": "CPU 테스트 제품 45", "price": 83029, "image": "cpu_45.jpg" },
+      { "id": 1046, "name": "CPU 테스트 제품 46", "price": 167402, "image": "cpu_46.jpg" },
+      { "id": 1047, "name": "CPU 테스트 제품 47", "price": 301222, "image": "cpu_47.jpg" },
+      { "id": 1048, "name": "CPU 테스트 제품 48", "price": 74000, "image": "cpu_48.jpg" },
+      { "id": 1049, "name": "CPU 테스트 제품 49", "price": 140202, "image": "cpu_49.jpg" },
+      { "id": 1050, "name": "CPU 테스트 제품 50", "price": 214399, "image": "cpu_50.jpg" },
+
+      { "id": 1051, "name": "CPU 테스트 제품 51", "price": 97022, "image": "cpu_51.jpg" },
+      { "id": 1052, "name": "CPU 테스트 제품 52", "price": 111239, "image": "cpu_52.jpg" },
+      { "id": 1053, "name": "CPU 테스트 제품 53", "price": 234499, "image": "cpu_53.jpg" },
+      { "id": 1054, "name": "CPU 테스트 제품 54", "price": 332200, "image": "cpu_54.jpg" },
+      { "id": 1055, "name": "CPU 테스트 제품 55", "price": 180224, "image": "cpu_55.jpg" },
+      { "id": 1056, "name": "CPU 테스트 제품 56", "price": 128332, "image": "cpu_56.jpg" },
+      { "id": 1057, "name": "CPU 테스트 제품 57", "price": 77400, "image": "cpu_57.jpg" },
+      { "id": 1058, "name": "CPU 테스트 제품 58", "price": 148330, "image": "cpu_58.jpg" },
+      { "id": 1059, "name": "CPU 테스트 제품 59", "price": 193030, "image": "cpu_59.jpg" },
+      { "id": 1060, "name": "CPU 테스트 제품 60", "price": 300000, "image": "cpu_60.jpg" },
+
+      { "id": 1061, "name": "CPU 테스트 제품 61", "price": 91022, "image": "cpu_61.jpg" },
+      { "id": 1062, "name": "CPU 테스트 제품 62", "price": 121890, "image": "cpu_62.jpg" },
+      { "id": 1063, "name": "CPU 테스트 제품 63", "price": 132443, "image": "cpu_63.jpg" },
+      { "id": 1064, "name": "CPU 테스트 제품 64", "price": 244552, "image": "cpu_64.jpg" },
+      { "id": 1065, "name": "CPU 테스트 제품 65", "price": 330210, "image": "cpu_65.jpg" },
+      { "id": 1066, "name": "CPU 테스트 제품 66", "price": 142334, "image": "cpu_66.jpg" },
+      { "id": 1067, "name": "CPU 테스트 제품 67", "price": 183002, "image": "cpu_67.jpg" },
+      { "id": 1068, "name": "CPU 테스트 제품 68", "price": 191944, "image": "cpu_68.jpg" },
+      { "id": 1069, "name": "CPU 테스트 제품 69", "price": 310400, "image": "cpu_69.jpg" },
+      { "id": 1070, "name": "CPU 테스트 제품 70", "price": 134022, "image": "cpu_70.jpg" },
+
+      { "id": 1071, "name": "CPU 테스트 제품 71", "price": 148322, "image": "cpu_71.jpg" },
+      { "id": 1072, "name": "CPU 테스트 제품 72", "price": 320000, "image": "cpu_72.jpg" },
+      { "id": 1073, "name": "CPU 테스트 제품 73", "price": 101332, "image": "cpu_73.jpg" },
+      { "id": 1074, "name": "CPU 테스트 제품 74", "price": 55555, "image": "cpu_74.jpg" },
+      { "id": 1075, "name": "CPU 테스트 제품 75", "price": 90000, "image": "cpu_75.jpg" },
+      { "id": 1076, "name": "CPU 테스트 제품 76", "price": 273330, "image": "cpu_76.jpg" },
+      { "id": 1077, "name": "CPU 테스트 제품 77", "price": 150920, "image": "cpu_77.jpg" },
+      { "id": 1078, "name": "CPU 테스트 제품 78", "price": 244290, "image": "cpu_78.jpg" },
+      { "id": 1079, "name": "CPU 테스트 제품 79", "price": 159220, "image": "cpu_79.jpg" },
+      { "id": 1080, "name": "CPU 테스트 제품 80", "price": 306333, "image": "cpu_80.jpg" },
+
+      { "id": 1081, "name": "CPU 테스트 제품 81", "price": 229000, "image": "cpu_81.jpg" },
+      { "id": 1082, "name": "CPU 테스트 제품 82", "price": 310000, "image": "cpu_82.jpg" },
+      { "id": 1083, "name": "CPU 테스트 제품 83", "price": 163000, "image": "cpu_83.jpg" },
+      { "id": 1084, "name": "CPU 테스트 제품 84", "price": 91000, "image": "cpu_84.jpg" },
+      { "id": 1085, "name": "CPU 테스트 제품 85", "price": 198000, "image": "cpu_85.jpg" },
+      { "id": 1086, "name": "CPU 테스트 제품 86", "price": 276000, "image": "cpu_86.jpg" },
+      { "id": 1087, "name": "CPU 테스트 제품 87", "price": 138000, "image": "cpu_87.jpg" },
+      { "id": 1088, "name": "CPU 테스트 제품 88", "price": 318000, "image": "cpu_88.jpg" },
+      { "id": 1089, "name": "CPU 테스트 제품 89", "price": 228000, "image": "cpu_89.jpg" },
+      { "id": 1090, "name": "CPU 테스트 제품 90", "price": 160000, "image": "cpu_90.jpg" },
+
+      { "id": 1091, "name": "CPU 테스트 제품 91", "price": 134000, "image": "cpu_91.jpg" },
+      { "id": 1092, "name": "CPU 테스트 제품 92", "price": 177000, "image": "cpu_92.jpg" },
+      { "id": 1093, "name": "CPU 테스트 제품 93", "price": 311000, "image": "cpu_93.jpg" },
+      { "id": 1094, "name": "CPU 테스트 제품 94", "price": 78000, "image": "cpu_94.jpg" },
+      { "id": 1095, "name": "CPU 테스트 제품 95", "price": 224000, "image": "cpu_95.jpg" },
+      { "id": 1096, "name": "CPU 테스트 제품 96", "price": 288000, "image": "cpu_96.jpg" },
+      { "id": 1097, "name": "CPU 테스트 제품 97", "price": 91000, "image": "cpu_97.jpg" },
+      { "id": 1098, "name": "CPU 테스트 제품 98", "price": 146000, "image": "cpu_98.jpg" },
+      { "id": 1099, "name": "CPU 테스트 제품 99", "price": 265000, "image": "cpu_99.jpg" },
+      { "id": 1100, "name": "CPU 테스트 제품 100", "price": 321000, "image": "cpu_100.jpg" },
+
+      { "id": 1101, "name": "CPU 테스트 제품 101", "price": 165000, "image": "cpu_101.jpg" },
+      { "id": 1102, "name": "CPU 테스트 제품 102", "price": 182000, "image": "cpu_102.jpg" },
+      { "id": 1103, "name": "CPU 테스트 제품 103", "price": 73000, "image": "cpu_103.jpg" },
+      { "id": 1104, "name": "CPU 테스트 제품 104", "price": 141000, "image": "cpu_104.jpg" },
+      { "id": 1105, "name": "CPU 테스트 제품 105", "price": 289000, "image": "cpu_105.jpg" },
+      { "id": 1106, "name": "CPU 테스트 제품 106", "price": 91000, "image": "cpu_106.jpg" },
+      { "id": 1107, "name": "CPU 테스트 제품 107", "price": 310000, "image": "cpu_107.jpg" },
+      { "id": 1108, "name": "CPU 테스트 제품 108", "price": 255000, "image": "cpu_108.jpg" },
+      { "id": 1109, "name": "CPU 테스트 제품 109", "price": 132000, "image": "cpu_109.jpg" },
+      { "id": 1110, "name": "CPU 테스트 제품 110", "price": 168000, "image": "cpu_110.jpg" }
+    ]
+  },
+
+  {
+    "id": 2,
+    "name": "메인보드",
+    "products": [
+      { "id": 201, "name": "[ASUS] PRIME B660M-A", "price": 150000, "image": "mb1.jpg" },
+      { "id": 202, "name": "[ASUS] TUF GAMING B760M", "price": 170000, "image": "mb2.jpg" },
+      { "id": 203, "name": "[MSI] B550 TOMAHAWK", "price": 180000, "image": "mb3.jpg" },
+      { "id": 204, "name": "[MSI] MAG B760 TOMAHAWK", "price": 200000, "image": "mb4.jpg" },
+      { "id": 205, "name": "[GIGABYTE] B660M DS3H", "price": 120000, "image": "mb5.jpg" },
+      { "id": 206, "name": "[GIGABYTE] X670 AORUS", "price": 450000, "image": "mb6.jpg" },
+      { "id": 207, "name": "[ASRock] B550M Steel Legend", "price": 160000, "image": "mb7.jpg" },
+      { "id": 208, "name": "[ASRock] Z790 PG Lightning", "price": 310000, "image": "mb8.jpg" },
+      { "id": 209, "name": "[ASUS] ROG STRIX X570-F", "price": 330000, "image": "mb9.jpg" },
+      { "id": 210, "name": "[MSI] PRO B650M-P", "price": 145000, "image": "mb10.jpg" }
+    ]
+  },
+
+  {
+    "id": 3,
+    "name": "RAM",
+    "products": [
+      { "id": 301, "name": "[Corsair] VENGEANCE LPX 8GB", "price": 30000, "image": "ram1.jpg" },
+      { "id": 302, "name": "[Corsair] VENGEANCE LPX 16GB", "price": 60000, "image": "ram2.jpg" },
+      { "id": 303, "name": "[G.SKILL] Ripjaws V 16GB", "price": 65000, "image": "ram3.jpg" },
+      { "id": 304, "name": "[G.SKILL] Trident Z RGB 16GB", "price": 110000, "image": "ram4.jpg" },
+      { "id": 305, "name": "[Kingston] Fury Beast 16GB", "price": 57000, "image": "ram5.jpg" },
+      { "id": 306, "name": "[Crucial] DDR4 16GB", "price": 52000, "image": "ram6.jpg" },
+      { "id": 307, "name": "[Corsair] VENGEANCE DDR5 32GB", "price": 160000, "image": "ram7.jpg" },
+      { "id": 308, "name": "[G.SKILL] Trident Z5 32GB", "price": 180000, "image": "ram8.jpg" },
+      { "id": 309, "name": "[TEAMGROUP] T-Force Delta RGB 16GB", "price": 70000, "image": "ram9.jpg" },
+      { "id": 310, "name": "[ADATA] XPG Lancer DDR5 16GB", "price": 90000, "image": "ram10.jpg" }
+    ]
+  },
+
+  {
+    "id": 4,
+    "name": "그래픽카드",
+    "products": [
+      { "id": 401, "name": "[NVIDIA] GTX 1660 Super", "price": 320000, "image": "gpu1.jpg" },
+      { "id": 402, "name": "[NVIDIA] RTX 3050", "price": 360000, "image": "gpu2.jpg" },
+      { "id": 403, "name": "[NVIDIA] RTX 3060", "price": 460000, "image": "gpu3.jpg" },
+      { "id": 404, "name": "[NVIDIA] RTX 3060 Ti", "price": 520000, "image": "gpu4.jpg" },
+      { "id": 405, "name": "[NVIDIA] RTX 3070", "price": 720000, "image": "gpu5.jpg" },
+      { "id": 406, "name": "[NVIDIA] RTX 4060", "price": 480000, "image": "gpu6.jpg" },
+      { "id": 407, "name": "[NVIDIA] RTX 4070", "price": 850000, "image": "gpu7.jpg" },
+      { "id": 408, "name": "[AMD] RX 6600 XT", "price": 380000, "image": "gpu8.jpg" },
+      { "id": 409, "name": "[AMD] RX 6700 XT", "price": 500000, "image": "gpu9.jpg" },
+      { "id": 410, "name": "[AMD] RX 6800", "price": 630000, "image": "gpu10.jpg" }
+    ]
+  },
+
+  {
+    "id": 5,
+    "name": "저장 장치",
+    "products": [
+      { "id": 501, "name": "Samsung 970 EVO Plus 1TB", "price": 120000, "image": "ssd1.jpg" },
+      { "id": 502, "name": "Samsung 980 PRO 1TB", "price": 160000, "image": "ssd2.jpg" },
+      { "id": 503, "name": "WD Black SN850 1TB", "price": 150000, "image": "ssd3.jpg" },
+      { "id": 504, "name": "Crucial P5 Plus 1TB", "price": 130000, "image": "ssd4.jpg" },
+      { "id": 505, "name": "ADATA XPG S70 Blade 1TB", "price": 125000, "image": "ssd5.jpg" },
+      { "id": 506, "name": "SK hynix Gold P31 1TB", "price": 140000, "image": "ssd6.jpg" },
+      { "id": 507, "name": "Samsung 870 EVO 1TB (SATA)", "price": 90000, "image": "ssd7.jpg" },
+      { "id": 508, "name": "WD Blue SN570 1TB", "price": 95000, "image": "ssd8.jpg" },
+      { "id": 509, "name": "Lexar NM790 1TB", "price": 110000, "image": "ssd9.jpg" },
+      { "id": 510, "name": "Seagate FireCuda 530 1TB", "price": 200000, "image": "ssd10.jpg" }
+    ]
+  },
+
+  {
+    "id": 6,
+    "name": "파워 서플라이",
+    "products": [
+      { "id": 601, "name": "Corsair RM750x", "price": 130000, "image": "psu1.jpg" },
+      { "id": 602, "name": "EVGA 750 G5", "price": 110000, "image": "psu2.jpg" },
+      { "id": 603, "name": "Seasonic Focus GX-750", "price": 150000, "image": "psu3.jpg" },
+      { "id": 604, "name": "MSI MPG A750GF", "price": 120000, "image": "psu4.jpg" },
+      { "id": 605, "name": "Cooler Master MWE Gold 750W", "price": 115000, "image": "psu5.jpg" },
+      { "id": 606, "name": "FSP Hydro GT 750W", "price": 100000, "image": "psu6.jpg" },
+      { "id": 607, "name": "Corsair CX650M", "price": 75000, "image": "psu7.jpg" },
+      { "id": 608, "name": "Gigabyte P750GM", "price": 90000, "image": "psu8.jpg" },
+      { "id": 609, "name": "Thermaltake Toughpower GF1 750W", "price": 140000, "image": "psu9.jpg" },
+      { "id": 610, "name": "EVGA SuperNOVA G3 650W", "price": 95000, "image": "psu10.jpg" }
+    ]
+  },
+
+  {
+    "id": 7,
+    "name": "케이스",
+    "products": [
+      { "id": 701, "name": "NZXT H510", "price": 80000, "image": "case1.jpg" },
+      { "id": 702, "name": "Fractal Meshify C", "price": 90000, "image": "case2.jpg" },
+      { "id": 703, "name": "Lian Li Lancool 205", "price": 70000, "image": "case3.jpg" },
+      { "id": 704, "name": "Corsair 4000D Airflow", "price": 105000, "image": "case4.jpg" },
+      { "id": 705, "name": "DarkFlash DLX21", "price": 65000, "image": "case5.jpg" },
+      { "id": 706, "name": "Cooler Master NR600", "price": 75000, "image": "case6.jpg" },
+      { "id": 707, "name": "Montech Air 1000", "price": 85000, "image": "case7.jpg" },
+      { "id": 708, "name": "Lian Li O11 Dynamic", "price": 180000, "image": "case8.jpg" },
+      { "id": 709, "name": "Thermaltake V200", "price": 65000, "image": "case9.jpg" },
+      { "id": 710, "name": "Fractal Pop Air", "price": 95000, "image": "case10.jpg" }
+    ]
+  },
+
+  {
+    "id": 8,
+    "name": "쿨러/팬",
+    "products": [
+      { "id": 801, "name": "Cooler Master Hyper 212", "price": 35000, "image": "cool1.jpg" },
+      { "id": 802, "name": "Noctua NH-D15", "price": 130000, "image": "cool2.jpg" },
+      { "id": 803, "name": "DeepCool AK620", "price": 85000, "image": "cool3.jpg" },
+      { "id": 804, "name": "Be Quiet! Dark Rock Pro 4", "price": 125000, "image": "cool4.jpg" },
+      { "id": 805, "name": "Corsair iCUE H100i", "price": 160000, "image": "cool5.jpg" },
+      { "id": 806, "name": "NZXT Kraken X53", "price": 180000, "image": "cool6.jpg" },
+      { "id": 807, "name": "Arctic Freezer 34", "price": 35000, "image": "cool7.jpg" },
+      { "id": 808, "name": "Cooler Master MF120 Halo", "price": 45000, "image": "cool8.jpg" },
+      { "id": 809, "name": "Lian Li Uni Fan SL120", "price": 90000, "image": "cool9.jpg" },
+      { "id": 810, "name": "Thermaltake ToughFan 12", "price": 40000, "image": "cool10.jpg" }
+    ]
+  },
+
+  {
+    "id": 9,
+    "name": "기타 입출력 장치",
+    "products": [
+      { "id": 901, "name": "Logitech G Pro Wireless", "price": 130000, "image": "io1.jpg" },
+      { "id": 902, "name": "Razer BlackWidow V3", "price": 120000, "image": "io2.jpg" },
+      { "id": 903, "name": "Keychron K2", "price": 90000, "image": "io3.jpg" },
+      { "id": 904, "name": "Logitech MX Master 3S", "price": 120000, "image": "io4.jpg" },
+      { "id": 905, "name": "LG 27GN750 모니터", "price": 280000, "image": "io5.jpg" },
+      { "id": 906, "name": "ASUS ProArt PA278QV", "price": 400000, "image": "io6.jpg" },
+      { "id": 907, "name": "SteelSeries Rival 3", "price": 30000, "image": "io7.jpg" },
+      { "id": 908, "name": "Logitech G733 헤드셋", "price": 160000, "image": "io8.jpg" },
+      { "id": 909, "name": "HyperX Alloy Origins", "price": 130000, "image": "io9.jpg" },
+      { "id": 910, "name": "Elgato Stream Deck Mini", "price": 130000, "image": "io10.jpg" }
+    ]
+  }
+]

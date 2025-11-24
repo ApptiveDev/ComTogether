@@ -9,6 +9,8 @@ interface ModalProps {
   children: React.ReactNode;
   size?: "sm" | "md" | "lg" | "xl";
   showCloseButton?: boolean;
+  positionType?: "center" | "target";
+  container?: React.RefObject<HTMLDivElement | null>;
 }
 
 export default function Modal({
@@ -18,6 +20,8 @@ export default function Modal({
   children,
   size = "md",
   showCloseButton = true,
+  positionType = "center",
+  container,
 }: ModalProps) {
   // ESC 키로 모달 닫기
   useEffect(() => {
@@ -40,8 +44,10 @@ export default function Modal({
 
   if (!isOpen) return null;
 
+  const overlayClass = positionType === "center" ? styles.overlayCenter : styles.overlayTarget;
+
   const modalContent = (
-    <div className={styles.overlay} onClick={onClose}>
+    <div className={overlayClass} onClick={onClose}>
       <div
         className={`${styles.modal} ${styles[size]}`}
         onClick={(e) => e.stopPropagation()}
@@ -65,5 +71,5 @@ export default function Modal({
     </div>
   );
 
-  return createPortal(modalContent, document.body);
+  return createPortal(modalContent, container?.current ?? document.body);
 }

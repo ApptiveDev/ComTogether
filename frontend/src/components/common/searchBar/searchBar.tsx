@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import RecentSearchItem from "../glossary/RecentSearchItem";
 import { useSearchGlossaryStore } from "../../../stores/useSearchGlossaryStore";
 import { useGlossaryAutoComplete } from "@/api/glossary/useGlossaryAutoComplete";
-import Button from "../button/Button";
+import Button from "../Button/Button";
 import style from "./searchBar.module.css";
 import clock_icon from "../../../assets/image/icon/clock_icon.svg";
 import { useShallow } from "zustand/shallow";
