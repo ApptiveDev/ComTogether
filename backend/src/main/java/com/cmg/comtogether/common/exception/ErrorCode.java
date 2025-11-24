@@ -10,6 +10,7 @@ public enum ErrorCode {
     // 공통
     INVALID_INPUT(400, "COMMON-001", "잘못된 입력 값입니다."),
     INVALID_FORMAT(400, "COMMON-002", "요청 본문의 형식이 올바르지 않습니다."),
+    METHOD_NOT_ALLOWED(405, "COMMON-003", "지원하지 않는 메서드입니다."),
     INTERNAL_SERVER_ERROR(500, "COMMON-999", "서버 에러가 발생했습니다."),
 
     // 유저
@@ -28,7 +29,10 @@ public enum ErrorCode {
 
     // 네이버 상품 API
     NAVER_API_ERROR(502, "NAVER-999", "네이버 서버와 통신 중 오류가 발생했습니다."),
-
+    
+    // Gemini API
+    GEMINI_API_ERROR(502, "GEMINI-999", "Gemini API와 통신 중 오류가 발생했습니다."),
+    
     // 가이드
     GUIDE_NOT_FOUND(404, "GUIDE-001", "가이드를 찾을 수 없습니다"),
 
