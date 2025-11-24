@@ -1,4 +1,4 @@
-.overlay {
+.overlayCenter {
     position: fixed;
     top: 0;
     left: 0;
@@ -11,6 +11,19 @@
     z-index: var(--z-index-modal);
     animation: fadeIn var(--transition-fast) ease-out;
 }
+
+.overlayTarget {
+    position: absolute;  
+    top: 0;         
+    right: 0;      
+    background-color: transparent;
+    z-index: var(--z-index-modal);
+    
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
 
 .modal {
     background-color: var(--bg-primary);

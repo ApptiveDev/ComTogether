@@ -1,0 +1,57 @@
+.container {
+  width: 583px;
+  border-radius: var(--border-radius-lg);
+  border: 1px solid var(--color-gray-300);
+}
+
+.header {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-6) var(--spacing-6) var(--spacing-3) var(--spacing-5);
+}
+
+.category {
+  font-size: 22px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-gray-900);
+  line-height: 1;/*텍스트 기본 줄 높이 제거*/
+}
+
+.metabox{
+    display: flex;
+    white-space: nowrap; /*줄 바뀜 안되게*/
+    height: fit-content;
+    align-items: center;
+    gap: 150px;
+}
+
+.totalItem {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-900);
+  font-weight: var(--font-weight-medium);
+}
+
+.tableHeader {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 16% 49% 35%;
+  height: fit-content;
+
+  border-top: 1px solid var(--color-gray-300);
+
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-600);
+}
+
+.colName {
+  border-left: 1px solid var(--color-gray-300);
+  border-right: 1px solid var(--color-gray-300);
+  padding-left: var(--spacing-3);
+  padding-top: var(--spacing-1);
+}
+
+.colPrice {
+  padding-left: var(--spacing-3);
+  padding-top: var(--spacing-1);
+}
