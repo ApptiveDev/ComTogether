@@ -4,7 +4,7 @@
   align-items: center;
 
   border-bottom: 1px solid var(--color-gray-300);
-  padding: var(--spacing-3) 0; 
+  padding: var(--spacing-3) 0;
 }
 
 .item img {
@@ -15,7 +15,7 @@
   margin-left: var(--spacing-5);
 }
 
-.name {
+.title {
   padding: 0 var(--spacing-3);
   color: var(--color-gray-900);
   font-weight: var(--font-weight-medium);
@@ -29,7 +29,7 @@
   align-items: center;
 }
 
-.price{
+.lprice {
   color: var(--color-gray-900);
   font-weight: var(--font-weight-semibold);
 }

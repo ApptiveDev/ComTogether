@@ -3,7 +3,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import "./app.css";
 import Home from "./pages/Home";
-import CompatibilityCheck from "./pages/CompatibilityCheck";
+import CompatibilityCheck from "./pages/Qutoe";
 import ExpertConsultation from "./pages/ExpertConsultation";
 import Guide from "./pages/Guide";
 import Community from "./pages/Community";

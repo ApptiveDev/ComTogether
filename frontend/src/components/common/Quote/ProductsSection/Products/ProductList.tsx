@@ -1,0 +1,17 @@
+import styles from "./productList.module.css";
+import PartItem from "./ProductItem";
+import type { item } from "@/types/compatibility";
+
+interface partPageProps {
+  pageItems: item[];
+}
+
+export default function PartPage({ pageItems }: partPageProps) {
+  return (
+    <div className={styles.container}>
+      {pageItems?.map((item) => (
+        <PartItem key={item.id} name={item.name} price={item.price} />
+      ))}
+    </div>
+  );
+}

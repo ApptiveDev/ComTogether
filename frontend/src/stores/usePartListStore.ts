@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { item } from '@/types/compability';
+import type { item } from '@/types/compatibility';
 
 interface PartState{
     currentCategory: string;
