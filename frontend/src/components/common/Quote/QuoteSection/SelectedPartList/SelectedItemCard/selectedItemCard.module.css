@@ -1,0 +1,46 @@
+.card {
+  width: calc(100% - var(--spacing-1) - 125px);
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0 var(--spacing-4);
+
+  background-color: white;
+  border: 1px solid var(--color-gray-300);
+  box-shadow: 0 2px 5.5px rgba(0, 0, 0, 0.1);
+  border-radius: var(--border-radius-xl);
+}
+
+.error{
+    border: 1px solid #ff5525;
+    background-color: #fff1ee;
+}
+
+.name {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-gray-900);
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-6);
+}
+
+.price {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-gray-900);
+}
+
+.removeBtn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: var(--font-size-base);
+  color: var(--color-gray-500);
+}
