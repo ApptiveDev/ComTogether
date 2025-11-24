@@ -11,19 +11,26 @@ import { useNavigate } from "react-router";
 import Button from "../common/Button/Button";
 import { useProfileSetupStore } from "@/stores/useProfileSetupStore";
 import { useEffect } from "react";
+import { useAuthStore } from "@/stores/useAuthStore";
 
 export default function ExpertVerifyLayout() {
   const { mutate: logout } = useLogout();
   const navigate = useNavigate();
   const { data: certifications, isLoading } = useCertificationGet();
   const { mutate: deleteCertification } = useCertificationDelete();
-  const { setCurrentStep } = useProfileSetupStore();
+  const { setCurrentStep, tempRole } = useProfileSetupStore();
+  const { user } = useAuthStore();
 
   useEffect(() => {
+    // tempRole이 EXPERT가 아니면 Setting 페이지로 리다이렉트
+    if (tempRole !== "EXPERT") {
+      navigate("/setting");
+      return;
+    }
+
     // 페이지 진입 시 현재 단계 저장
     setCurrentStep("expert-verify");
-  }, [setCurrentStep]);
-
+  }, [tempRole, setCurrentStep, navigate]);
   const instructionItems = [
     "컴퓨터공학 관련 학위증명서",
     "IT 관련 자격증 (정보처리기사, 컴활 등)",
@@ -66,10 +73,12 @@ export default function ExpertVerifyLayout() {
       title="전문가 인증"
       description="전문가임을 인증할 수 있는 다음 중 하나의 문서를 첨부해주세요."
     >
-      <button onClick={handleLogout} className={styles.logoutBtn}>
-        로그아웃
-      </button>
-
+      <div className={styles.userInfo}>
+        <button onClick={handleLogout} className={styles.logoutBtn}>
+          로그아웃
+        </button>
+        {user?.email && <span className={styles.userEmail}>{user.email}</span>}
+      </div>
       {isLoading ? (
         <div className={styles.loadingContainer}>
           <p>인증 상태를 확인하는 중...</p>
