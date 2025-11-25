@@ -152,7 +152,6 @@ public class CompatibilityCheckService {
                     response, 1, "CPU ↔ 메인보드 호환성"
             );
 
-            sendResultWithDelay(result, resultCallback);
 
         } catch (Exception e) {
             log.error("CPU ↔ 메인보드 호환성 검사 중 오류 발생", e);
@@ -623,19 +622,6 @@ public class CompatibilityCheckService {
         }
     }
 
-    /**
-     * 결과 전송 전 딜레이 추가 (테스트용: 실시간 스트리밍 확인)
-     * 체크 ID * 0.5초씩 딜레이를 추가하여 순차적으로 결과가 오는 것을 확인 가능
-     */
-    private void sendResultWithDelay(CompatibilityCheckResultDto result, Consumer<CompatibilityCheckResultDto> resultCallback) {
-        // 테스트용: 실시간 스트리밍 확인을 위한 딜레이 (체크 ID * 0.5초)
-        try {
-            Thread.sleep(500 * result.getCheckId());
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-        resultCallback.accept(result);
-    }
 
     /**
      * 카테고리에서 아이템 가져오기 (헬퍼 메서드)
