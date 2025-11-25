@@ -23,7 +23,7 @@ export default function CategorySelector({
               onClick={() => onCategoryChange(item.name)}
             />
           );
-        })}
+        })} 
       </div>
       <div className={styles.line}></div>
     </div>
