@@ -54,7 +54,9 @@ public class UserController {
     }
 
     @DeleteMapping
-    public ResponseEntity<ApiResponse<Void>> deleteUser(@AuthenticationPrincipal CustomUserDetails userDetails) {
+    public ResponseEntity<ApiResponse<Void>> deleteUser(
+            @AuthenticationPrincipal CustomUserDetails userDetails
+    ) {
         userService.deleteUser(userDetails.getUser());
         return ResponseEntity.ok(ApiResponse.success(null));
     }

@@ -132,13 +132,40 @@ export const API_ENDPOINTS = {
     POST: (id: string) => `/community/posts/${id}`,
   },
   
-  // 챗봇 관련
-  CHATBOT: {
-    BASE: '/chatbot',
-    CONVERSATIONS: '/chatbot/conversations',
-    CONVERSATION: (id: string) => `/chatbot/conversations/${id}`,
+  
+  // 전문가 인증 관련
+  CERTIFICATION: {
+    ME: '/certification/me',
+    BASE: '/certification',
+    ALL: '/certification/all',
+    APPROVE: (certId: number) => `/certification/${certId}/approve`,
+    REJECT: (certId: number) => `/certification/${certId}/reject`,
+    DELETE: (certId: number) => `/certification/${certId}`,
   },
 } as const;
+
+// 전문가 인증 관련 타입
+export interface Certification {
+  cert_id: number;
+  user_id: number;
+  file_url: string;
+  status: 'PENDING' | 'APPROVED' | 'REJECTED';
+  requested_at: string;
+  reason: string | null;
+}
+
+export interface CertificationGenerateRequest {
+  file_key: string;
+}
+
+export interface CertificationApproveRequest {
+  certId: number;
+}
+
+export interface CertificationRejectRequest {
+  certId: number;
+  reason: string;
+}
 
 // API 에러 클래스
 export class ApiError extends Error {

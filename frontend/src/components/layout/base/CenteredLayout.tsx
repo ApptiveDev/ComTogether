@@ -1,6 +1,6 @@
 import React from "react";
 import BaseLayout from "./BaseLayout";
-import styles from "./BaseLayout.module.css";
+import styles from "./baseLayout.module.css";
 
 interface CenteredLayoutProps {
   children: React.ReactNode;
@@ -11,7 +11,7 @@ interface CenteredLayoutProps {
 
 export default function CenteredLayout({
   children,
-  showHeader = true,
+  showHeader = false,
   title,
   description,
 }: CenteredLayoutProps) {

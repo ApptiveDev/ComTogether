@@ -1,0 +1,40 @@
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: var(--border-width-1) solid transparent;
+    border-radius: var(--border-radius-full);
+    cursor: pointer;
+    font-size: var(--font-size-sm);
+}
+
+/* Sizes */
+
+.sm{
+    height: 35px;
+    font-weight: var(--font-weight-medium);
+    min-width: 90px;
+}
+
+.md {
+    height: 35px;
+    font-weight: var(--font-weight-medium);
+    min-width: 100px;
+}
+
+.lg {
+    height: 40px;
+    font-weight: var(--font-weight-semibold);
+    min-width: 120px;
+}
+
+.primary{
+    color: white;
+    background-color: #ff5525;
+}
+
+.outline {
+    color: var(--color-gray-800);
+    border-color: var(--color-gray-400);
+    background-color: white;
+}

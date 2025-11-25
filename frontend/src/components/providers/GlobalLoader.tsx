@@ -2,7 +2,7 @@
 import React from "react";
 import { useGlobalState } from "../../stores/useGlobalState";
 import { LoadingSpinner } from "../ui";
-import styles from "./GlobalLoader.module.css";
+import styles from "./globalLoader.module.css";
 
 export const GlobalLoader: React.FC = () => {
   const { isGlobalLoading, loadingMessage } = useGlobalState();

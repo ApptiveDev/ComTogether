@@ -64,4 +64,8 @@ public class User {
             this.interests.add(new UserInterest(this, interest));
         }
     }
+
+    public void changeRole(Role role) {
+        this.role = role;
+    }
 }

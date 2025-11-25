@@ -1,0 +1,51 @@
+.container {
+  width: 100%;
+}
+
+.form {
+  display: flex;
+  align-items: center;
+
+  width: 340px; 
+  height: 35px; 
+
+  padding: 0 10px; 
+
+  border: 1px solid var(--color-gray-300);
+  border-radius: 8px; 
+
+  box-shadow: 0 2px 5.5px rgba(0, 0, 0, 0.1);
+}
+
+.input {
+  flex: 1;/*남은 칸 전부 차지*/
+  border: none;
+  outline: none;/*클릭 시 라인 제거*/
+
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-700);
+
+  padding: 0 4px;
+}
+
+.input::placeholder {
+  color: var(--color-gray-400);
+}
+
+.submit {
+  width: 24px;  
+  height: 24px;
+
+  border: none;
+  background: transparent;
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.submit img {
+  width: 16px;
+  height: 16px;
+}

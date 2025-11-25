@@ -64,6 +64,9 @@ export const queryKeys = {
     HISTORY: (size?: number) => 
       size ? ['glossary', 'history', size] : ['glossary', 'history'] as const,
   },
+
+  QUOTES: ['quotes'] as const,
+  QUOTE_DETAIL: 'quote-detail' as const,
   
   PRODUCTS: {
     ALL: ['products'] as const,
@@ -117,9 +120,6 @@ export const invalidateQueries = {
     }
   },
   products: () => queryClient.invalidateQueries({ queryKey: queryKeys.PRODUCTS.ALL }),
-  // TODO: Add COMMUNITY and CHATBOT query keys when needed
-  // community: () => queryClient.invalidateQueries({ queryKey: queryKeys.COMMUNITY.ALL }),
-  // chatbot: () => queryClient.invalidateQueries({ queryKey: queryKeys.CHATBOT.ALL }),
 };
 
 // 프리페치 헬퍼

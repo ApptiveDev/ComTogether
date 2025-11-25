@@ -1,13 +1,9 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { useAuthStore } from "../stores/useAuthStore";
 import { useTokenStore } from "../stores/useTokenStore";
 import { useEffect } from "react";
 
-interface ProtectedRouteProps {
-  children: React.ReactNode;
-}
-
-export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
+export const ProtectedRoute = () => {
   const { isAuthenticated, clearUser, setAuthenticated } = useAuthStore();
   const { getAccessToken, getRefreshToken, isTokenExpired } = useTokenStore();
 
@@ -63,5 +59,5 @@ export const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     return <Navigate to="/signIn" replace />;
   }
 
-  return <>{children}</>;
+  return <Outlet />;
 };

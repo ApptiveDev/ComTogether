@@ -1,0 +1,16 @@
+.item{
+    width: fit-content;
+    height: fit-content;
+    padding: var(--spacing-1) var(--spacing-4);
+    line-height: 150%;
+    color: var(--color-gray-600);
+    font-weight: var(--font-weight-medium);
+    border-radius: var(--border-radius-2xl);
+    cursor: pointer;
+}
+
+.active{
+    border: solid 1px #ff5525;
+    color: #ff5525;
+    font-weight: var(--font-weight-bold);
+}

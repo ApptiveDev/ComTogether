@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import "./App.css";
+import "./app.css";
 import Home from "./pages/Home";
-import CompatibilityCheck from "./pages/CompatibilityCheck";
+import Quote from "./pages/Quote";
 import ExpertConsultation from "./pages/ExpertConsultation";
 import Guide from "./pages/Guide";
 import Community from "./pages/Community";
@@ -11,9 +11,12 @@ import MyPage from "./pages/MyPage";
 import SignIn from "./pages/SignIn";
 import Setting from "./pages/Setting";
 import SecondSetting from "./pages/SecondSetting";
-import RedirectPage from "./pages/oauth/kakao/RedirectPage";
+import RedirectPage from "./pages/RedirectPage";
+import Admin from "./pages/Admin";
 import ExpertVerifyLayout from "./components/layout/ExpertVerifyLayout";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
+import { AdminProtectedRoute } from "./routes/AdminProtectedRoute";
+import { WithGlossary } from "./routes/WithGlossary";
 import RootRedirect from "./routes/RootRedirect";
 import {
   ErrorBoundary,
@@ -26,67 +29,35 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path={"/"} element={<RootRedirect />} />
-        <Route
-          path={"/home"}
-          element={
-            <ProtectedRoute>
-              <Home />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path={"/compatibility-check"}
-          element={
-            <ProtectedRoute>
-              <CompatibilityCheck />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path={"/expert-consultation"}
-          element={
-            <ProtectedRoute>
-              <ExpertConsultation />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path={"/guide"}
-          element={
-            <ProtectedRoute>
-              <Guide />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path={"/community"}
-          element={
-            <ProtectedRoute>
-              <Community />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path={"/mypage"}
-          element={
-            <ProtectedRoute>
-              <MyPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route path={"/signIn"} element={<SignIn />} />
-        <Route
-          path={"/expert-verify"}
-          element={
-            <ProtectedRoute>
-              <ExpertVerifyLayout />
-            </ProtectedRoute>
-          }
-        />
+        {/* Public Routes */}
+        <Route path="/" element={<RootRedirect />} />
+        <Route path="/signIn" element={<SignIn />} />
+        <Route path="/oauth/kakao/redirect" element={<RedirectPage />} />
         <Route path="/setting" element={<Setting />} />
         <Route path="/second-setting" element={<SecondSetting />} />
-        <Route path={"/oauth/kakao/redirect"} element={<RedirectPage />} />
+
+        {/* Protected Routes */}
+        <Route element={<ProtectedRoute />}>
+          <Route path="/home" element={<Home />} />
+          <Route path="/expert-verify" element={<ExpertVerifyLayout />} />
+
+          {/* Glossary가 표시되는 페이지들 */}
+          <Route element={<WithGlossary />}>
+            <Route path="/quote" element={<Quote />} />
+            <Route
+              path="/expert-consultation"
+              element={<ExpertConsultation />}
+            />
+            <Route path="/guide" element={<Guide />} />
+            <Route path="/community" element={<Community />} />
+            <Route path="/mypage" element={<MyPage />} />
+          </Route>
+        </Route>
+
+        {/* Admin Routes */}
+        <Route element={<AdminProtectedRoute />}>
+          <Route path="/admin" element={<Admin />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   );

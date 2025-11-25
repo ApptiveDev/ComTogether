@@ -1,0 +1,49 @@
+.container {
+  width: 100%;
+  height: 93px;/*PartList의 header의 높이와 동일*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 6px;
+}
+
+.btn,
+.prev,
+.next {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: var(--font-size-sm); 
+  color: var(--color-gray-900);
+
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+}
+
+.active {
+  border: 1px solid var(--color-gray-300);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.13);
+}
+
+.prev img,
+.next img {
+  width: 10px;
+  height: 10px;
+}
+
+.prev:disabled,
+.next:disabled {
+  cursor: auto;
+}
+
+.prev:disabled img,
+.next:disabled img {
+  opacity: 0.3;
+}

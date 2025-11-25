@@ -84,14 +84,10 @@ export const API_ENDPOINTS = {
     LIKES: (postId: string) => `/community/posts/${postId}/likes`,
   },
   
-  // 챗봇 관련
-  CHATBOT: {
-    CONVERSATIONS: '/chatbot/conversations',
-    CONVERSATION: (id: string) => `/chatbot/conversations/${id}`,
-    MESSAGES: (conversationId: string) => 
-      `/chatbot/conversations/${conversationId}/messages`,
-    SEND_MESSAGE: (conversationId: string) => 
-      `/chatbot/conversations/${conversationId}/messages`,
+  // 견적서 관련
+  QUOTES: {
+    BASE: '/quotes',
+    DETAIL: (quoteId: number) => `/quotes/${quoteId}`,
   },
   
   // 파일 업로드
