@@ -49,3 +49,9 @@ aws:
   s3:
     region: ${AWS_S3_REGION}
     bucket: ${AWS_S3_BUCKET}
+
+gemini:
+  api:
+    key: ${GEMINI_API_KEY}
+  model:
+    name: "gemini-2.5-flash-lite-preview-06-17"

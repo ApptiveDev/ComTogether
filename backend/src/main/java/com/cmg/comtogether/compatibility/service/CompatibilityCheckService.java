@@ -151,7 +151,7 @@ public class CompatibilityCheckService {
             CompatibilityCheckResultDto result = promptService.parseCompatibilityResponse(
                     response, 1, "CPU ↔ 메인보드 호환성"
             );
-
+            resultCallback.accept(result);
 
         } catch (Exception e) {
             log.error("CPU ↔ 메인보드 호환성 검사 중 오류 발생", e);
