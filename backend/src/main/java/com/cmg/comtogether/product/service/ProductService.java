@@ -5,6 +5,7 @@ import com.cmg.comtogether.common.exception.BusinessException;
 import com.cmg.comtogether.common.exception.ErrorCode;
 import com.cmg.comtogether.interest.entity.Interest;
 import com.cmg.comtogether.product.dto.NaverProductResponseDto;
+import com.cmg.comtogether.product.entity.ProductCategory;
 import com.cmg.comtogether.user.entity.User;
 import com.cmg.comtogether.user.entity.UserInterest;
 import com.cmg.comtogether.user.repository.UserRepository;
@@ -21,8 +22,12 @@ public class ProductService {
     private final NaverProductService naverProductService;
 
     public NaverProductResponseDto searchProducts(String category, String query, int display, int start, String sort, String exclude) {
-        String searchQuery = category + " " + query;
-        NaverProductResponseDto result = naverProductService.getNaverProducts(searchQuery, display, start, sort, exclude);
+        ProductCategory productCategory;
+        productCategory = ProductCategory.fromDisplayName(category);
+        
+        String searchQuery = productCategory.getSearchQuery() + " " + query;
+        
+        NaverProductResponseDto result = naverProductService.getNaverProducts(searchQuery.trim(), display, start, sort, exclude);
         cacheMonitorService.printCacheStats("naverProducts");
         return result;
     }
@@ -31,12 +36,16 @@ public class ProductService {
         User user = userRepository.findByIdWithInterests(userId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
 
+        ProductCategory productCategory;
+        productCategory = ProductCategory.fromDisplayName(category);
+        
         String interestString = user.getInterests().stream()
                 .map(UserInterest::getInterest)
                 .map(Interest::getName)
                 .collect(Collectors.joining(" "));
-        String searchQuery = category + " " + interestString + query;
-        NaverProductResponseDto result = naverProductService.getNaverProducts(searchQuery, display, start, sort, exclude);
+        String searchQuery = productCategory.getSearchQuery() + " " + interestString + " " + query;
+        
+        NaverProductResponseDto result = naverProductService.getNaverProducts(searchQuery.trim(), display, start, sort, exclude);
         cacheMonitorService.printCacheStats("naverProducts");
         return result;
     }
