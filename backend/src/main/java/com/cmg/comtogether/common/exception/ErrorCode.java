@@ -57,7 +57,10 @@ public enum ErrorCode {
     CERTIFICATION_ACCESS_DENIED(403, "CERTIFICATION-004", "해당 인증서에 대한 접근 권한이 없습니다."),
 
     // 업로드
-    INVALID_UPLOAD_TYPE(400,"UPLOAD-001", "올바르지 않은 업로드 타입입니다.");
+    INVALID_UPLOAD_TYPE(400,"UPLOAD-001", "올바르지 않은 업로드 타입입니다."),
+
+    // 상품
+    INVALID_PRODUCT_CATEGORY(400, "PRODUCT-001", "유효하지 않은 상품 카테고리입니다.");
 
 
     private final int status;
