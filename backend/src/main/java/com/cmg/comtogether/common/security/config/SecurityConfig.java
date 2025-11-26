@@ -17,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfigurationSource;
-import jakarta.servlet.DispatcherType;
 
 @Configuration
 @EnableWebSecurity
@@ -36,9 +35,6 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, CorsConfigurationSource corsConfigurationSource) throws Exception {
         http
-                // async dispatch는 Security 필터 적용 대상에서 제외
-                .securityMatcher(request -> request.getDispatcherType() != DispatcherType.ASYNC)
-
                 .csrf(AbstractHttpConfigurer::disable) // CSRF 비활성화
                 .httpBasic(AbstractHttpConfigurer::disable) // Basic Auth 비활성화
                 .formLogin(AbstractHttpConfigurer::disable) // Form Login 비활성화
