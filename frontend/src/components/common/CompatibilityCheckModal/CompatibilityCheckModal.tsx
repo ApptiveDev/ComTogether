@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Modal from "../../ui/Modal/Modal";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import complete from "../../../assets/image/icon/complete.svg";
+import notComplete from "../../../assets/image/icon/not_complete.svg";
 import styles from "./compatibilityCheckModal.module.css";
 import type { CompatibilityCheckDetail } from "@/types/compatibility";
 
@@ -15,12 +16,22 @@ interface CompatibilityCheckModalProps {
 interface CheckItem {
   id: number;
   label: string;
-  status: "pending" | "loading" | "complete" | "warning" | "error" | "unknown";
-  result?: "POSITIVE" | "NEGATIVE" | "WARNING" | "UNKNOWN";
-  details?: string;
-  warnings?: string[];
-  errors?: string[];
+  status: "pending" | "loading" | "complete" | "error";
 }
+
+// 고정된 10개 검사 항목
+const FIXED_CHECK_ITEMS: CheckItem[] = [
+  { id: 1, label: "CPU ↔ 메인보드 호환성", status: "pending" },
+  { id: 2, label: "메모리 타입 호환성", status: "pending" },
+  { id: 3, label: "메모리 속도 호환성", status: "pending" },
+  { id: 4, label: " 메인보드 ↔ 케이스 폼펙 호환성", status: "pending" },
+  { id: 5, label: "GPU ↔ 케이스 호환성", status: "pending" },
+  { id: 6, label: "전력 안정성", status: "pending" },
+  { id: 7, label: "파워 커넥터 호환성 검사", status: "pending" },
+  { id: 8, label: "스토리지", status: "pending" },
+  { id: 9, label: "CPU 쿨러 ↔ 케이스/램 (높이 및 간섭)", status: "pending" },
+  { id: 10, label: " OS/드라이버", status: "pending" },
+];
 
 export default function CompatibilityCheckModal({
   isOpen,
@@ -28,43 +39,41 @@ export default function CompatibilityCheckModal({
   results,
   isChecking,
 }: CompatibilityCheckModalProps) {
-  const [items, setItems] = useState<CheckItem[]>([]);
+  const [items, setItems] = useState<CheckItem[]>(FIXED_CHECK_ITEMS);
 
-  // 실시간으로 결과가 들어올 때마다 items 업데이트
+  // 모달이 열릴 때 초기화
+  useEffect(() => {
+    if (isOpen && isChecking) {
+      setItems(
+        FIXED_CHECK_ITEMS.map((item) => ({ ...item, status: "loading" }))
+      );
+    }
+  }, [isOpen, isChecking]);
+
+  // SSE로 결과가 들어올 때마다 해당 항목만 업데이트
   useEffect(() => {
     if (results && results.length > 0) {
-      setItems(
-        results.map((result) => {
-          let status: CheckItem["status"] = "complete";
-
-          if (result.status === "ERROR") {
-            status = "unknown";
-          } else if (result.result === "NEGATIVE") {
-            status = "error";
-          } else if (result.result === "WARNING") {
-            status = "warning";
-          } else if (result.result === "POSITIVE") {
-            status = "complete";
-          } else if (result.result === "UNKNOWN") {
-            status = "unknown";
+      setItems((prevItems) => {
+        const newItems = [...prevItems];
+        results.forEach((result) => {
+          const index = newItems.findIndex(
+            (item) => item.id === result.check_id
+          );
+          if (index !== -1) {
+            let status: CheckItem["status"] = "complete";
+            if (result.result === "NEGATIVE") {
+              status = "error";
+            }
+            newItems[index] = {
+              ...newItems[index],
+              status,
+            };
           }
-
-          return {
-            id: result.check_id,
-            label: result.check_name,
-            status,
-            result: result.result,
-            details: result.details,
-            warnings: result.warnings,
-            errors: result.errors,
-          };
-        })
-      );
-    } else if (!isChecking && results.length === 0) {
-      // 체크가 끝났는데 결과가 없으면 초기화
-      setItems([]);
+        });
+        return newItems;
+      });
     }
-  }, [results, isChecking]);
+  }, [results]);
 
   const renderCheckStatus = (item: CheckItem) => {
     if (item.status === "loading") {
@@ -88,24 +97,12 @@ export default function CompatibilityCheckModal({
         </div>
       );
     }
-    if (item.status === "warning") {
-      return (
-        <div className={`${styles.checkItem} ${styles.warning}`}>
-          <div className={styles.warningCircle}>⚠</div>
-        </div>
-      );
-    }
     if (item.status === "error") {
       return (
         <div className={`${styles.checkItem} ${styles.error}`}>
-          <div className={styles.errorCircle}>✕</div>
-        </div>
-      );
-    }
-    if (item.status === "unknown") {
-      return (
-        <div className={`${styles.checkItem} ${styles.unknown}`}>
-          <div className={styles.unknownCircle}>?</div>
+          <div className={styles.errorCircle}>
+            <img src={notComplete} alt="에러" />
+          </div>
         </div>
       );
     }
@@ -116,9 +113,9 @@ export default function CompatibilityCheckModal({
     );
   };
 
-  const allComplete = !isChecking && items.length > 0;
+  const allComplete =
+    !isChecking && items.every((item) => item.status !== "loading");
   const hasErrors = items.some((item) => item.status === "error");
-  const hasWarnings = items.some((item) => item.status === "warning");
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="호환성 체크" size="xl">
@@ -126,78 +123,24 @@ export default function CompatibilityCheckModal({
         <div className={styles.grid}>
           {items.map((item) => (
             <div key={item.id} className={styles.gridItem}>
-              <div className={styles.label}>{item.label}</div>{" "}
+              <div className={styles.label}>{item.label}</div>
               {renderCheckStatus(item)}
             </div>
           ))}
         </div>
 
         <div className={styles.statusMessage}>
-          {isChecking && <p>호환성 체크 중입니다... ({items.length}개 완료)</p>}
-          {allComplete && !hasErrors && !hasWarnings && (
-            <p className={styles.completeMessage}>
-              ✔ 모든 호환성 체크가 완료되었습니다!
-            </p>
-          )}
-          {allComplete && hasWarnings && !hasErrors && (
-            <p className={styles.warningMessage}>
-              ⚠ 일부 항목에 경고가 있습니다. 확인해주세요.
-            </p>
-          )}
-          {allComplete && hasErrors && (
+          {hasErrors && (
             <p className={styles.errorMessage}>
-              ✕ 호환되지 않는 부품이 있습니다. 확인해주세요.
+              ⚠ 호환성 체크가 미완료되었습니다.
             </p>
           )}
         </div>
-
-        {/* 세부 정보 표시 */}
-        {items.length > 0 && (
-          <div className={styles.details}>
-            {items.map((item) =>
-              (item.warnings && item.warnings.length > 0) ||
-              (item.errors && item.errors.length > 0) ||
-              item.details ? (
-                <div key={item.id} className={styles.detailItem}>
-                  <h4>
-                    {item.status === "complete" && "✅ "}
-                    {item.status === "warning" && "⚠️ "}
-                    {item.status === "error" && "❌ "}
-                    {item.status === "unknown" && "❓ "}
-                    {item.label}
-                  </h4>
-                  {item.errors && item.errors.length > 0 && (
-                    <ul className={styles.errorList}>
-                      {item.errors.map((error, idx) => (
-                        <li key={idx} className={styles.errorText}>
-                          {error}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                  {item.warnings && item.warnings.length > 0 && (
-                    <ul className={styles.warningList}>
-                      {item.warnings.map((warning, idx) => (
-                        <li key={idx} className={styles.warningText}>
-                          {warning}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                  {item.details && (
-                    <p className={styles.detailText}>{item.details}</p>
-                  )}
-                </div>
-              ) : null
-            )}
-          </div>
-        )}
 
         <button
           className={styles.pdfButton}
           disabled={!allComplete}
           onClick={() => {
-            // PDF 다운로드 로직
             console.log("PDF 다운로드");
           }}
         >

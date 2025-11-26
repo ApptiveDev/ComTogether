@@ -7,7 +7,7 @@
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: var(--spacing-8);
     margin-bottom: var(--spacing-6);
 }
@@ -84,29 +84,18 @@
     font-weight: var(--font-weight-semibold);
 }
 
-.warningCircle,
 .errorCircle {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
+    width: 85px;
+    height: 85px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
-    font-weight: bold;
     animation: scaleIn 0.3s ease-out;
 }
 
-.warningCircle {
-    background-color: #fff3cd;
-    color: #ff9800;
-    border: 2px solid #ff9800;
-}
-
-.errorCircle {
-    background-color: #f8d7da;
-    color: #f44336;
-    border: 2px solid #f44336;
+.errorCircle img {
+    width: 100%;
+    height: 100%;
 }
 
 .unknownCircle {

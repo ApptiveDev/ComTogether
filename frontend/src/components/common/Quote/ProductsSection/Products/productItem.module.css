@@ -19,6 +19,14 @@
   padding: 0 var(--spacing-3);
   color: var(--color-gray-900);
   font-weight: var(--font-weight-medium);
+
+  /* 2줄 넘어가면 말줄임표 처리 */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
 }
 
 .priceContainer {

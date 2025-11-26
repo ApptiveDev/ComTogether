@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router";
 import { QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import "./app.css";
 import Home from "./pages/Home";
 import Quote from "./pages/Quote";
@@ -70,7 +69,6 @@ function App() {
         <Router />
         <GlobalLoader />
         <ToastProvider />
-        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </ErrorBoundary>
   );
