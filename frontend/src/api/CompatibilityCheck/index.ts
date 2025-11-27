@@ -1,0 +1,1 @@
+export { useCompatibilityCheck } from './useCompatibilityCheck';

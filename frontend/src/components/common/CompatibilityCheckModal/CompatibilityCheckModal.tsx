@@ -2,87 +2,78 @@ import { useState, useEffect } from "react";
 import Modal from "../../ui/Modal/Modal";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import complete from "../../../assets/image/icon/complete.svg";
+import notComplete from "../../../assets/image/icon/not_complete.svg";
 import styles from "./compatibilityCheckModal.module.css";
+import type { CompatibilityCheckDetail } from "@/types/compatibility";
 
 interface CompatibilityCheckModalProps {
   isOpen: boolean;
   onClose: () => void;
+  results: CompatibilityCheckDetail[];
+  isChecking: boolean;
 }
 
 interface CheckItem {
-  id: string;
+  id: number;
   label: string;
-  status: "pending" | "loading" | "complete";
+  status: "pending" | "loading" | "complete" | "error";
 }
 
-const checkItems: CheckItem[] = [
-  { id: "monitor", label: "물리 규격 호환성", status: "pending" },
-  { id: "resolution", label: "전원 호환", status: "pending" },
-  { id: "memory-type", label: "메모리 타입", status: "pending" },
-  { id: "memory-speed", label: "메모리 속도", status: "pending" },
-  { id: "graphics", label: "파워 용량", status: "pending" },
-  { id: "graphics-power", label: "그래픽 카드 /파워 호환", status: "pending" },
-  { id: "panel-type", label: "파워 포트 인증", status: "pending" },
-  {
-    id: "update-monitor",
-    label: "수평 리프레쉬레이트 규격 지원",
-    status: "pending",
-  },
-  { id: "vertical-refresh", label: "스토리지 형식 호환", status: "pending" },
-  { id: "case-form", label: "케이스 폼팩터 포함성", status: "pending" },
-  { id: "rgb", label: "RGB/ARGB 커넥터 호환성", status: "pending" },
-  { id: "multimedia", label: "운영체제 및 드라이버 지원", status: "pending" },
+// 고정된 10개 검사 항목
+const FIXED_CHECK_ITEMS: CheckItem[] = [
+  { id: 1, label: "CPU ↔ 메인보드 호환성", status: "pending" },
+  { id: 2, label: "메모리 타입 호환성", status: "pending" },
+  { id: 3, label: "메모리 속도 호환성", status: "pending" },
+  { id: 4, label: " 메인보드 ↔ 케이스 폼펙 호환성", status: "pending" },
+  { id: 5, label: "GPU ↔ 케이스 호환성", status: "pending" },
+  { id: 6, label: "전력 안정성", status: "pending" },
+  { id: 7, label: "파워 커넥터 호환성 검사", status: "pending" },
+  { id: 8, label: "스토리지", status: "pending" },
+  { id: 9, label: "CPU 쿨러 ↔ 케이스/램 (높이 및 간섭)", status: "pending" },
+  { id: 10, label: " OS/드라이버", status: "pending" },
 ];
 
 export default function CompatibilityCheckModal({
   isOpen,
   onClose,
+  results,
+  isChecking,
 }: CompatibilityCheckModalProps) {
-  const [items, setItems] = useState<CheckItem[]>(checkItems);
-  const [currentCheckIndex, setCurrentCheckIndex] = useState(-1);
-  const [isChecking, setIsChecking] = useState(false);
+  const [items, setItems] = useState<CheckItem[]>(FIXED_CHECK_ITEMS);
 
+  // 모달이 열릴 때 초기화
   useEffect(() => {
-    if (isOpen && !isChecking) {
-      // 모달이 열리면 자동으로 체크 시작
-      startChecking();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen]);
-
-  const startChecking = () => {
-    setIsChecking(true);
-    setCurrentCheckIndex(0);
-    setItems(checkItems.map((item) => ({ ...item, status: "pending" })));
-  };
-
-  useEffect(() => {
-    if (!isChecking || currentCheckIndex === -1) return;
-
-    if (currentCheckIndex >= items.length) {
-      setIsChecking(false);
-      return;
-    }
-
-    // 현재 항목을 loading으로 변경
-    setItems((prev) =>
-      prev.map((item, idx) =>
-        idx === currentCheckIndex ? { ...item, status: "loading" } : item
-      )
-    );
-
-    // 0.5초 후 complete로 변경하고 다음 항목으로
-    const timer = setTimeout(() => {
-      setItems((prev) =>
-        prev.map((item, idx) =>
-          idx === currentCheckIndex ? { ...item, status: "complete" } : item
-        )
+    if (isOpen && isChecking) {
+      setItems(
+        FIXED_CHECK_ITEMS.map((item) => ({ ...item, status: "loading" }))
       );
-      setCurrentCheckIndex((prev) => prev + 1);
-    }, 500);
+    }
+  }, [isOpen, isChecking]);
 
-    return () => clearTimeout(timer);
-  }, [currentCheckIndex, isChecking, items.length]);
+  // SSE로 결과가 들어올 때마다 해당 항목만 업데이트
+  useEffect(() => {
+    if (results && results.length > 0) {
+      setItems((prevItems) => {
+        const newItems = [...prevItems];
+        results.forEach((result) => {
+          const index = newItems.findIndex(
+            (item) => item.id === result.check_id
+          );
+          if (index !== -1) {
+            let status: CheckItem["status"] = "complete";
+            if (result.result === "NEGATIVE") {
+              status = "error";
+            }
+            newItems[index] = {
+              ...newItems[index],
+              status,
+            };
+          }
+        });
+        return newItems;
+      });
+    }
+  }, [results]);
 
   const renderCheckStatus = (item: CheckItem) => {
     if (item.status === "loading") {
@@ -101,7 +92,16 @@ export default function CompatibilityCheckModal({
       return (
         <div className={`${styles.checkItem} ${styles.complete}`}>
           <div className={styles.completeCircle}>
-            <img src={complete} />
+            <img src={complete} alt="완료" />
+          </div>
+        </div>
+      );
+    }
+    if (item.status === "error") {
+      return (
+        <div className={`${styles.checkItem} ${styles.error}`}>
+          <div className={styles.errorCircle}>
+            <img src={notComplete} alt="에러" />
           </div>
         </div>
       );
@@ -113,7 +113,9 @@ export default function CompatibilityCheckModal({
     );
   };
 
-  const allComplete = items.every((item) => item.status === "complete");
+  const allComplete =
+    !isChecking && items.every((item) => item.status !== "loading");
+  const hasErrors = items.some((item) => item.status === "error");
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="호환성 체크" size="xl">
@@ -121,17 +123,16 @@ export default function CompatibilityCheckModal({
         <div className={styles.grid}>
           {items.map((item) => (
             <div key={item.id} className={styles.gridItem}>
-              <div className={styles.label}>{item.label}</div>{" "}
+              <div className={styles.label}>{item.label}</div>
               {renderCheckStatus(item)}
             </div>
           ))}
         </div>
 
         <div className={styles.statusMessage}>
-          {isChecking && !allComplete && <p>호환성 체크 중입니다...</p>}
-          {allComplete && (
-            <p className={styles.completeMessage}>
-              ✔ 모든 호환성 체크가 완료되었습니다!
+          {hasErrors && (
+            <p className={styles.errorMessage}>
+              ⚠ 호환성 체크가 미완료되었습니다.
             </p>
           )}
         </div>
@@ -140,7 +141,6 @@ export default function CompatibilityCheckModal({
           className={styles.pdfButton}
           disabled={!allComplete}
           onClick={() => {
-            // PDF 다운로드 로직
             console.log("PDF 다운로드");
           }}
         >

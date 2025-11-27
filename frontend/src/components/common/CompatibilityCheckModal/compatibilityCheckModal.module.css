@@ -7,7 +7,7 @@
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: var(--spacing-8);
     margin-bottom: var(--spacing-6);
 }
@@ -72,6 +72,98 @@
 .completeMessage {
     color: #4caf50 !important;
     font-weight: var(--font-weight-semibold);
+}
+
+.warningMessage {
+    color: #ff9800 !important;
+    font-weight: var(--font-weight-semibold);
+}
+
+.errorMessage {
+    color: #f44336 !important;
+    font-weight: var(--font-weight-semibold);
+}
+
+.errorCircle {
+    width: 85px;
+    height: 85px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: scaleIn 0.3s ease-out;
+}
+
+.errorCircle img {
+    width: 100%;
+    height: 100%;
+}
+
+.unknownCircle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    background-color: #e0e0e0;
+    color: #757575;
+    border: 2px solid #9e9e9e;
+    animation: scaleIn 0.3s ease-out;
+}
+
+.details {
+    margin-top: var(--spacing-4);
+    padding: var(--spacing-4);
+    background-color: var(--bg-tertiary);
+    border-radius: var(--border-radius-md);
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.detailItem {
+    margin-bottom: var(--spacing-4);
+    padding-bottom: var(--spacing-4);
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.detailItem:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.detailItem h4 {
+    margin: 0 0 var(--spacing-2) 0;
+    font-size: var(--font-size-base);
+    font-weight: var(--font-weight-semibold);
+    color: var(--text-primary);
+}
+
+.errorList,
+.warningList {
+    margin: var(--spacing-2) 0;
+    padding-left: var(--spacing-4);
+    list-style: none;
+}
+
+.errorText {
+    color: #f44336;
+    font-size: var(--font-size-sm);
+    margin: var(--spacing-1) 0;
+}
+
+.warningText {
+    color: #ff9800;
+    font-size: var(--font-size-sm);
+    margin: var(--spacing-1) 0;
+}
+
+.detailText {
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+    margin: var(--spacing-2) 0 0 0;
 }
 
 .pdfButton {

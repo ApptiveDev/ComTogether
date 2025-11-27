@@ -90,6 +90,11 @@ export const API_ENDPOINTS = {
     DETAIL: (quoteId: number) => `/quotes/${quoteId}`,
   },
   
+  // 호환성 체크 관련
+  COMPATIBILITY: {
+    CHECK: '/compatibility/check',
+  },
+  
   // 파일 업로드
   FILES: {
     UPLOAD: '/files/upload',
