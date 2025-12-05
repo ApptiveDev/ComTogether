@@ -6,9 +6,10 @@ import com.cmg.comtogether.interest.entity.Interest;
 import com.cmg.comtogether.interest.service.InterestService;
 import com.cmg.comtogether.jwt.dto.TokenDto;
 import com.cmg.comtogether.jwt.service.JwtService;
-import com.cmg.comtogether.user.dto.UserInitializeRequestDto;
+import com.cmg.comtogether.user.dto.UserInterestInitializeDto;
 import com.cmg.comtogether.user.dto.UserResponseDto;
 import com.cmg.comtogether.user.entity.Role;
+import com.cmg.comtogether.user.entity.SetupStep;
 import com.cmg.comtogether.user.entity.User;
 import com.cmg.comtogether.user.mapper.UserMapper;
 import com.cmg.comtogether.user.repository.UserRepository;
@@ -47,11 +48,10 @@ public class UserService {
     }
 
     @Transactional
-    public UserResponseDto initializeUser(Long userId, UserInitializeRequestDto requestDto) {
+    public UserResponseDto initializeUserInterest(Long userId, UserInterestInitializeDto requestDto) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
 
-        user.updateRole(requestDto.getRole());
         List<Interest> interests = new ArrayList<>();
 
         if (requestDto.getInterestIds() != null) {
@@ -62,7 +62,8 @@ public class UserService {
         }
 
         user.updateInterests(interests);
-        user.completeInitialization();
+        user.updateSetupStep(SetupStep.COMPLETED);
+        
         return userMapper.toResponse(user);
     }
 
@@ -90,10 +91,27 @@ public class UserService {
         return jwtService.generateToken(user);
     }
 
+    @Transactional
     public void updateRoleToExpert(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
 
         user.changeRole(Role.EXPERT);
+    }
+
+    @Transactional
+    public void updateCertificationUploaded(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+
+        user.updateSetupStep(SetupStep.CERTIFICATION_UPLOADED);
+    }
+
+    @Transactional
+    public void updateCertificationNotStarted(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+
+        user.updateSetupStep(SetupStep.NOT_STARTED);
     }
 }

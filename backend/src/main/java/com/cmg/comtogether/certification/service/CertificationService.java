@@ -22,6 +22,7 @@ public class CertificationService {
     private final UserService userService;
     private final S3Service s3Service;
 
+    @Transactional
     public CertificationResponseDto createCertification(Long userId, String fileKey) {
         String publicUrl = s3Service.getPublicUrl(fileKey);
 
@@ -33,6 +34,7 @@ public class CertificationService {
                 .build();
 
         certificationRepository.save(cert);
+        userService.updateCertificationUploaded(userId);
 
         return CertificationResponseDto.fromEntity(cert, publicUrl);
     }
@@ -92,5 +94,7 @@ public class CertificationService {
         }
 
         certificationRepository.delete(c);
+
+        userService.updateCertificationNotStarted(userId);
     }
 }

@@ -43,20 +43,14 @@ public class User {
 
     private String profileImageUrl;
 
+    @Enumerated(EnumType.STRING)
     @Builder.Default
-    private boolean initialized = false;
+    @Column(nullable = false)
+    private SetupStep setupStep = SetupStep.NOT_STARTED;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private Set<UserInterest> interests = new HashSet<>();;
-
-    public void updateRole(Role role) {
-        this.role = role;
-    }
-
-    public void completeInitialization() {
-        this.initialized = true;
-    }
 
     public void updateInterests(List<Interest> newInterests) {
         this.interests.clear();
@@ -67,5 +61,9 @@ public class User {
 
     public void changeRole(Role role) {
         this.role = role;
+    }
+
+    public void updateSetupStep(SetupStep setupStep) {
+        this.setupStep = setupStep;
     }
 }
