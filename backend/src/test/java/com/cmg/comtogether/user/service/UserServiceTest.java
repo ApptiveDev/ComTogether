@@ -5,7 +5,7 @@ import com.cmg.comtogether.common.exception.ErrorCode;
 import com.cmg.comtogether.interest.dto.InterestDto;
 import com.cmg.comtogether.jwt.entity.RefreshToken;
 import com.cmg.comtogether.jwt.repository.RefreshTokenRepository;
-import com.cmg.comtogether.user.dto.UserInitializeRequestDto;
+import com.cmg.comtogether.user.dto.UserInterestInitializeDto;
 import com.cmg.comtogether.user.dto.UserResponseDto;
 import com.cmg.comtogether.user.entity.Role;
 import com.cmg.comtogether.user.entity.SocialType;
@@ -92,17 +92,16 @@ class UserServiceTest {
 
     @Test
     @DisplayName("성공 - 유저 초기화 성공 (관심사 포함)")
-    void initializeUser_success() {
+    void initializeUser_Interest_success() {
         // given
         User user = createUser();
 
-        UserInitializeRequestDto requestDto = UserInitializeRequestDto.builder()
-                .role(Role.EXPERT)
+        UserInterestInitializeDto requestDto = UserInterestInitializeDto.builder()
                 .interestIds(List.of(1L, 2L))
                 .build();
 
         // when
-        UserResponseDto response = userService.initializeUser(user.getUserId(), requestDto);
+        UserResponseDto response = userService.initializeUserInterest(user.getUserId(), requestDto);
 
         // then
         assertThat(response.getRole()).isEqualTo(Role.EXPERT);

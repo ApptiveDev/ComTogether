@@ -4,7 +4,7 @@ import com.cmg.comtogether.common.response.ApiResponse;
 import com.cmg.comtogether.common.security.CustomUserDetails;
 import com.cmg.comtogether.jwt.dto.TokenDto;
 import com.cmg.comtogether.user.dto.LoginRequestDto;
-import com.cmg.comtogether.user.dto.UserInitializeRequestDto;
+import com.cmg.comtogether.user.dto.UserInterestInitializeDto;
 import com.cmg.comtogether.user.dto.UserResponseDto;
 import com.cmg.comtogether.user.entity.User;
 import com.cmg.comtogether.user.service.UserService;
@@ -47,9 +47,9 @@ public class UserController {
     @PutMapping("/initialize")
     public ResponseEntity<ApiResponse<UserResponseDto>> initializeUser(
             @AuthenticationPrincipal CustomUserDetails userDetails,
-            @Valid @RequestBody UserInitializeRequestDto request
+            @Valid @RequestBody UserInterestInitializeDto request
     ) {
-        UserResponseDto userResponseDto = userService.initializeUser(userDetails.getUser().getUserId(), request);
+        UserResponseDto userResponseDto = userService.initializeUserInterest(userDetails.getUser().getUserId(), request);
         return ResponseEntity.ok(ApiResponse.success(userResponseDto));
     }
 

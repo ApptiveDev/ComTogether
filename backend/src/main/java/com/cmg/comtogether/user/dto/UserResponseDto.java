@@ -2,6 +2,7 @@ package com.cmg.comtogether.user.dto;
 
 import com.cmg.comtogether.interest.dto.InterestDto;
 import com.cmg.comtogether.user.entity.Role;
+import com.cmg.comtogether.user.entity.SetupStep;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,7 +19,7 @@ public class UserResponseDto {
     private Role role;
     private Integer point;
     private String profileImageUrl;
-    private boolean initialized;
+    private SetupStep setupStep;
     private List<InterestDto> interests;
 }
 
