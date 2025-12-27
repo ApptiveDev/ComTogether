@@ -3,11 +3,10 @@ import { useMutation } from '@tanstack/react-query';
 import { useAuthStore } from '../stores/useAuthStore';
 import { client as apiClient } from '../api/core/client';
 import type { UserData } from '../types/user';
-import type { UserRoleType } from '../types/user';
 
 interface UpdateProfileRequest {
-  role?: UserRoleType;
   interest_ids?: number[];
+    custom_interests?: string[];
 }
 
 interface UpdateProfileResponse {
@@ -21,8 +20,8 @@ export const useUpdateProfile = () => {
 
     const mutation = useMutation({
         mutationFn: async (updateData: UpdateProfileRequest): Promise<UpdateProfileResponse> => {
-            // 최초 사용자인지 확인 (role이 없거나 interests가 없으면 최초 사용자)
-            const isFirstTimeUser = !user?.role || !user?.interests?.length;
+            // 최초 사용자인지 확인 (setup_step으로 판단)
+            const isFirstTimeUser = user?.setup_step !== 'COMPLETED';
             
             console.log("프로필 업데이트:", { isFirstTimeUser, updateData });
 

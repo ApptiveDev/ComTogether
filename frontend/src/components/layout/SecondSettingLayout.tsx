@@ -14,13 +14,36 @@ import { useNavigate } from "react-router";
 export default function SecondSettingLayout() {
   const [count, setCount] = useState(0);
   const initializeMutation = useInitializeUser();
-  const { tempRole, tempInterestIds, setCurrentStep } = useProfileSetupStore();
+  const {
+    tempRole,
+    tempInterestIds,
+    tempCustomInterests,
+    setCurrentStep,
+    currentStep,
+  } = useProfileSetupStore();
   const { mutate: logout } = useLogout();
   const { user } = useAuthStore();
   const navigate = useNavigate();
 
   useEffect(() => {
-    // tempRole이 없으면 Setting 페이지로 리다이렉트
+    if (!user) {
+      return;
+    }
+
+    if (user.setup_step === "COMPLETED") {
+      navigate("/home");
+      return;
+    }
+
+    if (
+      user.setup_step === "CERTIFICATION_UPLOADED" &&
+      currentStep !== "interest-selection" &&
+      tempRole !== "EXPERT"
+    ) {
+      navigate("/expert-verify");
+      return;
+    }
+
     if (!tempRole) {
       navigate("/setting");
       return;
@@ -28,12 +51,12 @@ export default function SecondSettingLayout() {
 
     // 페이지 진입 시 현재 단계 저장
     setCurrentStep("interest-selection");
-  }, [tempRole, setCurrentStep, navigate]);
+  }, [tempRole, setCurrentStep, navigate, user, currentStep]);
   const handleNext = () => {
     if (count > 0 && tempRole) {
       initializeMutation.mutate({
-        role: tempRole,
         interest_ids: tempInterestIds,
+        custom_interests: tempCustomInterests,
       });
     }
   };

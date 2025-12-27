@@ -66,10 +66,7 @@ export interface KakaoLoginResponse {
 
 export interface InitializeUserResponse {
   success: boolean;
-  data: {
-    userId: string;
-    isInitialized: boolean;
-  };
+  data: import('./user').UserData;
 }
 
 export interface UpdateProfileResponse {
