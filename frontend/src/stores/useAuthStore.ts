@@ -38,12 +38,8 @@ export const useAuthStore = create<AuthState>()(
             isProfileComplete: () => {
                 const { user } = get();
                 if (!user) return false;
-                
-                return !!(
-                    user.role &&
-                    user.interests &&
-                    user.interests.length > 0
-                );
+
+                return user.setup_step === 'COMPLETED';
             },
 
             clearAuthState: () => {

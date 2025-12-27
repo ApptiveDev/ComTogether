@@ -13,7 +13,15 @@ export default function RootRedirect() {
 
   // 로그인되어 있고 토큰이 있으면 홈으로
   if (isAuthenticated && token && user) {
-    return <Navigate to="/home" replace />;
+    if (user.setup_step === "COMPLETED") {
+      return <Navigate to="/home" replace />;
+    }
+
+    if (user.setup_step === "CERTIFICATION_UPLOADED") {
+      return <Navigate to="/expert-verify" replace />;
+    }
+
+    return <Navigate to="/setting" replace />;
   }
 
   // 아니면 로그인 페이지로

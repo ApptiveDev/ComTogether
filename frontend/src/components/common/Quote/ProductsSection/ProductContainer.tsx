@@ -4,7 +4,6 @@ import SearchBar from "./SearchBar/SearchBar";
 import Pagination from "./Pagination/Pagination";
 import { useGetProducts, useGetRecommendedProducts } from "@/api/Product";
 import { useState, useMemo, useEffect } from "react";
-import type { Product } from "@/types/product";
 
 interface PartListProps {
   currentCategory: string;

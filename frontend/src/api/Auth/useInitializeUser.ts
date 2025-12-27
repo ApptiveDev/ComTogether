@@ -11,7 +11,6 @@ import type { UserData } from '../../types/user';
 
 // 사용자 초기화
 interface InitializeUserRequest {
-  role: string;
   interest_ids: number[];
   custom_interests?: string[];
 }

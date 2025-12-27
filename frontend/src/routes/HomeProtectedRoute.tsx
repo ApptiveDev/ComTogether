@@ -36,15 +36,24 @@ export default function HomeProtectedRoute({
       return;
     }
 
-    // 초기화되지 않은 사용자는 설정 페이지로
-    if (!user.initialized) {
-      navigate("/setting");
+    // 초기 설정이 끝나지 않은 경우 단계에 맞춰 리다이렉트
+    if (user.setup_step !== "COMPLETED") {
+      const nextPath =
+        user.setup_step === "CERTIFICATION_UPLOADED"
+          ? "/expert-verify"
+          : "/setting";
+      navigate(nextPath);
       return;
     }
   }, [user, isAuthenticated, isLoading, isError, navigate]);
 
   // 로딩 중이거나 리다이렉트 중일 때는 아무것도 렌더링하지 않음
-  if (!isAuthenticated || isLoading || !user || !user.initialized) {
+  if (
+    !isAuthenticated ||
+    isLoading ||
+    !user ||
+    user.setup_step !== "COMPLETED"
+  ) {
     return null;
   }
 

@@ -18,19 +18,34 @@ export default function ExpertVerifyLayout() {
   const navigate = useNavigate();
   const { data: certifications, isLoading } = useCertificationGet();
   const { mutate: deleteCertification } = useCertificationDelete();
-  const { setCurrentStep, tempRole } = useProfileSetupStore();
+  const { setCurrentStep, tempRole, currentStep } = useProfileSetupStore();
   const { user } = useAuthStore();
 
   useEffect(() => {
-    // tempRole이 EXPERT가 아니면 Setting 페이지로 리다이렉트
-    if (tempRole !== "EXPERT") {
+    if (!user) {
+      return;
+    }
+
+    if (user.setup_step === "COMPLETED") {
+      navigate("/home");
+      return;
+    }
+
+    if (user.setup_step === "NOT_STARTED" && tempRole !== "EXPERT") {
       navigate("/setting");
       return;
     }
 
-    // 페이지 진입 시 현재 단계 저장
+    if (
+      user.setup_step === "CERTIFICATION_UPLOADED" &&
+      currentStep === "interest-selection"
+    ) {
+      navigate("/second-setting");
+      return;
+    }
+
     setCurrentStep("expert-verify");
-  }, [tempRole, setCurrentStep, navigate]);
+  }, [tempRole, setCurrentStep, navigate, user, currentStep]);
   const instructionItems = [
     "컴퓨터공학 관련 학위증명서",
     "IT 관련 자격증 (정보처리기사, 컴활 등)",
