@@ -1,0 +1,38 @@
+.button {
+  height: var(--button-height-md); 
+  border-radius: var(--border-radius-lg);
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-2);
+
+  font-family: inherit;
+  font-size: var(--font-size-sm);
+}
+
+.round {
+  border-radius: var(--border-radius-lg);
+}
+
+.pill {
+  border-radius: var(--border-radius-full);
+}
+
+.primary {
+  background: var(--color-brand);
+  color: white;
+  border: none;
+}
+
+.outline {
+  background: transparent;
+  border: 1px solid var(--border-default);
+  color: var(--text-primary);
+}
+
+.icon {
+  width: 14px;
+  height: 14px;
+}

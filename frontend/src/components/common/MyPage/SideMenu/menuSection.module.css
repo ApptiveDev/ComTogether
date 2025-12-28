@@ -1,0 +1,11 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.title {
+  font-size: 20px;
+  font-weight: var(--font-weight-bold);
+  white-space: nowrap;
+}

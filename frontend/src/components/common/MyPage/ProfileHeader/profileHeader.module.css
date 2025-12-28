@@ -1,0 +1,57 @@
+.container {
+  width: 100%;
+  margin: 0 auto;
+  padding-top: var(--spacing-10); 
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-2); 
+  white-space: nowrap;
+}
+
+.avatarWrapper {
+  position: relative;
+}
+
+.avatar {
+  width: 3.75rem;  
+  height: 3.75rem;
+  border-radius: var(--border-radius-full);
+}
+
+.badge {
+  position: absolute;
+  top: -5px;
+  right: 0;
+
+  transform: translateX(60%);
+
+  background: #fff7ed;
+  white-space: nowrap;
+  color: var(--color-brand);
+
+  box-shadow: var(--shadow-md);
+
+  font-size: var(--font-size-xs);      
+  font-weight: var(--font-weight-semibold);
+  padding: var(--spacing-1) var(--spacing-3);
+  border-radius: var(--border-radius-full);
+}
+
+.name {
+  font-size: var(--font-size-xl);       
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-primary);
+}
+
+.suffix {
+  font-weight: var(--font-weight-normal);
+  color: var(--text-primary);
+}
+
+.date {
+  font-size: var(--font-size-sm);       
+  font-weight: var(--font-weight-medium);
+  color: var(--text-secondary);
+}
