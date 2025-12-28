@@ -1,0 +1,18 @@
+.container {
+  margin-top: 75px;
+}
+
+.content {
+  margin: 0 auto;
+  padding: var(--spacing-10) var(--spacing-4);
+
+  display: flex;
+  gap: var(--spacing-6);
+  width: fit-content;
+}
+
+.divider {
+  width: 1px;
+  background: var(--border-default);
+  margin-left: var(--spacing-2); 
+}

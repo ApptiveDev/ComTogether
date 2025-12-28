@@ -1,0 +1,38 @@
+.section {
+  margin-top: 25px;
+  display: flex;
+  gap: var(--spacing-3);
+}
+
+.tag {
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+
+  padding: 6px 15px;
+  border-radius: var(--border-radius-full);
+
+  background: #fff7ed;
+  border: 1px solid #ff5525;
+  color: #ff5525;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+}
+
+.icon {
+  width: 14px;
+  height: 14px;
+}
+
+.remove {
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  font-size: 14px;
+  color: #ff5525;
+
+  padding: 0;
+}

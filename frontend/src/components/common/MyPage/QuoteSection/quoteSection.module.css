@@ -1,0 +1,6 @@
+.section {
+  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}

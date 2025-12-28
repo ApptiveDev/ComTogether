@@ -1,0 +1,90 @@
+.card {
+  width: 800px;
+  min-height: 96px; 
+  padding: 0 var(--spacing-6); 
+  border-radius: var(--border-radius-2xl);
+  background: var(--bg-primary);
+  border: 1px solid var(--border-default);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.done {
+  border-color: var(--color-brand);
+}
+
+.pending {
+  border-color: var(--border-default);
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  white-space: nowrap;
+}
+
+.title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+}
+
+.temp {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-tertiary);
+}
+
+.dateRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  white-space: nowrap;
+}
+
+.date {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--text-tertiary);
+}
+
+.doneText {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--text-tertiary);
+}
+
+.badgeDone,
+.badgePending {
+  height: 32px;
+  width: 140px; 
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  white-space: nowrap;
+
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+  gap: var(--spacing-2);
+}
+
+.badgeDone {
+  color: var(--color-success);
+  border: 2px solid var(--color-success);
+}
+
+.badgePending {
+  color: var(--color-error);
+  border: 2px solid var(--color-error);
+}
