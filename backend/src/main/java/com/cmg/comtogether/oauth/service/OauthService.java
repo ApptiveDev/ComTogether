@@ -11,6 +11,7 @@ import com.cmg.comtogether.user.repository.UserRepository;
 import io.micrometer.common.lang.Nullable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +21,7 @@ public class OauthService {
     private final JwtService jwtService;
     private final UserRepository userRepository;
 
+    @Transactional
     public TokenDto kakaoLogin(String code, @Nullable String redirectUri) {
         TokenDto kakaoToken = kakaoService.getToken(code, redirectUri);
         KakaoProfileDto profile = kakaoService.getKakaoProfile(kakaoToken.getAccessToken());
@@ -34,6 +36,7 @@ public class OauthService {
                         .socialType(SocialType.KAKAO)
                         .build()));
 
+        user.updateLastLoginAt();
         TokenDto token = jwtService.generateToken(user);
 
         return TokenDto.builder()

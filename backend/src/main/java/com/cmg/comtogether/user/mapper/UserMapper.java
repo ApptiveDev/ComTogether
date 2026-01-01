@@ -25,6 +25,8 @@ public class UserMapper {
                 .point(user.getPoint())
                 .profileImageUrl(user.getProfileImageUrl())
                 .setupStep(user.getSetupStep())
+                .createdAt(user.getCreatedAt())
+                .lastLoginAt(user.getLastLoginAt())
                 .interests(interests)
                 .build();
     }

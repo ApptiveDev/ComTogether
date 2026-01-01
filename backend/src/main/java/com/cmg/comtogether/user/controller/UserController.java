@@ -53,6 +53,15 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.success(userResponseDto));
     }
 
+    @PutMapping("/interests")
+    public ResponseEntity<ApiResponse<UserResponseDto>> updateUserInterests(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @Valid @RequestBody UserInterestInitializeDto request
+    ) {
+        UserResponseDto userResponseDto = userService.updateUserInterests(userDetails.getUser().getUserId(), request);
+        return ResponseEntity.ok(ApiResponse.success(userResponseDto));
+    }
+
     @DeleteMapping
     public ResponseEntity<ApiResponse<Void>> deleteUser(
             @AuthenticationPrincipal CustomUserDetails userDetails

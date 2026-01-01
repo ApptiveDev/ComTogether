@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -20,6 +21,8 @@ public class UserResponseDto {
     private Integer point;
     private String profileImageUrl;
     private SetupStep setupStep;
+    private LocalDateTime createdAt;
+    private LocalDateTime lastLoginAt;
     private List<InterestDto> interests;
 }
 
