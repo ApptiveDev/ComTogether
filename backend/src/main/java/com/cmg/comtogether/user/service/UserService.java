@@ -67,6 +67,25 @@ public class UserService {
         return userMapper.toResponse(user);
     }
 
+    @Transactional
+    public UserResponseDto updateUserInterests(Long userId, UserInterestInitializeDto requestDto) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
+
+        List<Interest> interests = new ArrayList<>();
+
+        if (requestDto.getInterestIds() != null) {
+            interests.addAll(interestService.findAllById(requestDto.getInterestIds()));
+        }
+        if (requestDto.getCustomInterests() != null) {
+            interests.addAll(interestService.saveCustomInterests(requestDto.getCustomInterests()));
+        }
+
+        user.updateInterests(interests);
+        
+        return userMapper.toResponse(user);
+    }
+
     public void deleteUser(User user) {
         Optional<User> deleteUser = userRepository.findById(user.getUserId());
         if (deleteUser.isEmpty()) {
@@ -80,6 +99,7 @@ public class UserService {
         userRepository.deleteAllByRoleNot(Role.ADMIN);
     }
 
+    @Transactional
     public TokenDto login(String email, String password) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
@@ -88,6 +108,7 @@ public class UserService {
             throw new BusinessException(ErrorCode.INVALID_PASSWORD);
         }
 
+        user.updateLastLoginAt();
         return jwtService.generateToken(user);
     }
 

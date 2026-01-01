@@ -4,6 +4,7 @@ import com.cmg.comtogether.interest.entity.Interest;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -48,6 +49,13 @@ public class User {
     @Column(nullable = false)
     private SetupStep setupStep = SetupStep.NOT_STARTED;
 
+    @Builder.Default
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+    @Column
+    private LocalDateTime lastLoginAt;
+
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private Set<UserInterest> interests = new HashSet<>();;
@@ -65,5 +73,9 @@ public class User {
 
     public void updateSetupStep(SetupStep setupStep) {
         this.setupStep = setupStep;
+    }
+
+    public void updateLastLoginAt() {
+        this.lastLoginAt = LocalDateTime.now();
     }
 }
