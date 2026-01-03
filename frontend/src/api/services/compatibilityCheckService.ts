@@ -50,7 +50,7 @@ export const compatibilityCheckService = {
         ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
       },
       body: JSON.stringify(data),
-      onopen(response) {
+      async onopen(response) {
         if (!response.ok) {
           throw new Error('호환성 체크 연결에 실패했습니다.');
         }

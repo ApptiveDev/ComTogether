@@ -36,7 +36,7 @@ const CHECK_ITEMS_CONFIG = [
   { id: 10, label: "OS/드라이버 호환성" },
 ] as const;
 
-const CHECK_LABEL_MAP = new Map(
+const CHECK_LABEL_MAP = new Map<number, string>(
   CHECK_ITEMS_CONFIG.map((config) => [config.id, config.label])
 );
 

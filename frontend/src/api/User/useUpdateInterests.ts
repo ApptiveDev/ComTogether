@@ -23,7 +23,7 @@ export function useUpdateInterests(
       }
       invalidateQueries.user();
       invalidateQueries.userProfile();
-      options?.onSuccess?.(response, variables, context);
+      options?.onSuccess?.(response, variables, context, undefined as never);
     },
   });
 }

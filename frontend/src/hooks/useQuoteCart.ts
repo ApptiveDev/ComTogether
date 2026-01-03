@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 import { useGetQuotes, useQuoteDetail, usePostQuote } from "@/api/Quote";
 import type { Product } from "@/types/product";
+import type { ProductItem } from "@/types/quote";
 import {
   QUOTE_CATEGORIES,
   type QuoteCategoryKey,
@@ -12,7 +13,7 @@ import { useQuoteStore } from "@/stores/useQuoteStore";
 export type CategoryKey = QuoteCategoryKey;
 
 export interface SelectedPart {
-  product: Product;
+  product: Product | ProductItem;
   name: string;
   price: number;
   error: boolean;
@@ -123,16 +124,23 @@ export const useQuoteCart = () => {
   const saveQuote = useCallback(
     (name?: string) => {
       // selectedParts를 ProductItem[] 형태로 변환하면서 카테고리 정보 추가
-      const items = Object.entries(selectedParts)
-        .filter(([part]) => part !== null)
+      const items: ProductItem[] = Object.entries(selectedParts)
+        .filter(([, part]) => part !== null)
         .map(([category, part]) => {
           const product = part!.product;
-          // API 요청에 필요한 필드만 추출 (created_at 등 제외)
+          // lprice가 string일 수도 number일 수도 있으므로 변환
+          const lprice = typeof product.lprice === 'string' 
+            ? parseInt(product.lprice) || 0 
+            : product.lprice;
+          const hprice = product.hprice 
+            ? (typeof product.hprice === 'string' ? parseInt(product.hprice) || null : product.hprice)
+            : null;
+          
           return {
             product_id: product.product_id,
             title: product.title,
-            lprice: product.lprice,
-            hprice: product.hprice,
+            lprice,
+            hprice,
             image: product.image,
             link: product.link,
             brand: product.brand,

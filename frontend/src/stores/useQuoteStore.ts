@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import type { Product } from "@/types/product";
+import type { ProductItem } from "@/types/quote";
 import {
   QUOTE_CATEGORIES,
   type QuoteCategoryKey,
@@ -9,7 +10,7 @@ import {
 export type CategoryKey = QuoteCategoryKey;
 
 export interface SelectedPart {
-  product: Product;
+  product: Product | ProductItem;
   name: string;
   price: number;
   error: boolean;
