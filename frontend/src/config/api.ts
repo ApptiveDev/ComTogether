@@ -58,6 +58,7 @@ export const API_ENDPOINTS = {
     DELETE: '/users',
     UPDATE: '/users/me',
     EXPERT_VERIFY: '/users/expert-verify',
+    INTERESTS: '/users/interests',
   },
   
   // 가이드 관련

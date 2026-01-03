@@ -1,5 +1,28 @@
 .sideMenu {
-  width: fit-content; 
+  width: fit-content;
   display: flex;
   flex-direction: column;
+}
+
+.menuItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.menuItem:nth-child(1) {
+  margin-bottom: 160px;
+}
+
+.menuItem:nth-child(2) {
+  margin-bottom: 150px;
+}
+
+.menuItem:nth-child(3) {
+  margin-bottom: 100px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
 }

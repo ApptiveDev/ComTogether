@@ -138,6 +138,12 @@ export const API_ENDPOINTS = {
     INITIALIZE: '/users/initialize',
     DELETE: '/users',
     EXPERT_VERIFY: '/users/expert-verify',
+    INTERESTS: '/users/interests',
+  },
+
+  // 관심사 관련
+  INTERESTS: {
+    LIST: '/interests',
   },
   
   // 가이드 관련

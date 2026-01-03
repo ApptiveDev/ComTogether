@@ -1,5 +1,49 @@
-.section {
+.wrapper {
   margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  margin: 0;
+}
+
+.subtitle {
+  margin: 4px 0 0;
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
+}
+
+.headerActions {
+  display: flex;
+  gap: var(--spacing-2);
+}
+
+.editButton {
+  border: 1px solid var(--border-strong);
+  background: #fff;
+  color: var(--text-primary);
+  border-radius: var(--border-radius-full);
+  padding: 6px 16px;
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+}
+
+.editButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.section {
   display: flex;
   flex-wrap: wrap;
   gap: var(--spacing-3);
@@ -41,4 +85,123 @@
   color: #ff5525;
 
   padding: 0;
+}
+
+.editor {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-4);
+}
+
+.optionGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+}
+
+.option {
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--border-radius-full);
+  padding: 8px 18px;
+  background: #fff;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background var(--transition-fast), border-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.optionSelected {
+  background: #fff3ec;
+  border-color: #ff5525;
+  color: #ff5525;
+  font-weight: var(--font-weight-semibold);
+}
+
+.customInputRow {
+  display: flex;
+  gap: var(--spacing-2);
+}
+
+.customInput {
+  flex: 1;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--border-radius-md);
+  padding: 10px 14px;
+  font-size: var(--font-size-sm);
+}
+
+.customAddButton {
+  padding: 10px 16px;
+  border-radius: var(--border-radius-md);
+  border: none;
+  background: #ff5525;
+  color: #fff;
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+}
+
+.customAddButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.customList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+}
+
+.editorFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-2);
+}
+
+.selectionInfo {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.actionButtons {
+  display: flex;
+  gap: var(--spacing-2);
+}
+
+.cancelButton,
+.saveButton {
+  border-radius: var(--border-radius-full);
+  padding: 8px 18px;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.cancelButton {
+  background: #fff;
+  border-color: var(--border-strong);
+  color: var(--text-secondary);
+}
+
+.saveButton {
+  background: #ff5525;
+  color: #fff;
+}
+
+.saveButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.errorAlert {
+  margin: 0;
+  color: #f44336;
+  font-size: var(--font-size-sm);
 }

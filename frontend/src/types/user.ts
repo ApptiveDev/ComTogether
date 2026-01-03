@@ -7,6 +7,11 @@ export interface UserInterest {
   name: string;
 }
 
+export interface UpdateInterestsPayload {
+  interest_ids?: number[];
+  custom_interests?: string[];
+}
+
 export interface UserData {
   userId: number;
   name: string;

@@ -67,6 +67,8 @@ export const queryKeys = {
 
   QUOTES: ['quotes'] as const,
   QUOTE_DETAIL: 'quote-detail' as const,
+
+  INTERESTS: ['interests'] as const,
   
   PRODUCTS: {
     ALL: ['products'] as const,
