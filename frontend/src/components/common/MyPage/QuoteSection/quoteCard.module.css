@@ -1,7 +1,7 @@
 .card {
   width: 800px;
-  min-height: 96px; 
-  padding: 0 var(--spacing-6); 
+  min-height: 96px;
+  padding: 0 var(--spacing-6);
   border-radius: var(--border-radius-2xl);
   background: var(--bg-primary);
   border: 1px solid var(--border-default);
@@ -67,7 +67,7 @@
 .badgeDone,
 .badgePending {
   height: 32px;
-  width: 140px; 
+  width: 140px;
   border-radius: var(--border-radius-full);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-semibold);
@@ -75,7 +75,7 @@
 
   display: flex;
   align-items: center;
-  justify-content: center; 
+  justify-content: center;
   gap: var(--spacing-2);
 }
 
@@ -87,4 +87,9 @@
 .badgePending {
   color: var(--color-error);
   border: 2px solid var(--color-error);
+}
+
+.badgeIcon {
+  width: 16px;
+  height: 16px;
 }

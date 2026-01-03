@@ -16,4 +16,5 @@ export interface UserData {
   profile_image_url: string | null;
   setup_step: SetupStep;
   interests: UserInterest[];
+  created_at?: string;
 }

@@ -10,12 +10,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@microsoft/fetch-event-source": "^2.0.1",
     "@tanstack/react-query": "^5.90.1",
     "@tanstack/react-query-devtools": "^5.90.2",
     "@types/react": "^19.1.10",
     "@types/react-dom": "^19.1.7",
     "axios": "^1.12.2",
     "dompurify": "^3.3.0",
+    "event-source-polyfill": "^1.0.31",
     "framer-motion": "^12.23.24",
     "gsap": "^3.13.0",
     "i": "^0.3.7",
@@ -43,5 +45,6 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.39.1",
     "vite": "^7.2.2"
-  }
+  },
+  "packageManager": "pnpm@10.27.0+sha512.72d699da16b1179c14ba9e64dc71c9a40988cbdc65c264cb0e489db7de917f20dcf4d64d8723625f2969ba52d4b7e2a1170682d9ac2a5dcaeaab732b7e16f04a"
 }

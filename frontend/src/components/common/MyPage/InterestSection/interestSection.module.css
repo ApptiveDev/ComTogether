@@ -1,7 +1,13 @@
 .section {
   margin-top: 25px;
   display: flex;
+  flex-wrap: wrap;
   gap: var(--spacing-3);
+}
+
+.state {
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
 }
 
 .tag {

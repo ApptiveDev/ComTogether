@@ -8,6 +8,7 @@ type MenuSectionProps = {
   buttonLabel: string;
   variant: "primary" | "outline";
   spacing?: number;
+  onClick?: () => void;
 };
 
 export default function MenuSection({
@@ -15,12 +16,10 @@ export default function MenuSection({
   buttonLabel,
   variant,
   spacing = 40,
+  onClick,
 }: MenuSectionProps) {
   return (
-    <div
-      className={styles.section}
-      style={{ marginBottom: `${spacing}px` }}
-    >
+    <div className={styles.section} style={{ marginBottom: `${spacing}px` }}>
       <div className={styles.title}>{title}</div>
 
       <MyPageButton
@@ -29,6 +28,7 @@ export default function MenuSection({
         icon={variant === "primary" ? plusIcon : moreViewIcon}
         width={115}
         shape={variant === "primary" ? "pill" : "round"}
+        onClick={onClick}
       />
     </div>
   );

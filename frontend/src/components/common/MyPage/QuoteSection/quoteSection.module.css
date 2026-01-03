@@ -4,3 +4,8 @@
   flex-direction: column;
   gap: var(--spacing-4);
 }
+
+.state {
+  font-size: var(--font-size-sm);
+  color: var(--text-tertiary);
+}
