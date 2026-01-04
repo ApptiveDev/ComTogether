@@ -1,5 +1,7 @@
 // Quote 관련 타입 정의
 
+export type QuoteCompatibilityStatus = 'DONE' | 'PENDING';
+
 export interface ProductItem {
   product_id: string;
   title: string;
@@ -26,6 +28,8 @@ export interface Quote {
   total_quantity: number;
   total_price: number;
   items: ProductItem[];
+  compatibility_status?: QuoteCompatibilityStatus;
+  compatibility_checked_at?: string | null;
 }
 
 export interface CreateQuoteRequest {
@@ -45,4 +49,6 @@ export interface QuoteListResponse {
   updated_at: string;
   total_quantity: number;
   total_price: number;
+  compatibility_status?: QuoteCompatibilityStatus;
+  compatibility_checked_at?: string | null;
 }

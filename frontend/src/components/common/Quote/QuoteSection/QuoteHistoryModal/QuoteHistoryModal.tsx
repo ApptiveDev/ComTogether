@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import Modal from "@/components/ui/Modal/Modal";
 import check from "@/assets/image/quoteCheck.svg";
 import styles from "./quoteHistoryModal.module.css";
@@ -10,7 +10,7 @@ interface QuoteHistoryModalProps {
   onClose: () => void;
   histories: QuoteListResponse[];
   onSelect: (id: number) => void;
-  container?: HTMLElement;
+  container?: React.RefObject<HTMLDivElement | null>;
 }
 
 export default function EstimateHistoryModal({

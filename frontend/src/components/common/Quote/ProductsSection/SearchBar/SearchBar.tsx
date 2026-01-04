@@ -2,11 +2,9 @@ import { useRef } from "react";
 import styles from "./searchBar.module.css";
 import { usePartListStore } from "@/stores/usePartListStore";
 import SearchIcon from "@/assets/image/searchIcon.svg";
-import type { item } from "../ProductContainer";
 
 interface SearchBarProps {
   setSearchResult: (query: string) => void;
-  categoryItem?: item[]; // optional로 변경
 }
 
 export default function SearchBar({ setSearchResult }: SearchBarProps) {

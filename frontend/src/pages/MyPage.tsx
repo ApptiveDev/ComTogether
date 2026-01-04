@@ -102,7 +102,34 @@
 // }
 
 import MyPageLayout from "@/components/layout/MyPageLayout";
+import { useUserProfile } from "@/api/Auth/useUserProfile";
+import { useGetQuotes } from "@/api/Quote";
+import { useAuthStore } from "@/stores/useAuthStore";
 
 export default function MyPage() {
-  return <MyPageLayout />;
+  const fallbackUser = useAuthStore((state) => state.user);
+  const {
+    data: profileData,
+    isLoading: isProfileLoading,
+    isError: isProfileError,
+  } = useUserProfile();
+
+  const resolvedUser = profileData ?? fallbackUser ?? null;
+
+  const {
+    data: quoteResponse,
+    isLoading: isQuotesLoading,
+    isError: isQuotesError,
+  } = useGetQuotes();
+
+  return (
+    <MyPageLayout
+      user={resolvedUser}
+      isUserLoading={isProfileLoading && !resolvedUser}
+      hasUserError={isProfileError}
+      quotes={quoteResponse?.data ?? []}
+      isQuotesLoading={isQuotesLoading}
+      hasQuoteError={isQuotesError}
+    />
+  );
 }

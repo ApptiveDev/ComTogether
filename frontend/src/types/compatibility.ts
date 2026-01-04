@@ -20,3 +20,10 @@ export interface CompatibilityCheckDetail {
 }
 
 export type CompatibilityCheckResponse = CompatibilityCheckDetail[];
+
+// PDF 생성 요청 타입
+export interface CompatibilityPdfRequest {
+  title: string;
+  results: CompatibilityCheckDetail[];
+  items: CompatibilityCheckItem[];
+}

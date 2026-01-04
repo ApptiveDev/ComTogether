@@ -4,25 +4,7 @@ import CustomInterest from "../CustomInterest/CustomInterest";
 import AddInterestButton from "../AddInterestButton/AddInterestButton";
 import { useState, useEffect } from "react";
 import { useProfileSetupStore } from "../../../../stores/useProfileSetupStore";
-
-// 관심사 데이터
-const data: InterestItem[] = [
-  { id: 1, interest: "게임" },
-  { id: 2, interest: "프로그래밍" },
-  { id: 3, interest: "디자인" },
-  { id: 4, interest: "영상 편집" },
-  { id: 5, interest: "음악" },
-  { id: 6, interest: "사진" },
-  { id: 7, interest: "3D 모델링" },
-  { id: 8, interest: "문서 작업" },
-  { id: 9, interest: "데이터 분석" },
-  { id: 10, interest: "AI/머신러닝" },
-];
-
-type InterestItem = {
-  id: number;
-  interest: string;
-};
+import { INTEREST_OPTIONS } from "@/constants/interests";
 
 interface InterestSelectorProps {
   count: number;
@@ -42,9 +24,7 @@ export default function InterestSelector({
 
   // 관심사 ID를 찾는 헬퍼 함수
   const getInterestId = (interestName: string): number | null => {
-    const found = data.find(
-      (item: InterestItem) => item.interest === interestName
-    );
+    const found = INTEREST_OPTIONS.find((item) => item.label === interestName);
     return found ? found.id : null;
   };
 
@@ -97,13 +77,13 @@ export default function InterestSelector({
 
   return (
     <div className={style.container}>
-      {data.map((interestItem: InterestItem) => (
+      {INTEREST_OPTIONS.map((interestItem) => (
         <InterestButton
           key={`interest-${interestItem.id}`}
-          onClick={() => handleClick(interestItem.interest)}
-          selected={selectedInterests.includes(interestItem.interest)}
+          onClick={() => handleClick(interestItem.label)}
+          selected={selectedInterests.includes(interestItem.label)}
         >
-          <div className={style.inputContainer}>{interestItem.interest}</div>
+          <div className={style.inputContainer}>{interestItem.label}</div>
         </InterestButton>
       ))}
       {customInterests.map((interest: string, index: number) => (

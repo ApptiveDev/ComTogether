@@ -58,6 +58,7 @@ export const API_ENDPOINTS = {
     DELETE: '/users',
     UPDATE: '/users/me',
     EXPERT_VERIFY: '/users/expert-verify',
+    INTERESTS: '/users/interests',
   },
   
   // 가이드 관련
@@ -93,6 +94,7 @@ export const API_ENDPOINTS = {
   // 호환성 체크 관련
   COMPATIBILITY: {
     CHECK: '/compatibility/check',
+    PDF: '/compatibility/pdf',
   },
   
   // 파일 업로드
