@@ -4,6 +4,7 @@ import type {
   CompatibilityCheckRequest,
   CompatibilityCheckDetail,
   CompatibilityCheckResponse,
+  CompatibilityPdfRequest,
 } from '@/types/compatibility';
 import { useTokenStore } from '@/stores/useTokenStore';
 import { fetchEventSource } from '@microsoft/fetch-event-source';
@@ -94,5 +95,31 @@ export const compatibilityCheckService = {
     return {
       close: () => controller.abort(),
     };
+  },
+
+  /**
+   * 호환성 체크 결과를 PDF로 다운로드
+   * @param data PDF 생성 요청 데이터
+   * @returns PDF Blob
+   */
+  async downloadPdf(data: CompatibilityPdfRequest): Promise<Blob> {
+    const { getAccessToken } = useTokenStore.getState();
+    const accessToken = getAccessToken();
+    const url = `${API_CONFIG.baseURL}${API_ENDPOINTS.COMPATIBILITY.PDF}`;
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error('PDF 생성에 실패했습니다.');
+    }
+
+    return response.blob();
   },
 };

@@ -3,13 +3,18 @@ import Modal from "../../ui/Modal/Modal";
 import complete from "../../../assets/image/icon/complete.svg";
 import notComplete from "../../../assets/image/icon/not_complete.svg";
 import styles from "./compatibilityCheckModal.module.css";
-import type { CompatibilityCheckDetail } from "@/types/compatibility";
+import type {
+  CompatibilityCheckDetail,
+  CompatibilityCheckItem,
+} from "@/types/compatibility";
+import { compatibilityCheckService } from "@/api/services/compatibilityCheckService";
 
 interface CompatibilityCheckModalProps {
   isOpen: boolean;
   onClose: () => void;
   results: CompatibilityCheckDetail[];
   isChecking: boolean;
+  items: CompatibilityCheckItem[];
 }
 
 type CheckStatus = "pending" | "complete" | "warning" | "error";
@@ -56,14 +61,16 @@ export default function CompatibilityCheckModal({
   onClose,
   results,
   isChecking,
+  items,
 }: CompatibilityCheckModalProps) {
-  const [items, setItems] = useState<CheckItem[]>([]);
+  const [checkItems, setCheckItems] = useState<CheckItem[]>([]);
+  const [isPdfLoading, setIsPdfLoading] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
-      setItems(createInitialItems());
+      setCheckItems(createInitialItems());
     } else {
-      setItems([]);
+      setCheckItems([]);
     }
   }, [isOpen]);
 
@@ -72,7 +79,7 @@ export default function CompatibilityCheckModal({
       return;
     }
 
-    setItems((prevItems) => {
+    setCheckItems((prevItems) => {
       const map = new Map(prevItems.map((item) => [item.id, item]));
 
       results.forEach((result) => {
@@ -113,23 +120,23 @@ export default function CompatibilityCheckModal({
   }, [results]);
 
   const hasErrors = useMemo(
-    () => items.some((item) => item.status === "error"),
-    [items]
+    () => checkItems.some((item) => item.status === "error"),
+    [checkItems]
   );
 
   const hasWarnings = useMemo(
-    () => items.some((item) => item.status === "warning"),
-    [items]
+    () => checkItems.some((item) => item.status === "warning"),
+    [checkItems]
   );
 
   const completedItems = useMemo(
-    () => items.filter((item) => item.status !== "pending"),
-    [items]
+    () => checkItems.filter((item) => item.status !== "pending"),
+    [checkItems]
   );
 
   const pendingCount = useMemo(
-    () => items.filter((item) => item.status === "pending").length,
-    [items]
+    () => checkItems.filter((item) => item.status === "pending").length,
+    [checkItems]
   );
 
   const renderCheckStatus = (item: CheckItem) => {
@@ -171,16 +178,43 @@ export default function CompatibilityCheckModal({
   };
 
   const sortedItems = useMemo(
-    () => [...items].sort((a, b) => a.id - b.id),
-    [items]
+    () => [...checkItems].sort((a, b) => a.id - b.id),
+    [checkItems]
   );
 
   const allComplete =
-    !isChecking &&
-    sortedItems.length > 0 &&
-    !hasErrors &&
-    !hasWarnings &&
-    pendingCount === 0;
+    !isChecking && sortedItems.length > 0 && !hasErrors && pendingCount === 0;
+
+  // PDF 다운로드 핸들러
+  const handlePdfDownload = async () => {
+    if (!allComplete || isPdfLoading) return;
+
+    setIsPdfLoading(true);
+    try {
+      const pdfBlob = await compatibilityCheckService.downloadPdf({
+        title: "호환성 체크 결과",
+        results: results,
+        items: items,
+      });
+
+      // Blob을 다운로드
+      const url = window.URL.createObjectURL(pdfBlob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `호환성체크_${
+        new Date().toISOString().split("T")[0]
+      }.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("PDF 다운로드 실패:", error);
+      alert("PDF 다운로드에 실패했습니다.");
+    } finally {
+      setIsPdfLoading(false);
+    }
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="호환성 체크" size="xl">
@@ -263,12 +297,10 @@ export default function CompatibilityCheckModal({
 
         <button
           className={styles.pdfButton}
-          disabled={!allComplete}
-          onClick={() => {
-            console.log("PDF 다운로드");
-          }}
+          disabled={!allComplete || isPdfLoading}
+          onClick={handlePdfDownload}
         >
-          PDF 내보내기
+          {isPdfLoading ? "PDF 생성 중..." : "PDF 내보내기"}
         </button>
       </div>
     </Modal>

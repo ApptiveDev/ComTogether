@@ -40,6 +40,9 @@ export default function QuotePart() {
       }));
   };
 
+  // 모달에 전달할 items 상태
+  const [modalItems, setModalItems] = useState<CompatibilityCheckItem[]>([]);
+
   const handleCompatibilityCheck = () => {
     const parts = convertToApiFormat();
 
@@ -56,6 +59,7 @@ export default function QuotePart() {
     }
 
     setCheckResults([]);
+    setModalItems(parts);
     setIsModalOpen(true);
     setIsChecking(true);
 
@@ -104,6 +108,7 @@ export default function QuotePart() {
     setIsModalOpen(false);
     setIsChecking(false);
     setCheckResults([]);
+    setModalItems([]);
   };
 
   return (
@@ -141,6 +146,7 @@ export default function QuotePart() {
         onClose={handleCloseModal}
         results={checkResults}
         isChecking={isChecking}
+        items={modalItems}
       />
     </div>
   );
