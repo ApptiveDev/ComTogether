@@ -1,13 +1,20 @@
 package com.cmg.comtogether.compatibility.controller;
 
 import com.cmg.comtogether.compatibility.dto.CompatibilityCheckRequestDto;
+import com.cmg.comtogether.compatibility.dto.CompatibilityPdfRequestDto;
 import com.cmg.comtogether.compatibility.service.CompatibilityCheckService;
+import com.cmg.comtogether.compatibility.service.CompatibilityPdfService;
+import com.cmg.comtogether.common.security.CustomUserDetails;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +31,7 @@ import java.util.concurrent.CompletableFuture;
 public class CompatibilityController {
 
     private final CompatibilityCheckService compatibilityCheckService;
+    private final CompatibilityPdfService compatibilityPdfService;
     private final ObjectMapper objectMapper;
 
     /**
@@ -115,6 +123,26 @@ public class CompatibilityController {
         });
 
         return ResponseEntity.ok(emitter);
+    }
+
+    /**
+     * 호환성 체크 결과를 PDF로 반환
+     */
+    @PostMapping(value = "/pdf", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<byte[]> generatePdf(
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @Valid @RequestBody CompatibilityPdfRequestDto requestDto
+    ) {
+        byte[] pdf = compatibilityPdfService.generatePdf(requestDto, userDetails != null ? userDetails.getUser() : null);
+        String filename = (requestDto.getTitle() != null && !requestDto.getTitle().isBlank())
+                ? requestDto.getTitle() + ".pdf"
+                : "부품 견적서.pdf";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDisposition(ContentDisposition.builder("attachment")
+                .filename(filename, java.nio.charset.StandardCharsets.UTF_8)
+                .build());
+        return new ResponseEntity<>(pdf, headers, HttpStatus.OK);
     }
 }
 
