@@ -128,8 +128,8 @@ ex) [Backend] 프로필 화면에서 로그인 불가하던 문제 해결     (�
  ## 🧑‍💻 팀원
 | <img width="100" src="https://github.com/cotidie.png"> | <img width="100" src="https://github.com/github.png"> | <img width="100" src="https://github.com/yuhoyeong.png"> | <img width="100" src="https://github.com/sysy04.png"> | <img width="100" src="https://github.com/ddoed.png"> | <img width="100" src="https://github.com/oxomi.png"> | 
 |:----------------------:|:----------------------:|:----------------------:|:----------------------:|:----------------------:|:----------------------:|
-| [기획자](https://github.com/cotidie) | [양라윤](https://github.com/cotidie) | [유호영](https://github.com/yuhoyeong) | [박소영](https://github.com/sysy04) | [임나빈](https://github.com/ddoed) | [옥소미](https://github.com/oxomi) |
+| [성민기](https://github.com/wannagola) | [양라윤](https://github.com/cotidie) | [유호영](https://github.com/yuhoyeong) | [박소영](https://github.com/sysy04) | [임나빈](https://github.com/ddoed) | [옥소미](https://github.com/oxomi) |
 | 💻 기획자 | 💻 디자이너 | 💻 프론트 | 💻 프론트 | 💻 백엔드 | 💻 백엔드 |
-| -기 | 22기 | 22기 | 22기 | 22기 | 22기 |
+| 23기 | 22기 | 22기 | 22기 | 22기 | 22기 |
 
  
